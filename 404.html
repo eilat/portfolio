@@ -4,18 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found — Eilat Brayer</title>
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Self-contained so it renders at any path depth (github.io/portfolio/ or a custom domain) */
+    :root { --bg: #faf8f5; --text: #1c1b19; --muted: #6b6760; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #151412; --text: #f1eee9; --muted: #a19c93; } }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px;
+      background: var(--bg); color: var(--text); font: 400 17px/1.6 "Inter", system-ui, sans-serif; text-align: center; }
+    h1 { font: 400 clamp(2rem, 6vw, 3.5rem)/1.15 "Fraunces", Georgia, serif; margin: 8px 0 12px; }
+    p { color: var(--muted); margin: 0 0 28px; }
+    a { display: inline-block; padding: 13px 22px; border-radius: 999px; background: var(--text); color: var(--bg); text-decoration: none; font-weight: 500; }
+  </style>
 </head>
 <body>
   <main>
-    <section class="hero">
-      <p class="eyebrow">404</p>
-      <h1>This page doesn’t exist.</h1>
-      <p class="lead">It may have moved, or the link might be wrong.</p>
-      <a class="btn" href="/">Back home</a>
-    </section>
+    <p>404</p>
+    <h1>This page doesn’t exist.</h1>
+    <p>It may have moved, or the link might be wrong.</p>
+    <a id="home" href="/">Back home</a>
   </main>
+  <script>
+    // On github.io the site lives under /portfolio/; on a custom domain it's at /
+    if (location.hostname.endsWith('github.io')) document.getElementById('home').href = '/' + location.pathname.split('/')[1] + '/';
+  </script>
 </body>
 </html>
