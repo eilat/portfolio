@@ -5,21 +5,34 @@ Personal UX/UI design portfolio. Plain HTML + CSS, no build step.
 ## Structure
 
 ```
-index.html              Home: hero, selected work, about, contact
-projects/project-one.html  Case study template — copy it for each project
-styles.css              All styles (colors/fonts are variables at the top)
-script.js               Footer year + fade-in on scroll
-assets/img/             Project images (replace the placeholders)
-assets/favicon.svg      Tab icon
-404.html                Not-found page
+index.html             Home: hero, selected work, about, CV, contact (one long scroll)
+projects/stay.html     Case study pages, each with "Back home"
+projects/kit.html
+projects/pulse.html
+css/style.css          All styles; colors and fonts are variables at the top
+js/shapes.js           The shape animation: forms words/frames and re-forms per section
+js/main.js             Scroll reveals, header behaviour, parallax
+assets/img/            Project images (replace the placeholders)
+assets/cv.pdf          Add your CV here (the Download CV buttons point to it)
+404.html               Not-found page
 ```
+
+## How the shapes work
+
+Any element with `data-shapes` tells the shapes what to form while its section is in view:
+
+- `data-shapes="word" data-word="hello"` writes a word inside that element
+- `data-shapes="ring"` frames the element (used around the portrait)
+- `data-shapes="edge"` lets the shapes drift quietly in the side margins
+
+Colors live at the top of `js/shapes.js` (`COLORS` and `WEIGHTS`).
 
 ## Editing
 
-- **Text**: edit `index.html` directly. Placeholders are in `[brackets]`.
-- **New project**: copy `projects/project-one.html`, rename it, then add a card in the `#work` grid in `index.html` pointing to it.
-- **Images**: put them in `assets/img/` (export at ~2000px wide, WebP or JPG) and update the `src`.
-- **Colors / fonts**: change the variables in `:root` at the top of `styles.css`.
+- **Text**: edit the HTML directly. Placeholders are in `[brackets]`.
+- **New project**: copy a page in `projects/`, change its text, images and `data-word`, and add a card in the `#work` grid in `index.html`.
+- **Images**: put them in `assets/img/` (about 2000px wide, WebP or JPG) and update the `src`.
+- **Portrait**: replace the "Your photo here" span in `index.html` with an `<img>`.
 
 Preview locally: `python3 -m http.server` then open http://localhost:8000
 
