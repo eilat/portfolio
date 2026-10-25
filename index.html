@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Eilat Brayer — UX/UI Designer</title>
-  <meta name="description" content="Eilat Brayer is a UX/UI designer who turns ideas into calm, colorful digital products.">
-  <meta property="og:title" content="Eilat Brayer — UX/UI Designer">
+  <title>Eilat Brayer — Senior Product Designer</title>
+  <meta name="description" content="Eilat Brayer is a Senior Product Designer who turns ideas into calm, colorful digital products.">
+  <meta property="og:title" content="Eilat Brayer — Senior Product Designer">
   <meta property="og:description" content="Selected work, about, CV and contact.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#ffffff">
@@ -21,27 +21,36 @@
 
   <header class="site-header">
     <a class="logo" href="./">Eilat <em>Brayer</em></a>
-    <nav aria-label="Main">
+    <nav class="tabs" aria-label="Main">
       <a href="#work">Work</a>
       <a href="#about">About</a>
       <a href="#cv">CV</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div class="talk-wrap">
+      <button class="talk" type="button" aria-expanded="false" aria-controls="talk-panel" data-cursor="say hi">Let’s talk</button>
+      <div class="talk-panel" id="talk-panel">
+        <p>Pick whatever feels easiest.</p>
+        <a class="pill" href="https://wa.me/972500000000?text=Hi%20Eilat%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20talk." target="_blank" rel="noopener" data-cursor="fastest reply"><span><span class="ico"></span> WhatsApp</span><span>↗</span></a>
+        <a class="pill nude" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener" data-cursor="let’s connect"><span><span class="ico"></span> LinkedIn</span><span>↗</span></a>
+        <button class="pill" type="button" data-copy="hello@yourdomain.com" data-cursor="click to copy"><span><span class="ico"></span> Email</span><span>hello@yourdomain.com</span></button>
+      </div>
+    </div>
   </header>
 
   <main>
-    <!-- Hero: the shapes form the name inside .hero-word -->
+    <!-- Hero: the shapes write the name inside .hero-word -->
     <section class="hero inner" id="top">
-      <div class="hero-word" data-shapes="word" data-word="eilat"></div>
+      <div class="hero-word" data-shapes="word" data-word="eilat" data-cursor="play with me"></div>
+      <h1 class="hero-title split">Senior Product <em>Designer</em></h1>
       <div class="hero-foot">
-        <h1 class="split">Designing ideas into calm, colorful products.</h1>
-        <div class="meta reveal" style="--d:.4s">
-          <span>UX/UI Designer</span>
-          <span>Based in Tel Aviv · Open to projects</span>
+        <p class="tagline reveal">Turning ideas into calm, colorful products people love to use.</p>
+        <div class="meta reveal" style="--d:.3s">
+          <span class="status">Open to roles &amp; projects</span>
+          <span>Tel Aviv</span>
           <a class="scroll-cue" href="#work">Scroll <i></i></a>
         </div>
       </div>
-      <span class="sr-only">Eilat Brayer</span>
     </section>
 
     <!-- Work: shapes drift to the side margins -->
@@ -54,8 +63,8 @@
 
         <div class="work-grid">
           <div data-speed="0">
-            <a class="project reveal" href="projects/stay.html">
-              <div class="media unveil" style="--tint:#f3e3d8"><img src="assets/img/stay-cover.svg" alt="Stay booking app screens on a nude background" loading="lazy"><span class="view">View project →</span></div>
+            <a class="project reveal" href="projects/stay.html" data-cursor="view case study">
+              <div class="media unveil" style="--tint:#f3e3d8"><img src="assets/img/stay-cover.svg" alt="Stay booking app screens on a nude background" loading="lazy"></div>
               <div class="info">
                 <div><h3>Stay <em>booking app</em></h3><p>Turning a nine-step checkout into one light, joyful flow.</p></div>
                 <span class="year">2025</span>
@@ -63,8 +72,8 @@
             </a>
           </div>
           <div data-speed="-0.06">
-            <a class="project reveal" href="projects/kit.html">
-              <div class="media unveil" style="--tint:#dff2e8"><img src="assets/img/kit-cover.svg" alt="Kit design system components on a mint background" loading="lazy"><span class="view">View project →</span></div>
+            <a class="project reveal" href="projects/kit.html" data-cursor="view case study">
+              <div class="media unveil" style="--tint:#dff2e8"><img src="assets/img/kit-cover.svg" alt="Kit design system components on a mint background" loading="lazy"></div>
               <div class="info">
                 <div><h3>Kit <em>design system</em></h3><p>One soft, flexible language shared by three product teams.</p></div>
                 <span class="year">2024</span>
@@ -72,8 +81,8 @@
             </a>
           </div>
           <div data-speed="0">
-            <a class="project reveal" href="projects/pulse.html">
-              <div class="media unveil" style="--tint:#efe6df"><img src="assets/img/pulse-cover.svg" alt="Pulse analytics dashboard on a warm background" loading="lazy"><span class="view">View project →</span></div>
+            <a class="project reveal" href="projects/pulse.html" data-cursor="view case study">
+              <div class="media unveil" style="--tint:#efe6df"><img src="assets/img/pulse-cover.svg" alt="Pulse analytics dashboard on a warm background" loading="lazy"></div>
               <div class="info">
                 <div><h3>Pulse <em>analytics</em></h3><p>Making dense data feel readable, even friendly.</p></div>
                 <span class="year">2026</span>
@@ -94,14 +103,14 @@
           <p class="reveal">[Something personal: what inspires you, what you do when you’re not designing.]</p>
           <ul class="skills reveal">
             <li>Concept &amp; storytelling</li>
+            <li>Product strategy</li>
             <li>UX research</li>
             <li>UI &amp; visual design</li>
             <li>Design systems</li>
             <li>Prototyping</li>
-            <li>Figma</li>
           </ul>
         </div>
-        <div class="portrait" data-shapes="ring">
+        <div class="portrait" data-shapes="ring" data-cursor="hi, it’s me">
           <!-- Replace with: <img src="assets/img/portrait.jpg" alt="Eilat Brayer"> -->
           <span>Your photo here</span>
         </div>
@@ -118,18 +127,18 @@
         <div class="cv-grid">
           <div class="cv-side reveal">
             <p>[One line summary: years of experience and what you specialise in.]</p>
-            <a class="btn" href="assets/cv.pdf">Download CV <span aria-hidden="true">↓</span></a>
+            <a class="btn" href="assets/cv.pdf" data-cursor="pdf · 2 pages">Download CV <span aria-hidden="true">↓</span></a>
           </div>
           <div>
             <div class="cv-block">
               <h3 class="reveal">Work</h3>
-              <div class="cv-row reveal"><span class="when">2024 — Now</span><span class="what">Product Designer<small>[What you do there in one line]</small></span><span class="where">[Company]</span></div>
-              <div class="cv-row reveal"><span class="when">2022 — 2024</span><span class="what">UX/UI Designer<small>[What you did there in one line]</small></span><span class="where">[Company]</span></div>
-              <div class="cv-row reveal"><span class="when">2021 — 2022</span><span class="what">Junior Designer<small>[What you did there in one line]</small></span><span class="where">[Company]</span></div>
+              <div class="cv-row reveal"><span class="when">2024 — Now</span><span class="what">Senior Product Designer<small>[What you do there in one line]</small></span><span class="where">[Company]</span></div>
+              <div class="cv-row reveal"><span class="when">2021 — 2024</span><span class="what">Product Designer<small>[What you did there in one line]</small></span><span class="where">[Company]</span></div>
+              <div class="cv-row reveal"><span class="when">2019 — 2021</span><span class="what">UX/UI Designer<small>[What you did there in one line]</small></span><span class="where">[Company]</span></div>
             </div>
             <div class="cv-block">
               <h3 class="reveal">Education</h3>
-              <div class="cv-row reveal"><span class="when">2017 — 2021</span><span class="what">B.Des, Visual Communication<small>[Focus or final project]</small></span><span class="where">[School]</span></div>
+              <div class="cv-row reveal"><span class="when">2015 — 2019</span><span class="what">B.Des, Visual Communication<small>[Focus or final project]</small></span><span class="where">[School]</span></div>
             </div>
           </div>
         </div>
@@ -141,12 +150,13 @@
       <div class="inner">
         <div class="contact-word" data-shapes="word" data-word="hello"></div>
         <h2 class="split">Have an idea worth shaping? Let’s talk.</h2>
-        <a class="mail reveal" href="mailto:hello@yourdomain.com">hello@yourdomain.com</a>
+        <div class="reveal">
+          <button class="mail" type="button" data-copy="hello@yourdomain.com" data-cursor="click to copy">hello@yourdomain.com<span class="copied" aria-live="polite"></span></button>
+        </div>
         <ul class="socials reveal">
-          <li><a href="https://www.linkedin.com/in/your-profile" rel="noopener">LinkedIn</a></li>
-          <li><a href="https://www.behance.net/your-profile" rel="noopener">Behance</a></li>
-          <li><a href="https://www.instagram.com/your-profile" rel="noopener">Instagram</a></li>
-          <li><a href="assets/cv.pdf">CV (PDF)</a></li>
+          <li><a class="pill" href="https://wa.me/972500000000?text=Hi%20Eilat%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20talk." target="_blank" rel="noopener" data-cursor="fastest reply"><span class="ico"></span> WhatsApp</a></li>
+          <li><a class="pill nude" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener" data-cursor="let’s connect"><span class="ico"></span> LinkedIn</a></li>
+          <li><a class="pill" href="assets/cv.pdf" data-cursor="pdf · 2 pages"><span class="ico"></span> CV</a></li>
         </ul>
       </div>
     </section>
@@ -154,7 +164,7 @@
 
   <footer class="site-footer">
     <span>© <span data-year>2026</span> Eilat Brayer</span>
-    <a href="#top">Back to top ↑</a>
+    <a href="#top" data-cursor="up we go">Back to top ↑</a>
   </footer>
 
   <script src="js/main.js" defer></script>

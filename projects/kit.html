@@ -17,16 +17,26 @@
 
   <header class="site-header">
     <a class="back" href="../#work"><span aria-hidden="true">←</span> Back home</a>
-    <nav aria-label="Main">
+    <nav class="tabs" aria-label="Main">
       <a href="../#work">Work</a>
       <a href="../#about">About</a>
+      <a href="../#cv">CV</a>
       <a href="../#contact">Contact</a>
     </nav>
+    <div class="talk-wrap">
+      <button class="talk" type="button" aria-expanded="false" aria-controls="talk-panel" data-cursor="say hi">Let’s talk</button>
+      <div class="talk-panel" id="talk-panel">
+        <p>Pick whatever feels easiest.</p>
+        <a class="pill" href="https://wa.me/972500000000?text=Hi%20Eilat%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20talk." target="_blank" rel="noopener" data-cursor="fastest reply"><span><span class="ico"></span> WhatsApp</span><span>↗</span></a>
+        <a class="pill nude" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener" data-cursor="let’s connect"><span><span class="ico"></span> LinkedIn</span><span>↗</span></a>
+        <button class="pill" type="button" data-copy="hello@yourdomain.com" data-cursor="click to copy"><span><span class="ico"></span> Email</span><span>hello@yourdomain.com</span></button>
+      </div>
+    </div>
   </header>
 
   <main>
     <section class="case-hero inner" id="top">
-      <div class="case-word" data-shapes="word" data-word="kit"></div>
+      <div class="case-word" data-shapes="word" data-word="kit" data-cursor="play with me"></div>
       <span class="label reveal">Case study · design system</span>
       <h1 class="split">Kit, design system</h1>
       <p class="intro reveal">One soft, flexible language shared by three product teams.</p>
@@ -36,7 +46,7 @@
         <div><dt>Timeline</dt><dd>8 months, 2024</dd></div>
         <div><dt>Platform</dt><dd>Web &amp; mobile</dd></div>
       </dl>
-      <div class="case-cover unveil" style="--tint:#dff2e8"><img src="../assets/img/kit-cover.svg" alt="Kit overview"></div>
+      <div class="case-cover unveil" style="--tint:#dff2e8" data-zoom data-cursor="zoom"><img src="../assets/img/kit-cover.svg" alt="Kit overview"></div>
     </section>
 
     <div class="inner" data-shapes="edge">
@@ -69,7 +79,7 @@
           <h2 class="split">From sketch to system</h2>
           <p class="reveal">[Walk through key decisions, the options you explored and why you chose one direction.]</p>
           <figure>
-            <div class="case-cover unveil" style="--tint:#dff2e8"><img src="../assets/img/kit-detail.svg" alt="" loading="lazy"></div>
+            <div class="case-cover unveil" style="--tint:#dff2e8" data-zoom data-cursor="zoom"><img src="../assets/img/kit-detail.svg" alt="Core shapes and how they combine into components." loading="lazy"></div>
             <figcaption class="reveal">Core shapes and how they combine into components.</figcaption>
           </figure>
         </section>
@@ -87,7 +97,7 @@
       </article>
     </div>
 
-    <a class="next inner" href="pulse.html">
+    <a class="next inner" href="pulse.html" data-cursor="up next">
       <span class="label">Next project</span>
       <strong>Pulse →</strong>
     </a>
@@ -95,7 +105,7 @@
 
   <footer class="site-footer">
     <span>© <span data-year>2026</span> Eilat Brayer</span>
-    <a href="../">Home</a>
+    <a href="#top" data-cursor="up we go">Back to top ↑</a>
   </footer>
 
   <script src="../js/main.js" defer></script>
