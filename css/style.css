@@ -79,8 +79,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
   padding: 18px var(--gutter);
   transition: transform .5s var(--ease), background .4s;
 }
-.logo { justify-self: start; text-decoration: none; font: 400 19px/1 var(--display); letter-spacing: -.02em; }
-.logo em { font-size: 21px; }
+.logo { justify-self: start; text-decoration: none; font: 600 clamp(22px, 1.8vw, 26px)/1 var(--display); letter-spacing: -.035em; white-space: nowrap; }
 .back { justify-self: start; font-size: 14px; padding: 9px 16px 9px 12px; background: rgba(255,255,255,.8); box-shadow: inset 0 0 0 1px var(--line); }
 .tabs { display: flex; gap: 4px; justify-self: center; }
 .tabs a { font-size: 14px; padding: 8px 15px; }
@@ -98,8 +97,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
   transition: translate .7s var(--spring), opacity .3s;
 }
 .float-nav.show { translate: -50% 0; opacity: 1; }
-.float-logo { text-decoration: none; font: 400 16px/1 var(--display); letter-spacing: -.02em; padding: 0 12px 0 14px; white-space: nowrap; }
-.float-logo em { font-size: 18px; }
+.float-logo { text-decoration: none; font: 600 18px/1 var(--display); letter-spacing: -.035em; padding: 0 12px 0 14px; white-space: nowrap; }
 .float-nav .tabs { position: relative; gap: 2px; }
 .float-nav .tabs a { position: relative; z-index: 1; }
 .float-nav .talk { padding: 9px 16px; }
@@ -135,13 +133,13 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 @media (hover: none), (pointer: coarse) { .cursor-tag { display: none; } }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; padding-block: 120px 150px; }
+.hero { position: relative; min-height: calc(100svh - clamp(80px, 11vw, 150px)); display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; padding-block: clamp(96px, 14vh, 130px) clamp(100px, 15vh, 150px); }
 .hero-stack { display: grid; }
 .hero-title { font-size: clamp(46px, 9.4vw, 150px); line-height: .95; letter-spacing: -.045em; margin: 0; }
 .title-line { position: relative; display: inline-block; }
 /* Years tag: tilted like a hovered tab, perched on the end of "Senior Product" */
 .years-tag {
-  position: absolute; left: 100%; top: 0; translate: -18% -55%; rotate: -5deg;
+  position: absolute; left: 100%; top: 100%; translate: -78% -20%; rotate: -5deg;
   font: 400 clamp(13px, 1.15vw, 16px)/1 var(--body); letter-spacing: 0; white-space: nowrap;
   background: var(--mint); color: var(--ink); padding: .7em 1.1em; border-radius: 99px;
   box-shadow: 0 12px 22px -14px rgba(20, 20, 20, .45);
@@ -165,6 +163,11 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .section { padding-block: clamp(90px, 14vw, 180px); }
 .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(40px, 7vw, 84px); }
 .section-head h2 { font-size: clamp(44px, 8vw, 112px); }
+/* "Selected work" is the first thing under the hero: bigger, and it peeks in from the bottom */
+#work { padding-top: clamp(4px, 1vw, 16px); }
+.work-head { flex-direction: column; align-items: flex-start; gap: clamp(14px, 2vw, 24px); }
+.work-head h2 { font-size: clamp(64px, 14.5vw, 230px); line-height: .9; letter-spacing: -.05em; }
+.count-tag { display: inline-block; font: 400 clamp(14px, 1.2vw, 17px)/1 var(--body); padding: .75em 1.2em; border-radius: 99px; background: var(--nude); rotate: 4deg; margin-left: clamp(4px, 1vw, 12px); box-shadow: 0 12px 22px -14px rgba(20, 20, 20, .4); }
 .section-head .count { font-family: var(--accent); font-style: italic; font-size: clamp(22px, 2.6vw, 32px); color: var(--ink-soft); }
 
 /* ---------- Work ---------- */
@@ -295,7 +298,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
   .site-header { grid-template-columns: 1fr auto; row-gap: 10px; padding-block: 14px; }
   .float-logo { display: none; }
   .badge { width: 100px; bottom: 20px; }
-  .years-tag { left: auto; right: 0; top: 0; translate: 0 -95%; }
+  .years-tag { left: auto; right: 0; top: 100%; translate: 0 -10%; }
   .badge-ring text { font-size: 12.5px; }
   .tabs { grid-column: 1 / -1; grid-row: 2; }
   .talk-wrap { grid-column: 2; grid-row: 1; }

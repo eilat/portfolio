@@ -66,7 +66,8 @@ function track(x, y, target) {
 addEventListener('pointermove', (e) => {
   if (e.pointerType !== 'mouse') return;
   mouseSeen = true; mx = e.clientX; my = e.clientY;
-  tag.style.transform = `translate3d(${mx + 16}px, ${my + 18}px, 0)`;
+  // `translate` (not `transform`) so the pop-in scale doesn't scale the position too
+  tag.style.translate = `${mx + 16}px ${my + 18}px`;
   track(mx, my, e.target);
 }, { passive: true });
 document.addEventListener('pointerleave', () => setHot(null));
