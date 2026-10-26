@@ -1,6 +1,11 @@
 document.documentElement.classList.add('js');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Years of experience, counted from the year in data-since
+document.querySelectorAll('[data-since]').forEach((el) => {
+  el.textContent = `${new Date().getFullYear() - parseInt(el.dataset.since, 10)}+`;
+});
+
 // Split headings into words so they can rise in one by one (inline tags like <em> stay whole)
 document.querySelectorAll('.split').forEach((el) => {
   el.setAttribute('aria-label', el.textContent.trim().replace(/\s+/g, ' '));
@@ -27,17 +32,139 @@ if ('IntersectionObserver' in window) {
   revealables.forEach((el) => el.classList.add('in'));
 }
 
-// Header: soft background once scrolled, tucks away when scrolling down
-const header = document.querySelector('.site-header');
+// ---------- Hover: tilt + cursor tag ----------
+// Tilting a button moves its edges, which can slide it out from under a still
+// mouse and make hover flicker. So we remember each target's box from before
+// it tilted and keep it "hot" until the mouse really leaves that box.
+const HOVER = '.pill, .tabs a, .btn, .talk, .back, [data-cursor]';
+const tag = document.createElement('div');
+tag.className = 'cursor-tag';
+tag.setAttribute('aria-hidden', 'true');
+document.body.appendChild(tag);
+let hot = null, hotBox = null, mx = -100, my = -100, mouseSeen = false;
+
+function inBox(b, x, y) { return b && x >= b.left - 2 && x <= b.right + 2 && y >= b.top - 2 && y <= b.bottom + 2; }
+function label(el) { return el && (el.dataset.cursorNow || el.dataset.cursor); }
+function showTag() {
+  const text = label(hot);
+  if (text) tag.textContent = text;
+  tag.classList.toggle('on', !!text);
+}
+function setHot(el) {
+  if (el === hot) return;
+  if (hot) hot.classList.remove('is-hover');
+  hot = el;
+  hotBox = el ? el.getBoundingClientRect() : null;
+  if (el) el.classList.add('is-hover');
+  showTag();
+}
+function track(x, y, target) {
+  if (hot && inBox(hotBox, x, y)) return; // still on the same thing
+  const el = target && target.closest ? target.closest(HOVER) : null;
+  setHot(el);
+}
+addEventListener('pointermove', (e) => {
+  if (e.pointerType !== 'mouse') return;
+  mouseSeen = true; mx = e.clientX; my = e.clientY;
+  tag.style.transform = `translate3d(${mx + 16}px, ${my + 18}px, 0)`;
+  track(mx, my, e.target);
+}, { passive: true });
+document.addEventListener('pointerleave', () => setHot(null));
+// What's under the mouse changes on scroll and when overlays open, not only on move
+function recheck() {
+  if (!mouseSeen) return;
+  if (hot) { hot.classList.remove('is-hover'); hotBox = hot.getBoundingClientRect(); hot.classList.add('is-hover'); }
+  track(mx, my, document.elementFromPoint(mx, my));
+}
+addEventListener('scroll', recheck, { passive: true });
+addEventListener('click', () => setTimeout(recheck, 60));
+
+// ---------- Copy email ----------
+document.querySelectorAll('[data-copy]').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    const text = btn.dataset.copy;
+    try { await navigator.clipboard.writeText(text); }
+    catch { const r = document.createRange(); r.selectNodeContents(btn); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    btn.dataset.cursorNow = 'copied ✓';
+    if (hot === btn) showTag();
+    const note = btn.querySelector('.copied');
+    if (note) note.textContent = 'Copied ✓';
+    setTimeout(() => {
+      delete btn.dataset.cursorNow;
+      if (hot === btn) showTag();
+      if (note) note.textContent = '';
+    }, 1800);
+  });
+});
+
+// ---------- Let's talk panel (one panel, opened from either bar) ----------
+const panel = document.getElementById('talk-panel');
+let openedBy = null;
+function placePanel() {
+  if (!openedBy || !panel) return;
+  const r = openedBy.getBoundingClientRect();
+  panel.style.top = `${r.bottom + 12}px`;
+  panel.style.right = `${Math.max(12, innerWidth - r.right)}px`;
+}
+function setPanel(open, trigger) {
+  if (!panel) return;
+  if (open) { openedBy = trigger; placePanel(); }
+  document.querySelectorAll('.talk').forEach((t) => t.setAttribute('aria-expanded', String(open && t === openedBy)));
+  panel.classList.toggle('open', open);
+  if (open) panel.querySelector('a, button').focus({ preventScroll: true });
+}
+document.querySelectorAll('.talk').forEach((t) => t.addEventListener('click', (e) => {
+  e.stopPropagation();
+  setPanel(!(panel.classList.contains('open') && openedBy === t), t);
+}));
+document.addEventListener('click', (e) => { if (panel && !panel.contains(e.target)) setPanel(false); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && panel && panel.classList.contains('open')) { setPanel(false); if (openedBy) openedBy.focus(); }
+});
+addEventListener('resize', placePanel);
+
+// ---------- Floating nav: appears once the top bar has scrolled away ----------
+const floatNav = document.querySelector('.float-nav');
+const topBar = document.querySelector('.site-header');
+function updateFloat() {
+  if (!floatNav || !topBar) return;
+  const show = topBar.getBoundingClientRect().bottom < 0;
+  if (show === floatNav.classList.contains('show')) return;
+  floatNav.classList.toggle('show', show);
+  floatNav.inert = !show;
+  // the panel follows whichever bar is visible
+  if (panel && panel.classList.contains('open')) setPanel(false);
+}
+
+// Active section marker in the tabs
+const tabSets = [...document.querySelectorAll('.tabs')];
+const sections = ['work', 'about', 'cv', 'contact'].map((id) => document.getElementById(id)).filter(Boolean);
+function markActive() {
+  let current = null;
+  sections.forEach((s) => { if (s.getBoundingClientRect().top < innerHeight * .45) current = s.id; });
+  tabSets.forEach((set) => {
+    const ind = set.querySelector('.tab-ind');
+    let target = null;
+    set.querySelectorAll('a').forEach((a) => {
+      const on = !!current && a.getAttribute('href').endsWith('#' + current);
+      a.classList.toggle('active', on);
+      if (on) target = a;
+    });
+    if (!ind) return;
+    if (target) {
+      ind.style.width = `${target.offsetWidth}px`;
+      ind.style.transform = `translateX(${target.offsetLeft}px)`;
+      ind.classList.add('on');
+    } else ind.classList.remove('on');
+  });
+}
+
+// ---------- Parallax + scroll-driven bits ----------
 const parallax = [...document.querySelectorAll('[data-speed]')];
-let lastY = scrollY;
 function onScroll() {
-  const y = scrollY;
-  if (header) {
-    header.classList.toggle('scrolled', y > 40);
-    header.classList.toggle('hide', y > lastY && y > 400 && !header.classList.contains('talk-open'));
-  }
-  lastY = y;
+  updateFloat();
+  markActive();
+  if (panel && panel.classList.contains('open')) placePanel();
   if (!reduce) {
     parallax.forEach((el) => {
       const r = el.getBoundingClientRect();
@@ -47,72 +174,23 @@ function onScroll() {
   }
 }
 addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
-onScroll();
+addEventListener('resize', markActive);
 
-// Cursor label: a small tag that follows the mouse and says what a click will do
-const tag = document.createElement('div');
-tag.className = 'cursor-tag';
-tag.setAttribute('aria-hidden', 'true');
-document.body.appendChild(tag);
-let tx = -100, ty = -100, cx = -100, cy = -100, hovered = null;
-let mouseSeen = false;
-function setHovered(target) {
-  const el = target && target.closest ? target.closest('[data-cursor]') : null;
-  if (el !== hovered) {
-    hovered = el;
-    if (el) tag.textContent = el.dataset.cursorNow || el.dataset.cursor;
-    tag.classList.toggle('on', !!el);
-  }
-}
-// What's under the mouse changes on scroll and when overlays open, not only on move
-const recheck = () => { if (mouseSeen) setHovered(document.elementFromPoint(tx, ty)); };
-addEventListener('pointermove', (e) => {
-  if (e.pointerType !== 'mouse') return;
-  mouseSeen = true; tx = e.clientX; ty = e.clientY;
-  setHovered(e.target);
-}, { passive: true });
-addEventListener('scroll', recheck, { passive: true });
-addEventListener('click', () => setTimeout(recheck, 50));
-document.addEventListener('pointerleave', () => { hovered = null; tag.classList.remove('on'); });
-(function follow() {
-  if (tx !== cx || ty !== cy) { cx = tx; cy = ty; tag.style.transform = `translate3d(${cx + 16}px, ${cy + 18}px, 0)`; }
-  requestAnimationFrame(follow);
-})();
-
-// Copy email buttons
-document.querySelectorAll('[data-copy]').forEach((btn) => {
-  btn.addEventListener('click', async () => {
-    const text = btn.dataset.copy;
-    try { await navigator.clipboard.writeText(text); }
-    catch { const r = document.createRange(); r.selectNodeContents(btn); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-    btn.dataset.cursorNow = 'copied ✓';
-    if (hovered === btn) tag.textContent = 'copied ✓';
-    const note = btn.querySelector('.copied');
-    if (note) note.textContent = 'Copied ✓';
-    setTimeout(() => {
-      delete btn.dataset.cursorNow;
-      if (hovered === btn) tag.textContent = btn.dataset.cursor;
-      if (note) note.textContent = '';
-    }, 1800);
-  });
-});
-
-// Let's talk panel
-const talk = document.querySelector('.talk');
-const panel = document.getElementById('talk-panel');
-if (talk && panel) {
-  const setOpen = (open) => {
-    talk.setAttribute('aria-expanded', open);
-    panel.classList.toggle('open', open);
-    header.classList.toggle('talk-open', open);
-    if (open) panel.querySelector('a, button').focus({ preventScroll: true });
-  };
-  talk.addEventListener('click', (e) => { e.stopPropagation(); setOpen(talk.getAttribute('aria-expanded') !== 'true'); });
-  document.addEventListener('click', (e) => { if (!panel.contains(e.target)) setOpen(false); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('open')) { setOpen(false); talk.focus(); } });
+// Hero badge turns slowly, and faster while you scroll
+const badge = document.querySelector('.badge-ring');
+if (badge && !reduce) {
+  let spin = 0, lastY = scrollY, speed = 0;
+  (function spinLoop() {
+    const y = scrollY;
+    speed = speed * .9 + Math.abs(y - lastY) * .1;
+    lastY = y;
+    spin = (spin + .12 + speed * .25) % 360;
+    badge.style.transform = `rotate(${spin.toFixed(2)}deg)`;
+    requestAnimationFrame(spinLoop);
+  })();
 }
 
-// Lightbox: case study images open large
+// ---------- Lightbox: case study images open large ----------
 const zoomables = document.querySelectorAll('[data-zoom]');
 if (zoomables.length) {
   const box = document.createElement('div');
@@ -142,4 +220,19 @@ if (zoomables.length) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && box.classList.contains('open')) hide(); });
 }
 
+// ---------- TEMPORARY: compare the two hero options (remove once one is chosen) ----------
+const compare = document.querySelector('.compare');
+if (compare) {
+  let choice = 'badge';
+  try { choice = localStorage.getItem('hero-variant') || 'badge'; } catch {}
+  const set = (v) => {
+    document.documentElement.dataset.variant = v;
+    compare.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+    try { localStorage.setItem('hero-variant', v); } catch {}
+  };
+  compare.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => set(b.dataset.v)));
+  set(choice);
+}
+
+onScroll();
 document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });

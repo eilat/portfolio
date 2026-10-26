@@ -54,13 +54,24 @@
     const o = off.getContext('2d', { willReadFrequently: true });
     const font = (fs) => `400 ${fs}px "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif`;
     let fs = h * .9;
-    o.font = font(fs);
-    const tw = o.measureText(text).width;
-    if (tw > w * .96) fs *= (w * .96) / tw;
-    o.font = font(fs);
-    o.textBaseline = 'middle';
-    o.textAlign = align === 'left' ? 'left' : 'center';
-    o.fillText(text, align === 'left' ? Math.max(4, fs * .02) : w / 2, h / 2);
+    if (align === 'fill') {
+      // Ink runs exactly from the left edge to the right edge, centred vertically
+      o.font = font(100);
+      const m = o.measureText(text), k = (w * .985) / (m.actualBoundingBoxLeft + m.actualBoundingBoxRight);
+      fs = 100 * k;
+      o.font = font(fs);
+      o.textAlign = 'left'; o.textBaseline = 'alphabetic';
+      const inkH = (m.actualBoundingBoxAscent + m.actualBoundingBoxDescent) * k;
+      o.fillText(text, m.actualBoundingBoxLeft * k + w * .0075, (h - inkH) / 2 + m.actualBoundingBoxAscent * k);
+    } else {
+      o.font = font(fs);
+      const tw = o.measureText(text).width;
+      if (tw > w * .96) fs *= (w * .96) / tw;
+      o.font = font(fs);
+      o.textBaseline = 'middle';
+      o.textAlign = 'center';
+      o.fillText(text, w / 2, h / 2);
+    }
     const data = o.getImageData(0, 0, ow, oh).data;
     let gap = Math.max(W < 600 ? 3 : 4, Math.round(fs / 34)), pts;
     do {
@@ -69,7 +80,7 @@
         const shift = (Math.floor(y / gap) % 2) * gap / 2; // staggered rows read denser
         for (let x = shift; x < ow; x += gap) {
           const xi = Math.round(x);
-          if (data[(y * ow + xi) * 4 + 3] > 140) pts.push({ x: xi + (Math.random() - .5) * gap * .8, y: y + (Math.random() - .5) * gap * .8, sx: xi, sy: y });
+          if (data[(y * ow + xi) * 4 + 3] > 140) pts.push({ x: xi + (Math.random() - .5) * gap * .5, y: y + (Math.random() - .5) * gap * .5, sx: xi, sy: y });
         }
       }
       gap++;
@@ -77,7 +88,7 @@
     gap--;
     const r = Math.max(6, Math.round(fs * .11)); // wider than the stroke, so its direction shows
     pts.forEach((p) => { p.ang = strokeAngle(data, ow, oh, p.sx, p.sy, r); });
-    return { pts, size: gap * .68 };
+    return { pts, size: gap * .6, uniform: true };
   }
 
   function ringPoints(w, h) {
@@ -117,7 +128,7 @@
     const pts = res.pts.slice().sort((a, b) => key(a) - key(b));
     const map = new Array(MAX);
     order.forEach((pi, k) => { map[pi] = k < pts.length ? pts[k] : null; });
-    return { el, type, map, size: res.size };
+    return { el, type, map, size: res.size, uniform: !!res.uniform };
   }
 
   function apply(el) {
@@ -126,7 +137,7 @@
     parts.forEach((p, i) => {
       const pt = plan && plan.map[i];
       p.ta = pt ? (plan.type === 'edge' ? .6 : 1) : 0;
-      p.ts = pt ? plan.size * (.4 + Math.pow(p.fx, 1.5) * 1.1) : 1.5;
+      p.ts = !pt ? 1.5 : plan.uniform ? plan.size * (.94 + p.fx * .12) : plan.size * (.4 + Math.pow(p.fx, 1.5) * 1.1);
       if (pt) p.tang = pt.ang + (p.fy - .5) * .12;
     });
   }
@@ -158,8 +169,8 @@
     if (s < .3 || p.a < .01) return;
     ctx.globalAlpha = p.a;
     if (p.line) {
-      const len = s * 1.25, c = Math.cos(p.ang) * len, sn = Math.sin(p.ang) * len;
-      ctx.strokeStyle = p.color; ctx.lineWidth = s * .75;
+      const len = s * .55, c = Math.cos(p.ang) * len, sn = Math.sin(p.ang) * len;
+      ctx.strokeStyle = p.color; ctx.lineWidth = s * 1.1;
       ctx.beginPath(); ctx.moveTo(p.x - c, p.y - sn); ctx.lineTo(p.x + c, p.y + sn); ctx.stroke();
     } else {
       ctx.fillStyle = p.color;

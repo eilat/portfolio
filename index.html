@@ -29,26 +29,51 @@
     </nav>
     <div class="talk-wrap">
       <button class="talk" type="button" aria-expanded="false" aria-controls="talk-panel" data-cursor="say hi">Let’s talk</button>
-      <div class="talk-panel" id="talk-panel">
-        <p>Pick whatever feels easiest.</p>
-        <a class="pill" href="https://wa.me/972500000000?text=Hi%20Eilat%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20talk." target="_blank" rel="noopener" data-cursor="fastest reply"><span><span class="ico"></span> WhatsApp</span><span>↗</span></a>
-        <a class="pill nude" href="https://www.linkedin.com/in/eilat-brayer-48146722/" target="_blank" rel="noopener" data-cursor="let’s connect"><span><span class="ico"></span> LinkedIn</span><span>↗</span></a>
-        <button class="pill" type="button" data-copy="hello@yourdomain.com" data-cursor="click to copy"><span><span class="ico"></span> Email</span><span>hello@yourdomain.com</span></button>
-      </div>
     </div>
   </header>
+
+  <!-- Floating bar: slides in once the top bar has scrolled away -->
+  <nav class="float-nav" aria-label="Quick navigation" inert>
+    <a class="float-logo" href="#top" data-cursor="up we go">Eilat <em>B.</em></a>
+    <div class="tabs">
+      <span class="tab-ind" aria-hidden="true"></span>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#cv">CV</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="talk" type="button" aria-expanded="false" aria-controls="talk-panel" data-cursor="say hi">Let’s talk</button>
+  </nav>
+
+  <div class="talk-panel" id="talk-panel">
+    <p>Pick whatever feels easiest.</p>
+    <a class="pill" href="https://wa.me/972500000000?text=Hi%20Eilat%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20talk." target="_blank" rel="noopener" data-cursor="fastest reply"><span><span class="ico"></span> WhatsApp</span><span>↗</span></a>
+    <a class="pill nude" href="https://www.linkedin.com/in/eilat-brayer-48146722/" target="_blank" rel="noopener" data-cursor="let’s connect"><span><span class="ico"></span> LinkedIn</span><span>↗</span></a>
+    <button class="pill" type="button" data-copy="hello@yourdomain.com" data-cursor="click to copy"><span><span class="ico"></span> Email</span><span>hello@yourdomain.com</span></button>
+  </div>
 
   <main>
     <!-- Hero: type sets "Senior Product", the shapes write "Designer" -->
     <section class="hero inner" id="top">
       <h1 class="hero-title"><span class="split">Senior Product</span><span class="sr-only"> Designer</span></h1>
-      <div class="hero-word" data-shapes="word" data-word="Designer" data-align="left" data-cursor="play with me"></div>
+      <div class="hero-word" data-shapes="word" data-word="Designer" data-align="fill" data-cursor="play with me"></div>
       <div class="hero-foot">
-        <p class="tagline reveal">Turning ideas into calm, colorful products people love to use.</p>
+        <div class="hero-left">
+          <p class="tagline reveal">Turning ideas into calm, colorful products people love to use.</p>
+          <span class="years-pill v-pill reveal" style="--d:.2s"><span><b data-since="2012">14+</b> years designing products</span></span>
+        </div>
         <div class="meta reveal" style="--d:.3s">
           <span>Tel Aviv</span>
-          <a class="scroll-cue" href="#work">Scroll <i></i></a>
+          <a class="scroll-cue v-pill" href="#work" data-cursor="let’s go">Scroll <i><b></b></i></a>
         </div>
+        <!-- Option A: round badge with years + scroll, sitting on the line -->
+        <a class="badge v-badge" href="#work" data-cursor="let’s go" aria-label="Scroll to work">
+          <svg class="badge-ring" viewBox="0 0 140 140" aria-hidden="true">
+            <defs><path id="badge-path" d="M70,70 m-55,0 a55,55 0 1,1 110,0 a55,55 0 1,1 -110,0"/></defs>
+            <text><textPath href="#badge-path" textLength="342" lengthAdjust="spacing"><tspan data-since="2012">14+</tspan> YEARS OF DESIGN · SCROLL TO EXPLORE ·</textPath></text>
+          </svg>
+          <span class="badge-core" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+        </a>
       </div>
     </section>
 
@@ -165,6 +190,13 @@
     <span>© <span data-year>2026</span> Eilat Brayer</span>
     <a href="#top" data-cursor="up we go">Back to top ↑</a>
   </footer>
+
+  <!-- TEMPORARY: switch between the two hero options. Delete once one is chosen. -->
+  <div class="compare" role="group" aria-label="Compare hero options">
+    <span>Compare</span>
+    <button type="button" data-v="badge">A · Badge</button>
+    <button type="button" data-v="pill">B · Pill</button>
+  </div>
 
   <script src="js/main.js" defer></script>
   <script src="js/shapes.js" defer></script>
