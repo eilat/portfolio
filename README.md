@@ -35,7 +35,7 @@ Colors live at the top of `js/shapes.js` (`COLORS` and `WEIGHTS`).
 - **Text**: edit the HTML directly. Placeholders are in `[brackets]`.
 - **New project**: copy a page in `projects/`, change its text, images and `data-word`, and add a card in the `#work` grid in `index.html`.
 - **Images**: put them in `assets/img/` (about 2000px wide, WebP or JPG) and update the `src`.
-- **Contact details**: search for `972500000000` (WhatsApp number, international format without +), `your-profile` (LinkedIn) and `hello@yourdomain.com`, and replace them in `index.html` and the project pages.
+- **Contact details**: search for `972500000000` (WhatsApp number, international format without +), `your-profile` (LinkedIn) and `eilatbrayer@gmail.com`, and replace them in `index.html` and the project pages.
 - **Portrait**: replace the "Your photo here" span in `index.html` with an `<img>`.
 
 Preview locally: `python3 -m http.server` then open http://localhost:8000

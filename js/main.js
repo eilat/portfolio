@@ -220,19 +220,5 @@ if (zoomables.length) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && box.classList.contains('open')) hide(); });
 }
 
-// ---------- TEMPORARY: compare the two hero options (remove once one is chosen) ----------
-const compare = document.querySelector('.compare');
-if (compare) {
-  let choice = 'badge';
-  try { choice = localStorage.getItem('hero-variant') || 'badge'; } catch {}
-  const set = (v) => {
-    document.documentElement.dataset.variant = v;
-    compare.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
-    try { localStorage.setItem('hero-variant', v); } catch {}
-  };
-  compare.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => set(b.dataset.v)));
-  set(choice);
-}
-
 onScroll();
 document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
