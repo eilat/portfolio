@@ -34,6 +34,17 @@ if ('IntersectionObserver' in window) {
   revealables.forEach((el) => el.classList.add('in'));
 }
 
+// Section tags land like stickers once their title is well on screen
+const stickers = document.querySelectorAll('.head-tag');
+if ('IntersectionObserver' in window && !reduce) {
+  const so = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); so.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -45% 0px' });
+  stickers.forEach((el) => so.observe(el));
+} else {
+  stickers.forEach((el) => el.classList.add('in'));
+}
+
 // ---------- Hover: tilt + cursor tag ----------
 // Tilting a button moves its edges, which can slide it out from under a still
 // mouse and make hover flicker. So we remember each target's box from before

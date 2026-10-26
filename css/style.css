@@ -165,11 +165,16 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .section-head h2 { font-size: clamp(44px, 8vw, 112px); }
 /* Big section titles share one size; a tilted tag sits above each */
 #work { padding-top: clamp(4px, 1vw, 16px); }
-.big-head { flex-direction: column; align-items: flex-start; gap: clamp(16px, 2vw, 26px); }
+.big-head { position: relative; display: block; }
 .big-head h2 { font-size: clamp(60px, 11.5vw, 180px); line-height: .9; letter-spacing: -.05em; }
-.head-tag { display: inline-block; font: 400 clamp(14px, 1.2vw, 17px)/1 var(--body); padding: .75em 1.2em; border-radius: 99px; margin-left: clamp(2px, .6vw, 8px); box-shadow: 0 12px 22px -14px rgba(20, 20, 20, .4); }
-.head-tag.nude { background: var(--nude); rotate: 4deg; }
-.head-tag.mint { background: var(--mint); rotate: -4deg; }
+/* The tag floats above the title without taking space, so the title itself peeks in first */
+.head-tag { position: absolute; left: 0; top: 0; translate: 0 calc(-100% - clamp(10px, 1.4vw, 20px)); z-index: 2; display: inline-block; white-space: nowrap; font: 400 clamp(14px, 1.2vw, 17px)/1 var(--body); padding: .75em 1.2em; border-radius: 99px; margin-left: clamp(2px, .6vw, 8px); box-shadow: 0 12px 22px -14px rgba(20, 20, 20, .4); }
+.head-tag.nude { background: var(--nude); --tilt: 4deg; }
+.head-tag.mint { background: var(--mint); --tilt: -4deg; }
+.head-tag { rotate: var(--tilt); }
+/* Sticker motion: it lands once the title is well on screen */
+.js .head-tag { opacity: 0; scale: .3; rotate: calc(var(--tilt) * -5); transition: scale .9s var(--spring), rotate .9s var(--spring), opacity .25s; }
+.js .head-tag.in { opacity: 1; scale: 1; rotate: var(--tilt); }
 
 /* ---------- Work ---------- */
 .work-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(24px, 5vw, 80px); row-gap: clamp(64px, 9vw, 120px); }
