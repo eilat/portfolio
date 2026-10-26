@@ -75,9 +75,7 @@ addEventListener('scroll', recheck, { passive: true });
 addEventListener('click', () => setTimeout(recheck, 50));
 document.addEventListener('pointerleave', () => { hovered = null; tag.classList.remove('on'); });
 (function follow() {
-  cx += (tx - cx) * (reduce ? 1 : .2);
-  cy += (ty - cy) * (reduce ? 1 : .2);
-  tag.style.transform = `translate3d(${cx + 16}px, ${cy + 18}px, 0)`;
+  if (tx !== cx || ty !== cy) { cx = tx; cy = ty; tag.style.transform = `translate3d(${cx + 16}px, ${cy + 18}px, 0)`; }
   requestAnimationFrame(follow);
 })();
 

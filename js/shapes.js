@@ -47,7 +47,7 @@
   }
 
   // ---- formation builders: points relative to the anchor's top-left ----
-  function wordPoints(text, w, h) {
+  function wordPoints(text, w, h, align) {
     const off = document.createElement('canvas');
     const ow = Math.max(1, Math.round(w)), oh = Math.max(1, Math.round(h));
     off.width = ow; off.height = oh;
@@ -58,8 +58,9 @@
     const tw = o.measureText(text).width;
     if (tw > w * .96) fs *= (w * .96) / tw;
     o.font = font(fs);
-    o.textAlign = 'center'; o.textBaseline = 'middle';
-    o.fillText(text, w / 2, h / 2);
+    o.textBaseline = 'middle';
+    o.textAlign = align === 'left' ? 'left' : 'center';
+    o.fillText(text, align === 'left' ? Math.max(4, fs * .02) : w / 2, h / 2);
     const data = o.getImageData(0, 0, ow, oh).data;
     let gap = Math.max(W < 600 ? 3 : 4, Math.round(fs / 34)), pts;
     do {
@@ -68,15 +69,15 @@
         const shift = (Math.floor(y / gap) % 2) * gap / 2; // staggered rows read denser
         for (let x = shift; x < ow; x += gap) {
           const xi = Math.round(x);
-          if (data[(y * ow + xi) * 4 + 3] > 140) pts.push({ x: xi, y });
+          if (data[(y * ow + xi) * 4 + 3] > 140) pts.push({ x: xi + (Math.random() - .5) * gap * .8, y: y + (Math.random() - .5) * gap * .8, sx: xi, sy: y });
         }
       }
       gap++;
     } while (pts.length > MAX * .95);
     gap--;
     const r = Math.max(6, Math.round(fs * .11)); // wider than the stroke, so its direction shows
-    pts.forEach((p) => { p.ang = strokeAngle(data, ow, oh, p.x, p.y, r); });
-    return { pts, size: gap * .5 };
+    pts.forEach((p) => { p.ang = strokeAngle(data, ow, oh, p.sx, p.sy, r); });
+    return { pts, size: gap * .68 };
   }
 
   function ringPoints(w, h) {
@@ -107,7 +108,7 @@
   function build(el) {
     const r = el.getBoundingClientRect(), type = el.dataset.shapes;
     let res;
-    if (type === 'word') res = wordPoints(el.dataset.word || 'hello', r.width, r.height);
+    if (type === 'word') res = wordPoints(el.dataset.word || 'hello', r.width, r.height, el.dataset.align);
     else if (type === 'ring') res = ringPoints(r.width, r.height);
     else res = edgePoints(r);
     // Pair points and shapes in the same left-to-right order so morphs flow
@@ -125,7 +126,7 @@
     parts.forEach((p, i) => {
       const pt = plan && plan.map[i];
       p.ta = pt ? (plan.type === 'edge' ? .6 : 1) : 0;
-      p.ts = pt ? plan.size * (.6 + p.fx * .75) : 1.5;
+      p.ts = pt ? plan.size * (.4 + Math.pow(p.fx, 1.5) * 1.1) : 1.5;
       if (pt) p.tang = pt.ang + (p.fy - .5) * .12;
     });
   }

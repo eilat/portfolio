@@ -116,15 +116,13 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 @media (hover: none), (pointer: coarse) { .cursor-tag { display: none; } }
 
 /* ---------- Hero ---------- */
-.hero { min-height: 100svh; display: grid; grid-template-rows: 1fr auto auto; padding-top: 84px; }
-.hero-word { min-height: 40vh; }
-.hero-title { font-size: clamp(46px, 9.4vw, 150px); line-height: .95; letter-spacing: -.045em; margin: 0 0 clamp(24px, 4vw, 44px); }
-.hero-title em { font-size: 1.04em; letter-spacing: -.01em; }
+.hero { min-height: 100svh; display: grid; grid-template-rows: auto auto 1fr; padding-top: clamp(110px, 14vh, 160px); }
+.hero-word { height: clamp(120px, 17vw, 260px); margin: clamp(4px, 1vw, 14px) 0 clamp(28px, 4vw, 56px); }
+.hero-foot { align-self: end; }
+.hero-title { font-size: clamp(46px, 9.4vw, 150px); line-height: .95; letter-spacing: -.045em; margin: 0; }
 .hero-foot { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; padding-bottom: clamp(28px, 5vw, 48px); border-top: 1px solid var(--line); padding-top: 22px; }
 .hero-foot .tagline { margin: 0; font: 300 clamp(20px, 2vw, 26px)/1.3 var(--display); letter-spacing: -.015em; max-width: 26ch; }
 .hero-foot .meta { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; font-size: 14px; color: var(--ink-soft); }
-.status { display: inline-flex; align-items: center; gap: 8px; }
-.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--mint-deep); box-shadow: 0 0 0 4px var(--mint); }
 .scroll-cue { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink); text-decoration: none; }
 .scroll-cue i { width: 1px; height: 30px; background: var(--line); position: relative; overflow: hidden; display: block; }
 .scroll-cue i::after { content: ""; position: absolute; left: 0; top: -100%; width: 1px; height: 100%; background: var(--ink); animation: drip 2.4s var(--ease) infinite; }
@@ -266,7 +264,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
   .tabs { grid-column: 1 / -1; grid-row: 2; }
   .talk-wrap { grid-column: 2; grid-row: 1; }
   .hero { padding-top: 120px; min-height: 0; }
-  .hero-word { min-height: 34vh; margin-bottom: 24px; }
+  .hero-word { height: 110px; margin-block: 4px 24px; }
   .case-hero { padding-top: 140px; }
 }
 @media (max-width: 560px) {
