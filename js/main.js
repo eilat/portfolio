@@ -12,9 +12,11 @@ document.querySelectorAll('.split').forEach((el) => {
   const words = [];
   el.childNodes.forEach((n) => {
     if (n.nodeType === 3) n.textContent.split(/\s+/).filter(Boolean).forEach((w) => words.push(w));
+    else if (n.nodeName === 'BR') words.push(null);
     else words.push(n.outerHTML);
   });
-  el.innerHTML = words.map((w, i) => `<span class="w" aria-hidden="true"><span style="--i:${i}">${w}</span></span>`).join(' ');
+  let i = 0;
+  el.innerHTML = words.map((w) => (w === null ? '<br>' : `<span class="w" aria-hidden="true"><span style="--i:${i++}">${w}</span></span>`)).join(' ');
 });
 
 // Reveal on scroll
