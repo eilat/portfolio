@@ -133,7 +133,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 @media (hover: none), (pointer: coarse) { .cursor-tag { display: none; } }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; min-height: calc(100svh - clamp(80px, 11vw, 150px)); display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; padding-block: clamp(96px, 14vh, 130px) clamp(100px, 15vh, 150px); }
+.hero { position: relative; min-height: calc(100svh - clamp(80px, 11vw, 150px)); display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; padding-block: clamp(130px, 19vh, 190px) clamp(90px, 13vh, 140px); }
 .hero-stack { display: grid; }
 .hero-title { font-size: clamp(46px, 9.4vw, 150px); line-height: .95; letter-spacing: -.045em; margin: 0; }
 .title-line { position: relative; display: inline-block; }
@@ -147,7 +147,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .years-tag b { font-weight: 500; }
 .js .years-tag { scale: 0; transition: scale .8s var(--spring) .7s; }
 .js .split.in + .years-tag { scale: 1; }
-.hero-word { width: 100%; aspect-ratio: 4.15 / 1; max-width: 100%; margin: clamp(8px, 1.5vw, 20px) 0 0; }
+.hero-word { width: 100%; aspect-ratio: 4.15 / 1; max-width: 100%; margin: clamp(26px, 3.4vw, 52px) 0 0; }
 .tagline { margin: clamp(10px, 1.5vw, 20px) 0 0; font: 300 clamp(20px, 2.1vw, 28px)/1.3 var(--display); letter-spacing: -.015em; max-width: 34ch; }
 
 /* Round badge: turns slowly, scrolls to the work */
