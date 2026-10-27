@@ -305,6 +305,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
   .float-logo { display: none; }
   .badge { width: 100px; bottom: 20px; }
   .years-tag { left: auto; right: 0; top: 100%; translate: 0 -10%; }
+  .hero-word { margin-top: 58px; }
   .badge-ring text { font-size: 12.5px; }
   .tabs { grid-column: 1 / -1; grid-row: 2; }
   .talk-wrap { grid-column: 2; grid-row: 1; }
