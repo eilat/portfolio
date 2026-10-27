@@ -34,16 +34,22 @@ if ('IntersectionObserver' in window) {
   revealables.forEach((el) => el.classList.add('in'));
 }
 
-// Section tags land like stickers once their title is well on screen
-const stickers = document.querySelectorAll('.head-tag');
-if ('IntersectionObserver' in window && !reduce) {
-  const so = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); so.unobserve(e.target); } });
-  }, { rootMargin: '0px 0px -45% 0px' });
-  stickers.forEach((el) => so.observe(el));
-} else {
-  stickers.forEach((el) => el.classList.add('in'));
+// Section tags land like stickers once their title reaches the top third of the
+// screen, and lift off again when you scroll back up. Worked out from scroll
+// position rather than IntersectionObserver margins, which browsers ignore
+// inside embedded frames.
+const stickers = [...document.querySelectorAll('.head-tag')];
+function updateStickers() {
+  stickers.forEach((tagEl) => {
+    const title = tagEl.parentElement.querySelector('h2') || tagEl.parentElement;
+    const top = title.getBoundingClientRect().top;
+    if (reduce || top < innerHeight / 3) tagEl.classList.add('in');
+    else if (top > innerHeight * .55) tagEl.classList.remove('in');
+  });
 }
+addEventListener('scroll', () => requestAnimationFrame(updateStickers), { passive: true });
+addEventListener('resize', updateStickers);
+updateStickers();
 
 // ---------- Hover: tilt + cursor tag ----------
 // Tilting a button moves its edges, which can slide it out from under a still
