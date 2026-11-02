@@ -33,6 +33,13 @@ company, role, status: toapply | applied | screen | interview | task | offer | r
 kinds: [freelance | part | remote | hybrid], applied, next, nextDate, contact,
 source, url, notes, createdAt, updatedAt
 ```
+`studios` collection: design studios that hand complex-product projects to freelancers (like Salant ID). Doc id = slug.
+```
+company, status: tocontact | sent | talking | pool | working | skip, domain, url, contact,
+contactedOn, why (Hebrew), notes, createdAt, updatedAt
+```
+Salant ID is in the collection with status `working`. Never change that row.
+
 The page flags a lead as due 14 days after `fundedOn`. Put a date in `fundedOn` only when a source states it. Otherwise leave it empty and write "לא אומת" in `notes`.
 Don't overwrite fields she edited. Use `update` with the `if_version` you just read, and only touch fields you are filling for the first time, or `status` when a check found something.
 
@@ -40,7 +47,7 @@ Don't overwrite fields she edited. Use `update` with the `if_version` you just r
 
 Funded companies tend to open product roles about two weeks after they announce a round. Seed and Series A companies often have no senior designer yet, so they are the best freelance targets.
 
-1. **Scan funding news from the last 7–10 days.** Sources:
+1. **Scan funding news from the last 3 days.** The routine runs daily; the duplicate check keeps overlaps out. Sources:
    - CTech / Calcalist funding roundups (calcalistech.com, "Israeli startups raised", "Full list of Israeli high-tech funding rounds")
    - Globes English (en.globes.co.il), Geektime, TheMarker, ynetnews business
    - VC Cafe "Weekly Firgun Newsletter", ilstartups.com daily digest
@@ -52,7 +59,8 @@ Funded companies tend to open product roles about two weeks after they announce 
    - A design opening exists: add an `apps` row (`status: "toapply"`, the job URL, `kinds` from the listing), and set the lead to `moved`.
    - No design opening: set the lead to `nojob` and suggest direct outreach in the summary.
 6. **Search job boards** for freelance, part-time and remote product-design roles in Israel: LinkedIn (filter Contract / Part-time / Remote), AllJobs, Drushim, job-scouter.com, Levels.fyi, designproject.io, the Shahar Polak "who is hiring" list, and Facebook groups for UX freelancers in Israel. Add only real listings with a URL.
-7. **Report in Hebrew**: what was added, which leads are due, and the 2–3 best next actions. Include a link to the tracker. Keep it short.
+7. **Sundays only: look for studios.** Find Israeli UX/product studios that do complex systems, SaaS, dashboards or cybersecurity interfaces and work with freelancers. Add new ones to `studios` with status `tocontact`. Skip solo freelancers, who are competitors rather than clients, and pure branding or website shops.
+8. **Report in Hebrew**: what was added, which leads are due, and the 2–3 best next actions. Include a link to the tracker. Keep it short.
 
 ## Outreach drafts
 
