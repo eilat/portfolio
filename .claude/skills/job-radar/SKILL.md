@@ -29,7 +29,8 @@ notes, createdAt, updatedAt (ISO)
 ```
 `apps` collection: real applications and openings.
 ```
-company, role, status: toapply | applied | screen | interview | task | offer | rejected | dropped,
+company, role, status: toapply | applied | screen | interview | task | offer | rejected | dropped | notrelevant,
+reason, archivedAt,
 kinds: [freelance | part | remote | hybrid], applied, next, nextDate, contact,
 source, url, notes, createdAt, updatedAt
 ```
@@ -39,6 +40,13 @@ company, status: tocontact | sent | talking | pool | working | skip, domain, url
 contactedOn, why (Hebrew), notes, createdAt, updatedAt
 ```
 Salant ID is in the collection with status `working`. Never change that row.
+
+### The archive
+Rows she rejects are not deleted. They are archived with status `notrelevant` (apps) or `skip` (leads, studios), plus a `reason` and `archivedAt`.
+- Read archived rows on every run. Never add again a company, URL or listing that is already archived, even under a different title.
+- Treat the `reason` values as her filter. Before adding anything new, check it against them. If a pattern repeats (say, every on-site full-time role was rejected), stop suggesting that kind of role and mention the pattern in the summary.
+- Never delete rows and never restore archived ones. Only she does that.
+- If a duplicate check finds no row but you know you added it before, she may have deleted it by hand. Don't add it back.
 
 The page flags a lead as due 14 days after `fundedOn`. Put a date in `fundedOn` only when a source states it. Otherwise leave it empty and write "לא אומת" in `notes`.
 Don't overwrite fields she edited. Use `update` with the `if_version` you just read, and only touch fields you are filling for the first time, or `status` when a check found something.
