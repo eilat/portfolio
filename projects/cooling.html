@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart cooling for dairy farms · Eilat Brayer</title>
+  <meta name="description" content="Smart cooling for dairy farms: redesigning the control interface of a camera and AI based cooling system.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=Instrument+Serif:ital@1&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <canvas class="shape-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <a class="back" href="../#work"><span aria-hidden="true">←</span> Back home</a>
+    <nav class="tabs" aria-label="Main">
+      <a href="../#work">Work</a>
+      <a href="../#about">About</a>
+      <a href="../#cv">CV</a>
+      <a href="../#contact">Contact</a>
+    </nav>
+    <div class="talk-wrap">
+      <button class="talk" type="button" aria-expanded="false" aria-controls="talk-panel" data-cursor="say hi">Let’s talk</button>
+    </div>
+  </header>
+
+  <!-- Floating bar: slides in once the top bar has scrolled away -->
+  <nav class="float-nav" aria-label="Quick navigation" inert>
+    <a class="back" href="../#work"><span aria-hidden="true">←</span> Home</a>
+    <div class="tabs">
+      <a href="../#work">Work</a>
+      <a href="../#about">About</a>
+      <a href="../#cv">CV</a>
+      <a href="../#contact">Contact</a>
+    </div>
+    <button class="talk" type="button" aria-expanded="false" aria-controls="talk-panel" data-cursor="say hi">Let’s talk</button>
+  </nav>
+
+  <div class="talk-panel" id="talk-panel">
+    <p>Pick whatever feels easiest.</p>
+    <a class="pill" href="https://wa.me/972500000000?text=Hi%20Eilat%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20talk." target="_blank" rel="noopener" data-cursor="fastest reply"><span><span class="ico"></span> WhatsApp</span><span>↗</span></a>
+    <a class="pill nude" href="https://www.linkedin.com/in/eilat-brayer-48146722/" target="_blank" rel="noopener" data-cursor="let’s connect"><span><span class="ico"></span> LinkedIn</span><span>↗</span></a>
+    <button class="pill" type="button" data-copy="eilatbrayer@gmail.com" data-cursor="click to copy"><span><span class="ico"></span> Email</span><span>eilatbrayer@gmail.com</span></button>
+  </div>
+
+  <main>
+    <section class="case-hero inner" id="top">
+      <div class="case-word" data-shapes="word" data-word="cool" data-cursor="play with me"></div>
+      <span class="label reveal">Case study · agritech, IoT and AI</span>
+      <h1 class="split">Smart cooling for dairy farms</h1>
+      <p class="intro reveal">Redesigning the control interface of a camera and AI based cooling system, so farmers can see at a glance that it works.</p>
+      <dl class="case-meta reveal">
+        <div><dt>Role</dt><dd>Product designer, specification and UI</dd></div>
+        <div><dt>Team</dt><dd>Product manager, developers</dd></div>
+        <div><dt>Platform</dt><dd>Desktop, a closed system in the farm office</dd></div>
+        <div><dt>Users</dt><dd>Dairy farmers and service technicians</dd></div>
+      </dl>
+      <div class="case-cover unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/img/cooling-cover.svg" alt="A camera list next to a live camera view in the cooling system interface"></div>
+    </section>
+
+    <div class="inner" data-shapes="edge">
+      <article class="case-body">
+        <section class="chapter">
+          <span class="label reveal">01 · Context</span>
+          <h2 class="split">Cooling cows only where they need it</h2>
+          <p class="reveal">A smart cooling system for dairy cows uses cameras and AI detection to cool the cows when and where they need it. The control interface was built by the developers, and the people who used it every day found it hard to work with. I worked on the specification and the redesign together with the product manager and the developers.</p>
+        </section>
+
+        <section class="chapter">
+          <span class="label reveal">02 · The problem</span>
+          <h2 class="split">What wasn’t working</h2>
+          <ul class="reveal">
+            <li><strong>Too many parameters.</strong> Every setting was on screen at once, and it was hard to tell what mattered.</li>
+            <li><strong>No clear navigation or flow.</strong> Users had no obvious path through the system.</li>
+            <li><strong>No context.</strong> The screens did not show the barn name, the camera name or the company logo, so users could not tell where they were.</li>
+            <li><strong>Colors that worked against the content.</strong> The palette had nothing to do with the brand, and on the camera screens it was so light that the parameters could not be read over the image.</li>
+          </ul>
+        </section>
+
+        <section class="chapter">
+          <span class="label reveal">03 · Insights from the field</span>
+          <h2 class="split">Farmers want to know one thing: is every camera working?</h2>
+          <p class="reveal">I suggested field tests, and the product manager ran them with farmers and technicians. What farmers needed most was simple: to get to every camera quickly and see that it is working. The detailed parameters mattered to technicians, and having them in everyone’s way made the system harder to use for both groups.</p>
+        </section>
+
+        <section class="chapter">
+          <span class="label reveal">04 · Design decisions</span>
+          <h2 class="split">Less on screen, more in control</h2>
+          <ol class="reveal">
+            <li><strong>A simple path to every camera.</strong> The main screen is a clear list of camera names. Selecting one opens its screen with a live image that refreshes every 30 seconds, so a farmer can see right away that the camera is working.</li>
+            <li><strong>Always know where you are.</strong> The barn name and the camera name appear on every screen, and the navigation follows one clear flow.</li>
+            <li><strong>A clear hierarchy on the camera screen.</strong> The image comes first and the key information sits on top of it, readable, with only what a farmer needs.</li>
+            <li><strong>Settings for technicians only.</strong> Parameter settings are hidden from the everyday flow and locked, so only technicians can change them.</li>
+            <li><strong>A visual language built on the brand.</strong> Brand colors and the company logo, with contrast that stays readable over a live camera image.</li>
+          </ol>
+          <figure>
+            <div class="case-cover unveil" style="--tint:#f7eee8" data-zoom data-cursor="zoom"><img src="../assets/img/cooling-before-after.svg" alt="Before: a crowded screen with light, unreadable parameters. After: a camera list and a clear live camera view." loading="lazy"></div>
+            <figcaption class="reveal">Before and after: from a screen crowded with parameters to a camera list and a clear live view.</figcaption>
+          </figure>
+        </section>
+
+        <section class="chapter">
+          <span class="label reveal">05 · Outcome</span>
+          <h2 class="split">What changed</h2>
+          <p class="reveal">Farmers and technicians gave positive feedback on the new interface. Farmers got a quick, clear way to check each camera, and technicians kept full control of the parameters without farmers changing them by mistake.</p>
+        </section>
+      </article>
+    </div>
+
+    <a class="next inner" href="care-platform.html" data-cursor="up next">
+      <span class="label">Next project</span>
+      <strong>One platform, three kinds of people →</strong>
+    </a>
+  </main>
+
+  <footer class="site-footer">
+    <span>© <span data-year>2026</span> Eilat Brayer</span>
+    <a href="#top" data-cursor="up we go">Back to top ↑</a>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/shapes.js" defer></script>
+</body>
+</html>
