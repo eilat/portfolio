@@ -177,8 +177,13 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .js .head-tag.in { opacity: 1; scale: 1; rotate: var(--tilt); }
 
 /* ---------- Work ---------- */
-.work-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(24px, 5vw, 80px); row-gap: clamp(64px, 9vw, 120px); }
-.work-grid > :nth-child(even) { margin-top: clamp(0px, 14vw, 200px); }
+.work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(20px, 3.5vw, 56px); row-gap: clamp(64px, 9vw, 120px); }
+/* The lead case spans the row; the middle card of the next row sits lower */
+.work-grid > .featured { grid-column: 1 / -1; }
+.work-grid .project .media { aspect-ratio: 4 / 3; }
+.work-grid > .featured .media { aspect-ratio: 16 / 8; }
+.work-grid > .featured h3 { font-size: clamp(30px, 4vw, 52px); }
+.work-grid > :nth-child(3) { margin-top: clamp(0px, 9vw, 140px); }
 .project { text-decoration: none; display: block; }
 .project .media { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--tint, var(--blush)); aspect-ratio: 4 / 5; max-width: 100%; }
 .project .media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.001); transition: transform 1.2s var(--ease); }
@@ -187,7 +192,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .project h3 { font-size: clamp(26px, 3vw, 38px); }
 .project h3 em { font-size: 1.05em; }
 .project p { margin: 6px 0 0; color: var(--ink-soft); max-width: 40ch; }
-.project .year { font-size: 14px; color: var(--ink-soft); white-space: nowrap; }
+.project .year { font-size: 13px; color: var(--ink-soft); white-space: nowrap; }
 
 /* ---------- About ---------- */
 .about-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(40px, 8vw, 120px); align-items: center; }
@@ -259,6 +264,17 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .chapter figure { margin: 44px 0 0; }
 .chapter figure .case-cover { margin: 0; aspect-ratio: 16 / 10; }
 .chapter figcaption { font-size: 14px; color: var(--ink-soft); margin-top: 12px; }
+/* Insight and decision cards on case pages */
+.case-cards { list-style: none; padding: 0 !important; margin: 28px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.case-cards li { background: var(--blush); border-radius: 22px; padding: 20px; color: var(--ink) !important; font-size: 15px; line-height: 1.5; }
+.case-cards li:nth-child(3n+2) { background: var(--mint); }
+.case-cards strong { display: block; font: 400 20px/1.2 var(--display); letter-spacing: -.02em; margin-bottom: 8px; }
+/* Before / after pair */
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+.before-after figure { margin: 0; position: relative; }
+.before-after .case-cover { margin: 0; aspect-ratio: 16 / 10; }
+.ba-tag { position: absolute; z-index: 2; top: 14px; left: 14px; font: 500 13px/1 var(--body); padding: 7px 12px; border-radius: 99px; background: var(--white); rotate: -4deg; box-shadow: 0 10px 20px -12px rgba(20,20,20,.4); }
+.ba-tag.after { background: var(--mint); rotate: 4deg; }
 .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; list-style: none; padding: 0 !important; margin: 28px 0 0; }
 .results li { background: var(--blush); border-radius: 22px; padding: 22px; color: var(--ink) !important; }
 .results li:nth-child(2) { background: var(--mint); }
@@ -295,14 +311,16 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
   .work-grid, .about-grid, .cv-grid { grid-template-columns: 1fr; }
-  .work-grid > :nth-child(even) { margin-top: 0; }
+  .work-grid > :nth-child(3) { margin-top: 0; }
+  .work-grid > .featured .media { aspect-ratio: 4 / 3; }
   .portrait { order: -1; width: min(300px, 80%); }
   .case-meta { grid-template-columns: repeat(2, 1fr); }
   .results { grid-template-columns: 1fr; }
+  .case-cards, .before-after { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
   .site-header { grid-template-columns: 1fr auto; row-gap: 10px; padding-block: 14px; }
-  .float-logo { display: none; }
+  .float-logo, .float-nav .back { display: none; }
   .badge { width: 100px; bottom: 20px; }
   .years-tag { left: auto; right: 0; top: 100%; translate: 0 -10%; }
   .hero-word { margin-top: 58px; }
