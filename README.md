@@ -6,7 +6,7 @@ Personal UX/UI design portfolio. Plain HTML + CSS, no build step.
 
 ```
 index.html             Home: hero, selected work, about, CV, contact (one long scroll)
-projects/stay.html     Case study pages, each with "Back home"
+projects/cooling.html  Case study pages, each with "Back home"
 projects/kit.html
 projects/pulse.html
 css/style.css          All styles; colors and fonts are variables at the top
