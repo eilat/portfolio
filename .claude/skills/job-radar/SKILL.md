@@ -7,7 +7,7 @@ description: Job search for Eilat Brayer, a senior product designer. Use when as
 
 ## Who the search is for
 
-Eilat Brayer, Senior Product Designer, 14+ years. Portfolio: this repo (`eilat/portfolio`).
+Eilat Brayer, Senior Product Designer, 12+ years. Portfolio: this repo (`eilat/portfolio`).
 - Strengths: complex B2B systems, dashboards and data tables, management tools, design systems, early concept work, coded prototypes built with AI.
 - Domains: cybersecurity, healthcare, fintech, video streaming, retail analytics, agritech.
 - Freelance since 2014, working with Salant ID studio since 2020. Earlier: Amdocs.
