@@ -6,9 +6,9 @@ Personal UX/UI design portfolio. Plain HTML + CSS, no build step.
 
 ```
 index.html             Home: hero, selected work, about, CV, contact (one long scroll)
-projects/cooling.html  Agritech case (featured), written by hand
-projects/care-platform.html, action-dashboard.html, media-ops.html
-                       Case study pages, each with "Back home"
+projects/cooling.html  Agritech case study, written by hand
+projects/care-platform.html
+                       Healthcare case study (generated)
 css/style.css          All styles; colors and fonts are variables at the top
 js/shapes.js           The shape animation: forms words/frames and re-forms per section
 js/main.js             Scroll reveals, header behaviour, parallax

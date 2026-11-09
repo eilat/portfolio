@@ -181,7 +181,8 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .work-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(20px, 3.5vw, 56px); row-gap: clamp(64px, 9vw, 120px); }
 /* The lead case spans the row; the middle card of the next row sits lower */
 .work-grid > .featured { grid-column: 1 / -1; }
-.work-grid .project .media { aspect-ratio: 4 / 3; }
+/* Two lead cases side by side, same size */
+.work-grid .project .media { aspect-ratio: 16 / 11; }
 .work-grid > .featured .media { aspect-ratio: 16 / 8; }
 .work-grid > .featured h3 { font-size: clamp(30px, 4vw, 52px); }
 .work-grid > :nth-child(3) { margin-top: clamp(0px, 9vw, 140px); }
