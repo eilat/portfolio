@@ -100,7 +100,7 @@
       const ang = Math.atan2((h / 2 + band) * Math.cos(a), -(w / 2 + band) * Math.sin(a));
       pts.push({ x: cx + Math.cos(a) * (w / 2 + band), y: cy + Math.sin(a) * (h / 2 + band), ang });
     }
-    return { pts, size: 3.6 };
+    return { pts, size: 5, uniform: true };
   }
 
   function edgePoints(rect) {
@@ -113,7 +113,7 @@
       const x = left ? 8 + p.fx * (margin - 16) : W - 8 - p.fx * (margin - 16);
       pts.push({ x, y: 40 + p.fy * (H - 80), fixed: true, ang: p.ph });
     }
-    return { pts, size: 2.6 };
+    return { pts, size: 5, uniform: true };
   }
 
   function build(el) {
@@ -136,7 +136,7 @@
     plan = el ? build(el) : null;
     parts.forEach((p, i) => {
       const pt = plan && plan.map[i];
-      p.ta = pt ? (plan.type === 'edge' ? .6 : 1) : 0;
+      p.ta = pt ? (plan.type === 'edge' ? .9 : 1) : 0;
       p.ts = !pt ? 1.5 : plan.uniform ? plan.size * (.94 + p.fx * .12) : plan.size * (.4 + Math.pow(p.fx, 1.5) * 1.1);
       if (pt) p.tang = pt.ang + (p.fy - .5) * .12;
     });
