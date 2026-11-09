@@ -208,6 +208,12 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
   display: grid; place-items: center; color: var(--ink-soft); font-size: 13px; text-align: center;
 }
 .portrait img { width: 100%; height: 100%; object-fit: cover; }
+/* About: particles cycle through the worlds Eilat designs for */
+.worlds { margin: 0; justify-self: center; width: min(400px, 100%); display: grid; gap: 14px; justify-items: center; }
+.worlds-stage { width: 100%; aspect-ratio: 1; max-width: 100%; }
+.worlds figcaption { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.worlds-label { color: var(--ink-soft); }
+.worlds [data-world-caption] { padding: 6px 12px; border-radius: 99px; background: var(--mint); rotate: -3deg; min-width: 92px; text-align: center; }
 .skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; padding: 0; list-style: none; }
 .skills li { font-size: 14px; padding: 7px 15px; border-radius: 99px; background: var(--blush); }
 .skills li:nth-child(3n+2) { background: var(--mint); }
@@ -365,6 +371,7 @@ html.sheet-open { overflow: hidden; }
   .work-grid > :nth-child(2), .work-grid > :nth-child(3) { margin-top: 0; }
   .work-grid > .featured .media { aspect-ratio: 4 / 3; }
   .portrait { order: -1; width: min(300px, 80%); }
+  .worlds { order: -1; width: min(300px, 80%); }
   .case-meta { grid-template-columns: repeat(2, 1fr); }
   .results { grid-template-columns: 1fr; }
   .case-cards, .before-after { grid-template-columns: 1fr; }

@@ -1,5 +1,5 @@
 // Soft dots and rounded strokes that form words and frames, and re-arrange as
-// you scroll. Any element with data-shapes="word|ring|edge" defines a
+// you scroll. Any element with data-shapes="word|ring|edge|worlds" defines a
 // formation; the one in the section nearest the middle of the screen is active.
 (() => {
   const canvas = document.querySelector('.shape-canvas');
@@ -91,6 +91,63 @@
     return { pts, size: gap * .6, uniform: true };
   }
 
+  // The worlds Eilat designs for, as simple filled silhouettes in a unit box
+  const ICONS = {
+    barn(o) {
+      o.beginPath();
+      o.moveTo(.10, .48); o.lineTo(.50, .14); o.lineTo(.90, .48); o.lineTo(.84, .48); o.lineTo(.84, .90);
+      o.lineTo(.16, .90); o.lineTo(.16, .48); o.closePath();
+      o.rect(.38, .58, .24, .32);                       // door
+      o.moveTo(.57, .40); o.arc(.50, .40, .07, 0, Math.PI * 2);   // loft window
+      o.fill('evenodd');
+      o.fillRect(.04, .90, .92, .05);                   // ground
+    },
+    clinic(o) {
+      o.beginPath();
+      o.moveTo(.50, .88);
+      o.bezierCurveTo(.12, .62, .02, .40, .14, .24);
+      o.bezierCurveTo(.26, .08, .46, .12, .50, .28);
+      o.bezierCurveTo(.54, .12, .74, .08, .86, .24);
+      o.bezierCurveTo(.98, .40, .88, .62, .50, .88);
+      o.closePath();
+      o.rect(.44, .32, .12, .32); o.rect(.34, .42, .32, .12);   // medical cross
+      o.fill('evenodd');
+    },
+    screen(o) {
+      o.beginPath();
+      o.rect(.06, .14, .88, .56); o.rect(.12, .20, .76, .44);   // frame
+      o.fill('evenodd');
+      o.fillRect(.20, .46, .10, .14); o.fillRect(.36, .36, .10, .24); o.fillRect(.52, .28, .10, .32); o.fillRect(.68, .40, .10, .20);
+      o.beginPath(); o.moveTo(.42, .70); o.lineTo(.58, .70); o.lineTo(.62, .82); o.lineTo(.38, .82); o.closePath(); o.fill();
+      o.fillRect(.28, .82, .44, .05);
+    },
+  };
+  function iconPoints(name, w, h) {
+    const ow = Math.max(1, Math.round(w)), oh = Math.max(1, Math.round(h));
+    const off = document.createElement('canvas'); off.width = ow; off.height = oh;
+    const o = off.getContext('2d', { willReadFrequently: true });
+    const side = Math.min(ow, oh) * .92;
+    o.translate((ow - side) / 2, (oh - side) / 2); o.scale(side, side);
+    (ICONS[name] || ICONS.screen)(o);
+    const data = o.getImageData(0, 0, ow, oh).data;
+    let gap = Math.max(W < 600 ? 4 : 5, Math.round(side / 36)), pts;
+    do {
+      pts = [];
+      for (let y = 0; y < oh; y += gap) {
+        const shift = (Math.floor(y / gap) % 2) * gap / 2;
+        for (let x = shift; x < ow; x += gap) {
+          const xi = Math.round(x);
+          if (data[(y * ow + xi) * 4 + 3] > 140) pts.push({ x: xi + (Math.random() - .5) * gap * .5, y: y + (Math.random() - .5) * gap * .5, sx: xi, sy: y });
+        }
+      }
+      gap++;
+    } while (pts.length > MAX * .9);
+    gap--;
+    const r = Math.max(6, Math.round(side * .06));
+    pts.forEach((p) => { p.ang = strokeAngle(data, ow, oh, p.sx, p.sy, r); });
+    return { pts, size: gap * .6, uniform: true };
+  }
+
   function ringPoints(w, h) {
     const pts = [], cx = w / 2, cy = h / 2;
     const n = Math.round(Math.min(420, (w + h) / 1.8));
@@ -120,6 +177,13 @@
     const r = el.getBoundingClientRect(), type = el.dataset.shapes;
     let res;
     if (type === 'word') res = wordPoints(el.dataset.word || 'hello', r.width, r.height, el.dataset.align);
+    else if (type === 'worlds') {
+      const icons = (el.dataset.icons || 'barn,clinic,screen').split(',');
+      const name = icons[(el._world || 0) % icons.length];
+      res = iconPoints(name, r.width, r.height);
+      const cap = el.parentElement.querySelector('[data-world-caption]');
+      if (cap) cap.textContent = (el.dataset.captions || '').split('|')[(el._world || 0) % icons.length] || '';
+    }
     else if (type === 'ring') res = ringPoints(r.width, r.height);
     else res = edgePoints(r);
     // Pair points and shapes in the same left-to-right order so morphs flow
@@ -128,12 +192,19 @@
     const pts = res.pts.slice().sort((a, b) => key(a) - key(b));
     const map = new Array(MAX);
     order.forEach((pi, k) => { map[pi] = k < pts.length ? pts[k] : null; });
-    return { el, type, map, size: res.size, uniform: !!res.uniform };
+    return { el, type, map, size: res.size, uniform: !!res.uniform, born: t };
   }
 
   function apply(el) {
+    const leaving = plan && !el;
     active = el;
     plan = el ? build(el) : null;
+    if (leaving && !reduce) {
+      for (const p of parts) {
+        const a = Math.random() * Math.PI * 2, f = 6 + Math.random() * 16;
+        p.vx += Math.cos(a) * f; p.vy += Math.sin(a) * f;
+      }
+    }
     parts.forEach((p, i) => {
       const pt = plan && plan.map[i];
       p.ta = pt ? (plan.type === 'edge' ? .9 : 1) : 0;
@@ -143,12 +214,11 @@
   }
 
   function pickActive() {
-    let best = null, bestD = Infinity;
+    let best = null;
     for (const el of forms) {
       const zone = el.closest('section, header, footer') || el;
       const rr = zone.getBoundingClientRect();
-      const d = rr.top > H * .5 ? rr.top - H * .5 : rr.bottom < H * .5 ? H * .5 - rr.bottom : 0;
-      if (d < bestD) { bestD = d; best = el; }
+      if (rr.top <= H * .5 && rr.bottom >= H * .5) { best = el; break; }
     }
     if (best !== active) apply(best);
   }
@@ -180,6 +250,11 @@
 
   function frame() {
     t += 1;
+    // The worlds formation moves on to the next world every few seconds
+    if (plan && plan.type === 'worlds' && !reduce && t - plan.born > 250) {
+      plan.el._world = (plan.el._world || 0) + 1;
+      apply(plan.el);
+    }
     ctx.clearRect(0, 0, W, H);
     ctx.lineCap = 'round';
     const ar = plan && plan.type !== 'edge' ? plan.el.getBoundingClientRect() : null;
