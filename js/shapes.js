@@ -12,6 +12,7 @@
   const LINE_SHARE = 0.24; // the rest are dots
   const MAX = 1100;
   const forms = [...document.querySelectorAll('[data-shapes]')];
+  const rgb = (hex) => { const n = parseInt(hex.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; };
 
   let W = 0, H = 0, active = null, plan = null, t = 0;
   const parts = [];
@@ -27,11 +28,13 @@
     parts.push({
       x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: 0, vy: 0,
       tx: 0, ty: 0, a: 0, ta: 0, s: 0, ts: 3,
-      line: Math.random() < LINE_SHARE, color: pickColor(),
+      line: Math.random() < LINE_SHARE, home: rgb(pickColor()), col: null, tcol: null, pick: Math.random(),
       ang: Math.random() * Math.PI, tang: 0,
       ph: Math.random() * 6.28, fx: Math.random(), fy: Math.random(),
     });
   }
+
+  parts.forEach((p) => { p.col = p.home.slice(); p.tcol = p.home; });
 
   // Direction of the letter stroke around (x, y): principal axis of nearby ink
   function strokeAngle(data, w, h, x, y, r) {
@@ -121,6 +124,57 @@
       o.beginPath(); o.moveTo(.42, .70); o.lineTo(.58, .70); o.lineTo(.62, .82); o.lineTo(.38, .82); o.closePath(); o.fill();
       o.fillRect(.28, .82, .44, .05);
     },
+    // Healthcare: listen, talk, treat
+    stethoscope(o) {
+      o.lineCap = 'round'; o.lineJoin = 'round'; o.lineWidth = .065;
+      o.beginPath(); o.moveTo(.26, .10); o.lineTo(.26, .38); o.bezierCurveTo(.26, .60, .58, .60, .58, .38); o.lineTo(.58, .10); o.stroke();
+      o.beginPath(); o.moveTo(.42, .56); o.lineTo(.42, .70); o.bezierCurveTo(.42, .92, .78, .92, .78, .70); o.lineTo(.78, .60); o.stroke();
+      o.lineWidth = .045; o.beginPath(); o.moveTo(.19, .10); o.lineTo(.30, .10); o.moveTo(.54, .10); o.lineTo(.65, .10); o.stroke();
+      o.beginPath(); o.arc(.78, .50, .11, 0, Math.PI * 2); o.arc(.78, .50, .045, 0, Math.PI * 2, true); o.fill();
+    },
+    chat(o) {
+      o.beginPath(); o.roundRect(.08, .14, .84, .54, .14);
+      o.moveTo(.26, .66); o.lineTo(.20, .88); o.lineTo(.46, .66); o.closePath(); o.fill();
+      o.globalCompositeOperation = 'destination-out';
+      [.32, .50, .68].forEach((x) => { o.beginPath(); o.arc(x, .41, .065, 0, Math.PI * 2); o.fill(); });
+      o.globalCompositeOperation = 'source-over';
+    },
+    capsule(o) {
+      o.save(); o.translate(.5, .5); o.rotate(-Math.PI / 4);
+      o.beginPath(); o.roundRect(-.42, -.17, .84, .34, .17); o.fill();
+      o.globalCompositeOperation = 'destination-out'; o.fillRect(-.02, -.2, .04, .4);
+      o.beginPath(); o.roundRect(-.32, -.08, .2, .06, .03); o.fill();
+      o.restore(); o.globalCompositeOperation = 'source-over';
+    },
+    // Dairy cooling: the herd, the milk, the cold
+    cow(o) {
+      o.beginPath(); o.roundRect(.30, .24, .40, .50, .16); o.fill();
+      o.beginPath(); o.ellipse(.50, .74, .21, .14, 0, 0, Math.PI * 2); o.fill();
+      o.beginPath(); o.ellipse(.19, .36, .13, .06, -.35, 0, Math.PI * 2); o.ellipse(.81, .36, .13, .06, .35, 0, Math.PI * 2); o.fill();
+      o.lineCap = 'round'; o.lineWidth = .05;
+      o.beginPath(); o.moveTo(.36, .26); o.quadraticCurveTo(.30, .12, .38, .08); o.moveTo(.64, .26); o.quadraticCurveTo(.70, .12, .62, .08); o.stroke();
+      o.globalCompositeOperation = 'destination-out';
+      [[.41, .44, .04], [.59, .44, .04], [.43, .76, .035], [.57, .76, .035]].forEach(([x, y, r]) => { o.beginPath(); o.arc(x, y, r, 0, Math.PI * 2); o.fill(); });
+      o.globalCompositeOperation = 'source-over';
+    },
+    drop(o) {
+      o.beginPath(); o.moveTo(.50, .06);
+      o.bezierCurveTo(.62, .26, .80, .42, .80, .62); o.bezierCurveTo(.80, .80, .66, .92, .50, .92);
+      o.bezierCurveTo(.34, .92, .20, .80, .20, .62); o.bezierCurveTo(.20, .42, .38, .26, .50, .06); o.fill();
+      o.globalCompositeOperation = 'destination-out'; o.lineCap = 'round'; o.lineWidth = .05;
+      o.beginPath(); o.arc(.50, .62, .19, Math.PI * .55, Math.PI * .95); o.stroke();
+      o.globalCompositeOperation = 'source-over';
+    },
+    snowflake(o) {
+      o.lineCap = 'round'; o.lineWidth = .06; o.save(); o.translate(.5, .5);
+      for (let i = 0; i < 6; i++) {
+        o.beginPath(); o.moveTo(0, 0); o.lineTo(0, -.42);
+        o.moveTo(0, -.26); o.lineTo(-.10, -.36); o.moveTo(0, -.26); o.lineTo(.10, -.36);
+        o.moveTo(0, -.12); o.lineTo(-.08, -.20); o.moveTo(0, -.12); o.lineTo(.08, -.20);
+        o.stroke(); o.rotate(Math.PI / 3);
+      }
+      o.restore();
+    },
   };
   function iconPoints(name, w, h) {
     const ow = Math.max(1, Math.round(w)), oh = Math.max(1, Math.round(h));
@@ -192,6 +246,9 @@
     const pts = res.pts.slice().sort((a, b) => key(a) - key(b));
     const map = new Array(MAX);
     order.forEach((pi, k) => { map[pi] = k < pts.length ? pts[k] : null; });
+    // A formation may bring its own colours (a project's palette)
+    const pal = el.dataset.palette ? el.dataset.palette.split(',').map((c) => rgb(c.trim())) : null;
+    parts.forEach((p, i) => { p.tcol = pal && map[i] ? pal[Math.floor(p.pick * pal.length)] : p.home; });
     return { el, type, map, size: res.size, uniform: !!res.uniform, born: t };
   }
 
@@ -199,6 +256,7 @@
     const leaving = plan && !el;
     active = el;
     plan = el ? build(el) : null;
+    if (!plan) parts.forEach((p) => { p.tcol = p.home; });
     if (leaving && !reduce) {
       for (const p of parts) {
         const a = Math.random() * Math.PI * 2, f = 6 + Math.random() * 16;
@@ -240,10 +298,10 @@
     ctx.globalAlpha = p.a;
     if (p.line) {
       const len = s * .55, c = Math.cos(p.ang) * len, sn = Math.sin(p.ang) * len;
-      ctx.strokeStyle = p.color; ctx.lineWidth = s * 1.1;
+      ctx.strokeStyle = `rgb(${p.col[0] | 0},${p.col[1] | 0},${p.col[2] | 0})`; ctx.lineWidth = s * 1.1;
       ctx.beginPath(); ctx.moveTo(p.x - c, p.y - sn); ctx.lineTo(p.x + c, p.y + sn); ctx.stroke();
     } else {
-      ctx.fillStyle = p.color;
+      ctx.fillStyle = `rgb(${p.col[0] | 0},${p.col[1] | 0},${p.col[2] | 0})`;
       ctx.beginPath(); ctx.arc(p.x, p.y, s * .85, 0, 6.283); ctx.fill();
     }
   }
@@ -268,7 +326,7 @@
         p.tx = p.fx * W; p.ty = p.fy * H;
       }
       if (reduce) {
-        p.x = p.tx; p.y = p.ty; p.a = p.ta; p.s = p.ts; p.ang = p.tang;
+        p.x = p.tx; p.y = p.ty; p.a = p.ta; p.s = p.ts; p.ang = p.tang; p.col = p.tcol.slice();
       } else {
         const fx = Math.sin(t * .012 + p.ph) * 1.6, fy = Math.cos(t * .010 + p.ph) * 1.6; // breathing
         p.vx += (p.tx + fx - p.x) * .014;
@@ -278,6 +336,7 @@
         p.vx *= .9; p.vy *= .9;
         p.x += p.vx; p.y += p.vy;
         p.a += (p.ta - p.a) * .04;
+        for (let k = 0; k < 3; k++) p.col[k] += (p.tcol[k] - p.col[k]) * .035;
         p.s += (p.ts - p.s) * .05;
         // strokes are symmetric, so turn the short way round (mod π)
         let da = p.tang - p.ang; da -= Math.round(da / Math.PI) * Math.PI;
