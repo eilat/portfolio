@@ -234,22 +234,43 @@
     else if (type === 'worlds') {
       const icons = (el.dataset.icons || 'barn,clinic,screen').split(',');
       const name = icons[(el._world || 0) % icons.length];
-      res = iconPoints(name, r.width, r.height);
+      if (el.dataset.morph !== 'soft') res = iconPoints(name, r.width, r.height);
       const cap = el.parentElement.querySelector('[data-world-caption]');
       if (cap) cap.textContent = (el.dataset.captions || '').split('|')[(el._world || 0) % icons.length] || '';
     }
     else if (type === 'ring') res = ringPoints(r.width, r.height);
     else res = edgePoints(r);
-    // Pair points and shapes in the same left-to-right order so morphs flow
-    const key = (o) => o.x + o.y * .3;
-    const order = parts.map((p, i) => i).sort((a, b) => key(parts[a]) - key(parts[b]));
-    const pts = res.pts.slice().sort((a, b) => key(a) - key(b));
-    const map = new Array(MAX);
-    order.forEach((pi, k) => { map[pi] = k < pts.length ? pts[k] : null; });
+    const soft = type === 'worlds' && el.dataset.morph === 'soft';
+    const map = new Array(MAX).fill(null);
+    if (soft) {
+      // Soft morph: the same particles stay in the stage and each keeps its
+      // place around the centre, so one shape melts into the next in place.
+      const icons = (el.dataset.icons || '').split(','), sizeKey = Math.round(r.width) + 'x' + Math.round(r.height);
+      if (el._sizeKey !== sizeKey) {
+        el._sizeKey = sizeKey;
+        el._sets = icons.map((n) => iconPoints(n, r.width, r.height));
+        el._n = Math.max(...el._sets.map((st) => st.pts.length));
+        el._size = el._sets.reduce((a, st) => a + st.size, 0) / el._sets.length;
+      }
+      const set = el._sets[(el._world || 0) % el._sets.length], cx = r.width / 2, cy = r.height / 2;
+      const ang = (o) => Math.atan2(o.y - cy, o.x - cx);
+      const pts = set.pts.slice().sort((a, b) => ang(a) - ang(b)), N = el._n, jit = el._size * .9;
+      for (let k = 0; k < N; k++) {
+        const q = pts[Math.floor((k * pts.length) / N)], dup = k >= pts.length;
+        map[k] = dup ? { x: q.x + (parts[k].fx - .5) * jit, y: q.y + (parts[k].fy - .5) * jit, ang: q.ang } : q;
+      }
+      res = { pts: [], size: el._size, uniform: true };
+    } else {
+      // Pair points and shapes in the same left-to-right order so morphs flow
+      const key = (o) => o.x + o.y * .3;
+      const order = parts.map((p, i) => i).sort((a, b) => key(parts[a]) - key(parts[b]));
+      const pts = res.pts.slice().sort((a, b) => key(a) - key(b));
+      order.forEach((pi, k) => { map[pi] = k < pts.length ? pts[k] : null; });
+    }
     // A formation may bring its own colours (a project's palette)
     const pal = el.dataset.palette ? el.dataset.palette.split(',').map((c) => rgb(c.trim())) : null;
     parts.forEach((p, i) => { p.tcol = pal && map[i] ? pal[Math.floor(p.pick * pal.length)] : p.home; });
-    return { el, type, map, size: res.size, uniform: !!res.uniform, born: t };
+    return { el, type, map, size: res.size, uniform: !!res.uniform, born: t, soft };
   }
 
   function apply(el) {
@@ -309,7 +330,7 @@
   function frame() {
     t += 1;
     // The worlds formation moves on to the next world every few seconds
-    if (plan && plan.type === 'worlds' && !reduce && t - plan.born > 250) {
+    if (plan && plan.type === 'worlds' && !reduce && t - plan.born > (plan.soft ? 600 : 250)) {
       plan.el._world = (plan.el._world || 0) + 1;
       apply(plan.el);
     }
@@ -329,18 +350,20 @@
         p.x = p.tx; p.y = p.ty; p.a = p.ta; p.s = p.ts; p.ang = p.tang; p.col = p.tcol.slice();
       } else {
         const fx = Math.sin(t * .012 + p.ph) * 1.6, fy = Math.cos(t * .010 + p.ph) * 1.6; // breathing
-        p.vx += (p.tx + fx - p.x) * .014;
-        p.vy += (p.ty + fy - p.y) * .014;
+        const pull = plan && plan.soft ? .0045 : .014;
+        p.vx += (p.tx + fx - p.x) * pull;
+        p.vy += (p.ty + fy - p.y) * pull;
         const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
         if (d2 < 9000) { const d = Math.sqrt(d2) || 1, f = (95 - d) / 95 * .9; p.vx += dx / d * f; p.vy += dy / d * f; }
-        p.vx *= .9; p.vy *= .9;
+        const damp = plan && plan.soft ? .86 : .9;
+        p.vx *= damp; p.vy *= damp;
         p.x += p.vx; p.y += p.vy;
         p.a += (p.ta - p.a) * .04;
         for (let k = 0; k < 3; k++) p.col[k] += (p.tcol[k] - p.col[k]) * .035;
         p.s += (p.ts - p.s) * .05;
         // strokes are symmetric, so turn the short way round (mod π)
         let da = p.tang - p.ang; da -= Math.round(da / Math.PI) * Math.PI;
-        p.ang += da * .06;
+        p.ang += da * (plan && plan.soft ? .025 : .06);
       }
       draw(p);
     }

@@ -256,9 +256,11 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .case-hero { padding-top: 120px; display: grid; gap: 28px; }
 .case-head { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); gap: clamp(24px, 5vw, 80px); align-items: center; }
 .case-text { display: grid; gap: 28px; align-content: center; }
-.case-worlds { width: min(380px, 100%); }
-.case-worlds [data-world-caption] { background: var(--chip, var(--mint)); }
-.case-hero h1 { font-size: clamp(40px, 5.8vw, 86px); }
+.case-worlds { width: min(380px, 100%); aspect-ratio: 1; justify-self: center; }
+.case-tag { justify-self: start; padding: 8px 14px; border-radius: 99px; background: var(--chip, var(--mint)); color: var(--ink); rotate: -3deg; letter-spacing: .1em; }
+/* Inner pages read more than they perform: titles in the text face */
+.case-hero h1, .case-body h2 { font-family: var(--body); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
+.case-hero h1 { font-size: clamp(36px, 4.6vw, 64px); }
 @media (max-width: 860px) {
   .case-head { grid-template-columns: 1fr; }
   .case-worlds { order: -1; width: min(240px, 66%); }
@@ -274,7 +276,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .case-body { max-width: 760px; margin: clamp(80px, 11vw, 140px) auto; }
 .chapter + .chapter { margin-top: clamp(64px, 9vw, 110px); }
 .chapter .label { display: block; margin-bottom: 14px; }
-.chapter h2 { font-size: clamp(30px, 3.8vw, 48px); margin-bottom: 20px; }
+.chapter h2 { font-size: clamp(26px, 2.8vw, 36px); margin-bottom: 18px; }
 .chapter p, .chapter li { color: var(--ink-soft); }
 .chapter ul { padding-left: 1.1em; }
 .chapter figure { margin: 44px 0 0; }
@@ -413,8 +415,8 @@ html.sheet-open { overflow: hidden; }
    parts worth explaining. Layers are placed in 1440x1024 screen space. */
 .tour { margin-top: clamp(40px, 6vw, 72px); }
 .tour-frame {
-  position: relative; border-radius: calc(var(--radius) + 6px); padding: clamp(10px, 2.4vw, 32px);
-  background: linear-gradient(150deg, var(--blush), var(--nude) 55%, var(--mint));
+  position: relative; border-radius: calc(var(--radius) + 4px); padding: clamp(5px, .7vw, 9px);
+  background: var(--chip, var(--blush));
 }
 .tour-view {
   position: relative; aspect-ratio: 1440 / 1024; overflow: hidden; border-radius: var(--radius);
