@@ -593,7 +593,7 @@ html.sheet-open { overflow: hidden; }
 .outcome-now { list-style: none; padding: 0 !important; margin: 28px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .outcome-now li { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; min-height: clamp(220px, 22vw, 300px); padding: clamp(24px, 3vw, 40px); border-radius: var(--radius); box-shadow: inset 0 0 0 1px var(--sand); color: var(--ink) !important; font: 500 clamp(18px, 1.6vw, 22px)/1.3 var(--body); letter-spacing: -.01em; }
 .outcome-now svg { width: clamp(56px, 6vw, 84px); height: auto; fill: none; stroke: #a5654f; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.outcome-now span { max-width: 18ch; }
+.outcome-now span { max-width: 24ch; }
 .outcome { list-style: none; padding: 0 !important; margin: 16px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .outcome li { display: grid; gap: 8px; align-content: start; padding: clamp(18px, 2vw, 26px); border-radius: var(--radius); background: #f8f2eb; color: var(--ink) !important; }
 .outcome strong { font: 500 clamp(19px, 1.7vw, 23px)/1.2 var(--body); letter-spacing: -.02em; }
@@ -608,3 +608,7 @@ html.sheet-open { overflow: hidden; }
 .next-img img { width: 100%; height: auto; border-radius: calc(var(--radius) - 2px); }
 .next-shot:hover .next-img { rotate: -1.5deg; translate: 0 -6px; }
 @media (max-width: 760px) { .next-shot { grid-template-columns: 1fr; } }
+
+/* Outcome opens with the goal it answers */
+.outcome-goal { margin: 28px 0 40px; padding-left: clamp(16px, 2vw, 26px); border-left: 3px solid #a5654f; max-width: 34ch !important; font: 500 clamp(20px, 2.1vw, 30px)/1.3 var(--body); letter-spacing: -.02em; color: var(--ink) !important; }
+.outcome-goal .label { display: block; margin-bottom: 12px; color: #a5654f; }
