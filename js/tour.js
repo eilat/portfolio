@@ -5,10 +5,11 @@
    scene's data-cam as JSON: [[ms, x, y, w, h, caption], ...] in 1440x1024
    screen coordinates. Plays only while visible; honours reduced motion. */
 (() => {
-  const W = 1440, H = 1024;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.querySelectorAll('[data-tour]').forEach((tour) => {
+    // Screen size the layers were placed in (defaults to 1440x1024)
+    const W = +tour.dataset.w || 1440, H = +tour.dataset.h || 1024;
     const cam = tour.querySelector('.tour-cam');
     const scenes = [...tour.querySelectorAll('.tour-scene')];
     const chips = [...tour.querySelectorAll('.tour-chip')];

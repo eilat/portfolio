@@ -339,6 +339,8 @@ html.sheet-open { overflow: hidden; }
 .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
 .before-after figure { margin: 0; position: relative; }
 .before-after .case-cover { margin: 0; aspect-ratio: 16 / 10; }
+.before-after .case-cover img { object-fit: contain; }
+.before-after + .before-after { margin-top: 28px; }
 .ba-tag { position: absolute; z-index: 2; top: 14px; left: 14px; font: 500 13px/1 var(--body); padding: 7px 12px; border-radius: 99px; background: var(--white); rotate: -4deg; box-shadow: 0 10px 20px -12px rgba(20,20,20,.4); }
 .ba-tag.after { background: var(--mint); rotate: 4deg; }
 .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; list-style: none; padding: 0 !important; margin: 28px 0 0; }
@@ -433,6 +435,7 @@ html.sheet-open { overflow: hidden; }
 .a-up { translate: 0 14px; }
 .a-drop { translate: 0 -10px; }
 .a-pop { scale: .94; }
+.a-fade { transition-duration: 1s !important; }
 .a-wipe { clip-path: inset(0 0 100% 0); }
 .a-grow { clip-path: inset(100% 0 0 0); transition-duration: .3s, .8s, 1.4s, .7s !important; }
 @property --sweep { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
