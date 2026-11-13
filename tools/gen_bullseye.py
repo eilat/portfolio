@@ -15,14 +15,15 @@ SHOTS = [
   [('s1-base', 0, 0)] + [(f's1-card{i+1}', x, 124) for i, x in enumerate([110, 497.3, 884.7])] + [(f's1-cam{i+1}', x, y) for i, (x, y) in enumerate(tiles)]),
  ('f-live', 'A single camera: the image of the feed lane with a region for every feeding spot',
   [('s2-base', 0, 0), ('s2-top', 102, 165), ('s2-bottom', 98, 520)]),
- ('f-fan', 'The same camera with one fan selected and the spots it covers highlighted', [('s2-fan', 0, 0)]),
+ ('f-tip', 'The same camera with a tooltip over one feeding spot: fan speed, cows and time in the region', [('s2-tip', 0, 0)]),
+ ('f-fan', 'The same camera with one fan selected and the spots it covers outlined in green', [('s2-fansel', 0, 0)]),
  ('f-basic', 'Group schedule in basic settings', [('s3-basic', 0, 0)]),
  ('f-advanced', 'Group schedule with advanced settings switched on', [('s3-adv', 0, 0)]),
 ]
 # Steps: (name, text). The text beside the screen; one is visible at a time.
 STEPS = [
  ('Check', 'Every camera and every cooling group on one screen. A camera that is down stands out at once.'),
- ('Open a camera', 'The live image comes first, and every feeding spot is a region on it.'),
+ ('Open a camera', 'The live image comes first, and every feeding spot is a region on it. Hover a spot for its details.'),
  ('Check a fan', 'Pick a fan to see exactly which spots it covers.'),
  ('Adjust', 'Basic settings hold the times that change from day to day. Everything else is one toggle away.'),
 ]
@@ -35,10 +36,11 @@ STEPS = [
 CURSOR_START = (760, 610)
 UNIT = 78  # vh of scroll per timeline unit
 TIMELINE = [
- ('hold', .5), ('move', 229, 358, .5), ('click', 1), ('step', 1), ('hold', .55),
- ('move', 632, 123, .5), ('click', 2), ('step', 2), ('hold', .65),
- ('move', 40, 188, .55), ('click', 3), ('step', 3), ('hold', .5),
- ('move', 940, 90, .5), ('click', 4), ('hold', .8),
+ ('hold', .5), ('move', 229, 358, .5), ('click', 1), ('step', 1), ('hold', .45),
+ ('move', 428, 268, .4), ('show', 2), ('hold', .55),          # hover spot 26: tooltip
+ ('move', 500, 205, .14), ('show', 1), ('move', 632, 123, .34), ('click', 3), ('step', 2), ('hold', .7),
+ ('move', 40, 188, .55), ('click', 4), ('step', 3), ('hold', .5),
+ ('move', 940, 90, .5), ('click', 5), ('hold', .8),
 ]
 LENGTH = sum(t[-1] for t in TIMELINE if t[0] in ('hold', 'move'))
 
@@ -49,6 +51,7 @@ if '--images' in sys.argv:
         out = Image.new('RGB', (W * 2, H * 2), 'white')
         for f, x, y in layers:
             im = Image.open(d + f + '.webp').convert('RGBA')
+            if im.size == (W, H): im = im.resize((W * 2, H * 2), Image.LANCZOS)  # 1x source
             out.paste(im, (round(x * 2), round(y * 2)), im)
         out.save(d + name + '.webp', quality=84, method=6)
 
