@@ -1,87 +1,76 @@
-/* Scroll-driven screen tour. The screen stays pinned and whole while short
-   steps scroll past beside it. Entering a step moves a cursor to the control a
-   user would press, clicks, and the next screen appears, so the tour reads as
-   one path through the product. Scrolling is never taken over.
-   Markup: [data-flow data-w data-h] > .flow-stage (rail + .flow-view with
-   .flow-shot images and .flow-cursor) + .flow-steps > .flow-step[data-seq],
-   where data-seq is [[clickX, clickY, shotIndex], ...] in screen pixels. */
+/* Scroll-scrubbed screen tour. The whole block (step rail, screen, text) pins
+   to the viewport while the page scrolls through a tall track. Scroll position
+   is the playhead: it moves a cursor across the screen, and when the cursor
+   clicks, the next screen shows. Nothing plays on its own and scrolling is
+   never taken over, so scrolling back rewinds.
+   Markup: [data-flow data-w data-h data-timeline] > .flow-pin > rail, .flow-view
+   (.flow-shot images + .flow-cursor) and .flow-step texts. Timeline items:
+   ["hold", len] ["move", x, y, len] ["click", shot] ["show", shot] ["step", i]. */
 (() => {
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ease = (k) => (k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2);
 
   document.querySelectorAll('[data-flow]').forEach((flow) => {
     const W = +flow.dataset.w, H = +flow.dataset.h;
-    const stage = flow.querySelector('.flow-stage');
     const shots = [...flow.querySelectorAll('.flow-shot')];
     const steps = [...flow.querySelectorAll('.flow-step')];
     const dots = [...flow.querySelectorAll('.flow-dot')];
     const cursor = flow.querySelector('.flow-cursor');
-    const seqs = steps.map((s) => JSON.parse(s.dataset.seq));
-    let current = 0, timers = [];
+    const start = [parseFloat(cursor.style.left) / 100 * W, parseFloat(cursor.style.top) / 100 * H];
 
-    const later = (ms, fn) => timers.push(setTimeout(fn, ms));
-    const show = (n) => shots.forEach((img, i) => img.classList.toggle('is-on', i === n));
-    const lastShot = (i) => seqs[i][seqs[i].length - 1][2];
+    // Lay the timeline out on one axis: moves and instant events, each at a position.
+    const moves = [], events = [], stepAt = [0];
+    let at = 0, from = start;
+    JSON.parse(flow.dataset.timeline).forEach((it) => {
+      if (it[0] === 'hold') at += it[1];
+      else if (it[0] === 'move') { moves.push({ a: at, b: at + it[3], from, to: [it[1], it[2]] }); from = [it[1], it[2]]; at += it[3]; }
+      else { events.push({ at, type: it[0], n: it[1] }); if (it[0] === 'step') stepAt[it[1]] = at; }
+    });
+    const total = at;
+    let shot = -1, step = -1, clicks = -1;
 
-    function play(seq, k) {
-      const [x, y, shot] = seq[k];
-      const next = () => (k + 1 < seq.length ? later(1500, () => play(seq, k + 1)) : later(900, () => cursor.classList.remove('is-on')));
-      if (x == null) { show(shot); return next(); }
-      cursor.classList.add('is-on');
+    function render() {
+      const track = flow.offsetHeight - innerHeight;
+      const pos = Math.min(1, Math.max(0, -flow.getBoundingClientRect().top / track)) * total;
+
+      let x = start[0], y = start[1];
+      for (const m of moves) {
+        if (pos >= m.b) { x = m.to[0]; y = m.to[1]; continue; }
+        if (pos > m.a) { const k = ease((pos - m.a) / (m.b - m.a)); x = m.from[0] + (m.to[0] - m.from[0]) * k; y = m.from[1] + (m.to[1] - m.from[1]) * k; }
+        break;
+      }
       cursor.style.left = (x / W) * 100 + '%';
       cursor.style.top = (y / H) * 100 + '%';
-      later(850, () => { cursor.classList.remove('is-click'); void cursor.offsetWidth; cursor.classList.add('is-click'); });
-      later(1050, () => { show(shot); next(); });
+
+      let s = 0, st = 0, c = 0;
+      for (const ev of events) {
+        if (ev.at > pos) break;
+        if (ev.type === 'step') st = ev.n; else s = ev.n;
+        if (ev.type === 'click') c++;
+      }
+      if (s !== shot) { shot = s; shots.forEach((img, i) => img.classList.toggle('is-on', i === s)); }
+      if (st !== step) {
+        step = st;
+        steps.forEach((el, i) => el.classList.toggle('is-active', i === st));
+        dots.forEach((d, i) => {
+          if (i === st) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current');
+          d.classList.toggle('is-done', i < st);
+        });
+      }
+      if (c > clicks && clicks >= 0) { cursor.classList.remove('is-click'); void cursor.offsetWidth; cursor.classList.add('is-click'); }
+      clicks = c;
     }
 
-    function go(i) {
-      if (i === current) return;
-      timers.forEach(clearTimeout); timers = [];
-      const forward = i > current;
-      current = i;
-      steps.forEach((s, n) => s.classList.toggle('is-active', n === i));
-      dots.forEach((d, n) => {
-        d.toggleAttribute('aria-current', n === i);
-        if (n === i) d.setAttribute('aria-current', 'step');
-        d.classList.toggle('is-done', n < i);
-      });
-      if (!forward || reduce) { cursor.classList.remove('is-on'); return show(lastShot(i)); }
-      show(lastShot(i - 1)); // the click lands on the screen before this step
-      play(seqs[i], 0);
-    }
-
-    // The active step is the last one whose top has passed a line in the viewport.
-    const stacked = matchMedia('(max-width: 900px)');
     let ticking = false;
-    function measure() {
-      ticking = false;
-      // Stacked: a step takes over when its top clears the pinned screen's shadow.
-      // Side by side: when the middle of its text nears the middle of the screen.
-      const line = innerHeight * (stacked.matches ? 0.8 : 0.7);
-      let i = 0;
-      steps.forEach((s, n) => {
-        const r = s.getBoundingClientRect();
-        if ((stacked.matches ? r.top : r.top + r.height / 2) <= line) i = n;
-      });
-      go(i);
-    }
-    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(measure); } };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; render(); }); } };
 
-    // Keep the pinned screen vertically centred (below the floating nav).
-    function place() {
-      const top = stacked.matches ? 0 : Math.max(84, (innerHeight - stage.offsetHeight) / 2);
-      flow.style.setProperty('--flow-top', top + 'px');
-      measure();
-    }
-
-    dots.forEach((d, n) => d.addEventListener('click', () => {
-      const r = steps[n].getBoundingClientRect();
-      const y = scrollY + r.top - innerHeight * (stacked.matches ? 0.74 : 0.5) + (stacked.matches ? 0 : r.height / 2);
-      scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    dots.forEach((d, i) => d.addEventListener('click', () => {
+      const track = flow.offsetHeight - innerHeight;
+      const top = flow.getBoundingClientRect().top + scrollY;
+      scrollTo({ top: top + (track * stepAt[i]) / total + (i ? 4 : 0), behavior: 'smooth' });
     }));
 
     addEventListener('scroll', onScroll, { passive: true });
-    addEventListener('resize', place);
-    addEventListener('load', place);
-    place();
+    addEventListener('resize', render);
+    render();
   });
 })();

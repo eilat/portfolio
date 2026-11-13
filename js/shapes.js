@@ -165,6 +165,23 @@
       o.beginPath(); o.arc(.50, .62, .19, Math.PI * .55, Math.PI * .95); o.stroke();
       o.globalCompositeOperation = 'source-over';
     },
+    // Case chapters: the problem, the structure, the decisions
+    question(o) {
+      o.lineCap = 'round'; o.lineWidth = .12;
+      o.beginPath(); o.moveTo(.30, .32); o.bezierCurveTo(.30, .04, .72, .04, .72, .32); o.bezierCurveTo(.72, .50, .50, .50, .50, .68); o.stroke();
+      o.beginPath(); o.arc(.50, .88, .075, 0, Math.PI * 2); o.fill();
+    },
+    layout(o) {
+      o.beginPath(); o.roundRect(.08, .14, .20, .72, .06); o.fill();
+      o.beginPath(); o.roundRect(.34, .14, .58, .16, .06); o.fill();
+      o.beginPath(); o.roundRect(.34, .36, .58, .50, .06); o.fill();
+    },
+    toggle(o) {
+      o.beginPath(); o.roundRect(.06, .28, .88, .44, .22); o.fill();
+      o.globalCompositeOperation = 'destination-out';
+      o.beginPath(); o.arc(.72, .50, .15, 0, Math.PI * 2); o.fill();
+      o.globalCompositeOperation = 'source-over';
+    },
     snowflake(o) {
       o.lineCap = 'round'; o.lineWidth = .06; o.save(); o.translate(.5, .5);
       for (let i = 0; i < 6; i++) {

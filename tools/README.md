@@ -14,6 +14,8 @@ Two tour styles:
 - Healthcare (`js/tour.js`): autoplay, layers build in, a camera zooms to regions.
   Layer format: `(file, x, y, w, h, anim, at_ms)` in screen pixels; camera stops:
   `(ms, x, y, w, h, caption)`. Animations: up, drop, pop, wipe, grow, sweep, fade.
-- BullsEye (`js/flow.js`): scroll driven, no zoom. The screen is pinned, steps scroll
-  beside it. `STEPS` in `gen_bullseye.py`: `(name, text, [(click_x, click_y, shot_index), ...])`;
-  the cursor clicks at x,y (screen pixels) and that shot appears.
+- BullsEye (`js/flow.js`): scroll scrubbed, no zoom. The whole block pins to the
+  viewport; scrolling moves a cursor over the screen and its clicks change the screen.
+  Edit `STEPS` (texts) and `TIMELINE` in `gen_bullseye.py`: `('hold', len)`,
+  `('move', x, y, len)`, `('click', shot)`, `('show', shot)` for hover states,
+  `('step', i)`. Lengths are in screens of scroll; x,y are screen pixels (1280x832).
