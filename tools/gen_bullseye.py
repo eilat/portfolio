@@ -1,75 +1,79 @@
 """Insert the BullsEye screen tour into projects/cooling.html (between tour markers).
-Usage: python3 gen_bullseye.py <portfolio_root>"""
-import html, re, sys
+The tour is scroll driven: the screen stays pinned and whole (no zoom) while short
+steps scroll past beside it; a cursor clicks and the screen changes, as in the product.
+Usage: python3 tools/gen_bullseye.py <portfolio_root> [--images]
+  --images  also rebuild the flat screens (f-*.webp) from the layered exports (needs Pillow)"""
+import html, json, re, sys
 ROOT = sys.argv[1]; e = html.escape
 W, H, FOLDER = 1280, 832, 'work/cooling/tour'
+
+# Flat screens, in the order they appear. (file, alt, layers to flatten: (file, x, y) in screen px)
 tiles = [(98, 273), (384.3, 273), (670.5, 273), (956.8, 273), (98, 467), (384.3, 467), (670.5, 467), (956.8, 467), (98, 661), (384.3, 661), (670.5, 661)]
-SCENES = [
- dict(name='Cameras', base='s1-base', alt='Camera overview: group state and a live tile for every camera', duration=12000,
-  layers=[(f's1-card{i+1}', x, 124, 363.3, 77, 'up', 300 + i * 160) for i, x in enumerate([110, 497.3, 884.7])]
-        + [(f's1-cam{i+1}', x, y, 262.3, 170, 'pop', 950 + i * 110) for i, (x, y) in enumerate(tiles)]
-        + [('s1-thi', 0, 0, W, H, 'fade', 6600)],
-  cam=[(0, 0, 0, W, H, 'Camera overview: every camera and every cooling group on one screen'),
-       (2900, 98, 70, 640, 170, 'Group state comes first: sprinklers and fans for each group, on or off'),
-       (5000, 370, 260, 860, 400, 'A camera that is down stands out at once'),
-       (7200, 400, 0, 560, 190, 'Heat stress is one hover away: THI, temperature and humidity'),
-       (9900, 0, 0, W, H, '')]),
- dict(name='Live view', base='s2-base', alt='A single camera: the live image of the feed lane', duration=12000,
-  layers=[('s2-top', 102, 165, 1155, 314, 'fade', 700), ('s2-bottom', 98, 520, 1143, 242, 'fade', 1300),
-          ('s2-fan', 0, 0, W, H, 'fade', 6300)],
-  cam=[(0, 0, 0, W, H, 'Live view: the image comes first, and every feeding spot is a region on it'),
-       (2800, 590, 150, 420, 300, 'Active spots light up, each with its own timer'),
-       (6500, 220, 90, 760, 80, 'Pick a fan to see exactly which spots it covers'),
-       (9600, 0, 0, W, H, '')]),
- dict(name='Settings', base='s3-basic', alt='Group schedule in basic settings', duration=11500,
-  layers=[('s3-help', 0, 0, W, H, 'fade', 3000), ('s3-adv', 0, 0, W, H, 'fade', 6800)],
-  cam=[(0, 0, 0, W, H, 'Basic settings: only the times that change from day to day'),
-       (3300, 580, 50, 600, 170, 'A short help line explains when to switch modes'),
-       (6900, 0, 0, W, H, 'Advanced settings hold every parameter, for those who need them'),
-       (9000, 940, 55, 330, 70, 'Technician mode is separate and password protected')]),
- dict(name='THI limits', base='s4-base', alt='THI limit management, by group', duration=9800,
-  layers=[(f's4-row{i+1}', 98, y, 1162, 42, 'wipe', 600 + i * 150) for i, y in enumerate([209, 263, 317, 460, 514, 568])]
-        + [('s4-add', 0, 0, W, H, 'fade', 4200)],
-  cam=[(0, 0, 0, W, H, 'THI limits: as heat stress rises, cooling steps up'),
-       (4600, 290, 270, 700, 300, 'Adding a limit is one short form'),
-       (7800, 0, 0, W, H, '')]),
+SHOTS = [
+ ('f-overview', 'Camera overview: the state of each cooling group and a tile for every camera',
+  [('s1-base', 0, 0)] + [(f's1-card{i+1}', x, 124) for i, x in enumerate([110, 497.3, 884.7])] + [(f's1-cam{i+1}', x, y) for i, (x, y) in enumerate(tiles)]),
+ ('f-live', 'A single camera: the image of the feed lane with a region for every feeding spot',
+  [('s2-base', 0, 0), ('s2-top', 102, 165), ('s2-bottom', 98, 520)]),
+ ('f-fan', 'The same camera with one fan selected and the spots it covers highlighted', [('s2-fan', 0, 0)]),
+ ('f-basic', 'Group schedule in basic settings', [('s3-basic', 0, 0)]),
+ ('f-advanced', 'Group schedule with advanced settings switched on', [('s3-adv', 0, 0)]),
 ]
-pct = lambda v, t: f'{v / t * 100:.4f}%'
-scenes, chips = [], []
-for i, sc in enumerate(SCENES):
-    lazy = '' if i == 0 else ' loading="lazy"'
-    rows = [f'            <img class="base" src="../assets/{FOLDER}/{sc["base"]}.webp" alt="{e(sc["alt"])}"{lazy}>']
-    for f, x, y, w, h, anim, at in sc['layers']:
-        pos = f'left:{pct(x, W)};top:{pct(y, H)};width:{pct(w, W)};height:{pct(h, H)}'
-        rows.append(f'            <img class="a-{anim}" src="../assets/{FOLDER}/{f}.webp" alt="" style="{pos}" data-at="{at}"{lazy}>')
-    cam = '[' + ','.join(f'[{t},{x},{y},{w},{h},"{c}"]' for t, x, y, w, h, c in sc['cam']) + ']'
-    scenes.append(f"          <div class=\"tour-scene\" data-duration=\"{sc['duration']}\" data-cam='{e(cam, quote=False)}'>\n" + '\n'.join(rows) + '\n          </div>')
-    chips.append(f'        <button class="tour-chip" type="button" aria-pressed="{"true" if i == 0 else "false"}">{e(sc["name"])}</button>')
-NL = '\n'
+# Steps: (name, text, sequence). Each sequence item is (click_x, click_y, shot_index):
+# the cursor clicks at x,y on the screen that is showing, then that shot appears.
+STEPS = [
+ ('Check', 'Every camera and every cooling group on one screen. A camera that is down stands out at once.', [(None, None, 0)]),
+ ('Open a camera', 'The live image comes first, and every feeding spot is a region on it.', [(229, 358, 1)]),
+ ('Check a fan', 'Pick a fan to see exactly which spots it covers.', [(632, 123, 2)]),
+ ('Adjust', 'Basic settings hold the times that change from day to day. Everything else is one toggle away.', [(40, 188, 3), (940, 90, 4)]),
+]
+
+if '--images' in sys.argv:
+    from PIL import Image
+    d = f'{ROOT}/assets/{FOLDER}/'
+    for name, _, layers in SHOTS:
+        out = Image.new('RGB', (W * 2, H * 2), 'white')
+        for f, x, y in layers:
+            im = Image.open(d + f + '.webp').convert('RGBA')
+            out.paste(im, (round(x * 2), round(y * 2)), im)
+        out.save(d + name + '.webp', quality=84, method=6)
+
+shots = '\n'.join(
+    f'              <img class="flow-shot{" is-on" if i == 0 else ""}" src="../assets/{FOLDER}/{f}.webp" alt="{e(alt)}" width="{W * 2}" height="{H * 2}"{"" if i == 0 else " loading=\"lazy\""}>'
+    for i, (f, alt, _) in enumerate(SHOTS))
+rail = '\n'.join(
+    f'              <li><button type="button" class="flow-dot"{" aria-current=\"step\"" if i == 0 else ""}><b>{i + 1}</b><span>{e(n)}</span></button></li>'
+    for i, (n, _, _) in enumerate(STEPS))
+steps = '\n'.join(
+    f"            <li class=\"flow-step{' is-active' if i == 0 else ''}\" data-seq='{json.dumps(seq)}'>\n"
+    f'              <span class="label">Step {i + 1} of {len(STEPS)}</span>\n              <h3>{e(n)}</h3>\n              <p>{e(t)}</p>\n            </li>'
+    for i, (n, t, seq) in enumerate(STEPS))
 block = f'''      <!-- tour:start (generated by gen_bullseye.py) -->
-      <div class="tour reveal" data-tour data-w="{W}" data-h="{H}" role="region" aria-label="Tour of the BullsEye control screens">
-        <div class="tour-frame">
-          <div class="tour-view" style="aspect-ratio:{W} / {H}"><div class="tour-cam">
-{NL.join(scenes)}
-          </div></div>
+      <div class="flow" data-flow data-w="{W}" data-h="{H}" role="region" aria-label="Screen tour: a farmer’s path through BullsEye">
+        <div class="flow-top">
+          <span class="label">Screen tour</span>
+          <a class="flow-skip" href="#details">Skip the tour <span aria-hidden="true">↓</span></a>
         </div>
-        <div class="tour-bar">
-          <div class="tour-chips">
-{NL.join(chips)}
+        <div class="flow-grid">
+          <div class="flow-stage">
+            <ol class="flow-rail" aria-label="Tour steps">
+{rail}
+            </ol>
+            <div class="flow-frame">
+              <div class="flow-view" style="aspect-ratio:{W} / {H}">
+{shots}
+                <span class="flow-cursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M5 2.5v17l4.6-4.3 2.9 6.6 2.7-1.2-2.9-6.5h6.2z" fill="#141414" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
           </div>
-          <p class="tour-caption" aria-live="polite"></p>
-          <button class="tour-toggle" type="button" aria-pressed="false">Pause</button>
+          <ol class="flow-steps">
+{steps}
+          </ol>
         </div>
       </div>
       <!-- tour:end -->
 '''
 p = f'{ROOT}/projects/cooling.html'; s = open(p).read()
-if '<!-- tour:start' in s:
-    s = re.sub(r'      <!-- tour:start.*?<!-- tour:end -->\n', lambda m: block, s, flags=re.S)
-else:
-    s, n = re.subn(r'      <div class="case-cover unveil"[^\n]*cooling/01\.jpg[^\n]*\n', lambda m: block, s, count=1)
-    assert n == 1
-if 'js/tour.js' not in s:
-    s = s.replace('<script src="../js/shapes.js" defer></script>', '<script src="../js/shapes.js" defer></script>\n  <script src="../js/tour.js" defer></script>')
+s, n = re.subn(r'      <!-- tour:start.*?<!-- tour:end -->\n', lambda m: block, s, flags=re.S)
+assert n == 1, 'tour markers not found in cooling.html'
 open(p, 'w').write(s)
 print('ok')
