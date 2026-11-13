@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="case-page">
+<body class="case-page case-wide">
   <canvas class="shape-canvas" aria-hidden="true"></canvas>
 
   <header class="site-header">
@@ -63,16 +63,16 @@
     <div class="flow" data-flow data-w="1280" data-h="832" data-timeline='[["hold", 0.5], ["move", 229, 358, 0.5], ["click", 1], ["step", 1], ["hold", 0.55], ["move", 632, 123, 0.5], ["click", 2], ["step", 2], ["hold", 0.65], ["move", 40, 188, 0.55], ["click", 3], ["step", 3], ["hold", 0.5], ["move", 940, 90, 0.5], ["click", 4], ["hold", 0.8]]' style="--flow-len:394" role="region" aria-label="Screen tour: a farmer’s path through BullsEye">
       <div class="flow-pin">
         <div class="flow-inner">
-          <div class="flow-bar">
-            <ol class="flow-rail" aria-label="Tour steps">
+          <div class="flow-stage">
+            <div class="flow-bar">
+              <ol class="flow-rail" aria-label="Tour steps">
             <li><button type="button" class="flow-dot" aria-current="step"><b>1</b><span>Check</span></button></li>
             <li><button type="button" class="flow-dot"><b>2</b><span>Open a camera</span></button></li>
             <li><button type="button" class="flow-dot"><b>3</b><span>Check a fan</span></button></li>
             <li><button type="button" class="flow-dot"><b>4</b><span>Adjust</span></button></li>
-            </ol>
-            <a class="flow-skip" href="#details">Skip<i> the tour</i> <span aria-hidden="true">↓</span></a>
-          </div>
-          <div class="flow-grid">
+              </ol>
+              <a class="flow-skip" href="#details">Skip<i> the tour</i> <span aria-hidden="true">↓</span></a>
+            </div>
             <div class="flow-frame">
               <div class="flow-view" style="aspect-ratio:1280 / 832">
               <img class="flow-shot is-on" src="../assets/work/cooling/tour/f-overview.webp" alt="Camera overview: the state of each cooling group and a tile for every camera" width="2560" height="1664">
@@ -83,7 +83,8 @@
                 <span class="flow-cursor" aria-hidden="true" style="left:59.38%;top:73.32%"><svg viewBox="0 0 24 24"><path d="M5 2.5v17l4.6-4.3 2.9 6.6 2.7-1.2-2.9-6.5h6.2z" fill="#ffd23f" stroke="#141414" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
               </div>
             </div>
-            <ol class="flow-steps">
+          </div>
+          <ol class="flow-steps">
             <li class="flow-step is-active">
               <span class="label">01 / 04</span>
               <h3>Check</h3>
@@ -104,8 +105,7 @@
               <h3>Adjust</h3>
               <p>Basic settings hold the times that change from day to day. Everything else is one toggle away.</p>
             </li>
-            </ol>
-          </div>
+          </ol>
         </div>
       </div>
     </div>
@@ -124,49 +124,50 @@
 
     <div class="inner">
       <article class="case-body">
-        <section class="chapter has-art">
-          <span class="label reveal">01</span>
-          <div class="chapter-art" data-shapes="worlds" data-icons="cow" data-palette="#a5654f,#c98f78,#eacdbc,#8fd3b0,#e6d3bf" aria-hidden="true"></div>
-          <h2 class="split">Context</h2>
-          <p class="reveal">BullsEye is BullTech’s camera and AI-based system for cooling dairy cows at the feed lane. A central computer processes camera data in real time and controls individual fans and sprinklers, activating cooling where cows are detected and adjusting the number of cooling cycles as needed. The system operates without tags attached to the cows.</p>
-          <p class="reveal">The system was already in use when I joined the project. Its interface had been built by the developers, and the initial goal was to make it easier for farmers to access all cameras and check that they were working.</p>
-          <p class="reveal">I worked with the product manager and developers on the UX specification and interface redesign. During our review, I proposed restructuring the navigation and bringing all technician settings together in one dedicated area.</p>
-        </section>
+        <div class="case-cols">
+          <div class="case-col">
+            <section class="chapter">
+              <span class="label reveal">01</span>
+              <h2 class="split">Context</h2>
+              <p class="reveal">BullsEye is BullTech’s camera and AI-based system for cooling dairy cows at the feed lane. A central computer processes camera data in real time and controls individual fans and sprinklers, activating cooling where cows are detected and adjusting the number of cooling cycles as needed. The system operates without tags attached to the cows.</p>
+              <p class="reveal">The system was already in use when I joined the project. Its interface had been built by the developers, and the initial goal was to make it easier for farmers to access all cameras and check that they were working.</p>
+              <p class="reveal">I worked with the product manager and developers on the UX specification and interface redesign. During our review, I proposed restructuring the navigation and bringing all technician settings together in one dedicated area.</p>
+            </section>
 
-        <section class="chapter has-art">
-          <span class="label reveal">02</span>
-          <div class="chapter-art" data-shapes="worlds" data-icons="question" data-palette="#a5654f,#c98f78,#eacdbc,#8fd3b0,#e6d3bf" aria-hidden="true"></div>
-          <h2 class="split">The problem</h2>
-          <p class="reveal">The existing interface made routine monitoring unnecessarily complicated.</p>
-          <ul class="reveal">
-            <li><strong>Too many parameters on screen.</strong> Technical settings competed with the information farmers needed for everyday use.</li>
-            <li><strong>Indirect navigation.</strong> Users had to enter and exit screens to move between different parts of the system.</li>
-            <li><strong>Missing context.</strong> Farm and camera names were not consistently visible, making it difficult to identify the view on screen.</li>
-            <li><strong>Poor readability and visual consistency.</strong> Parameters were difficult to read over camera images, and the colors and icons lacked a unified visual language.</li>
-          </ul>
-        </section>
+            <section class="chapter">
+              <span class="label reveal">02</span>
+              <h2 class="split">The problem</h2>
+              <p class="reveal">The existing interface made routine monitoring unnecessarily complicated.</p>
+              <ul class="reveal">
+                <li><strong>Too many parameters on screen.</strong> Technical settings competed with the information farmers needed for everyday use.</li>
+                <li><strong>Indirect navigation.</strong> Users had to enter and exit screens to move between different parts of the system.</li>
+                <li><strong>Missing context.</strong> Farm and camera names were not consistently visible, making it difficult to identify the view on screen.</li>
+                <li><strong>Poor readability and visual consistency.</strong> Parameters were difficult to read over camera images, and the colors and icons lacked a unified visual language.</li>
+              </ul>
+            </section>
 
-        <section class="chapter has-art">
-          <span class="label reveal">03</span>
-          <div class="chapter-art" data-shapes="worlds" data-icons="layout" data-palette="#a5654f,#c98f78,#eacdbc,#8fd3b0,#e6d3bf" aria-hidden="true"></div>
-          <h2 class="split">Rethinking the structure</h2>
-          <p class="reveal">The redesign needed to support two distinct tasks: checking cameras during everyday farm work and configuring the system during technical service.</p>
-          <p class="reveal">I proposed a consistent layout with persistent navigation, visible farm information and a central area where the screen content would change. This would give users direct access to the main screens while keeping their context visible.</p>
-          <p class="reveal">I also proposed gathering all technician settings in one password-protected area. This would give technicians a clear place to find their controls and keep detailed configuration separate from farmers’ daily monitoring.</p>
-        </section>
+            <section class="chapter">
+              <span class="label reveal">03</span>
+              <h2 class="split">Rethinking the structure</h2>
+              <p class="reveal">The redesign needed to support two distinct tasks: checking cameras during everyday farm work and configuring the system during technical service.</p>
+              <p class="reveal">I proposed a consistent layout with persistent navigation, visible farm information and a central area where the screen content would change. This would give users direct access to the main screens while keeping their context visible.</p>
+              <p class="reveal">I also proposed gathering all technician settings in one password-protected area. This would give technicians a clear place to find their controls and keep detailed configuration separate from farmers’ daily monitoring.</p>
+            </section>
 
-        <section class="chapter has-art">
-          <span class="label reveal">04</span>
-          <div class="chapter-art" data-shapes="worlds" data-icons="toggle" data-palette="#a5654f,#c98f78,#eacdbc,#8fd3b0,#e6d3bf" aria-hidden="true"></div>
-          <h2 class="split">Design decisions</h2>
-          <dl class="decisions reveal">
-            <div><dt>Persistent navigation</dt><dd>A fixed sidebar on the left provides direct access to the main screens. Users can move between them without repeatedly returning to a previous screen.</dd></div>
-            <div><dt>A consistent frame</dt><dd>Farm information and the company logo remain visible around the central content area. Each camera view also displays its name, helping users identify what they are looking at.</dd></div>
-            <div><dt>Camera monitoring first</dt><dd>A clear list of camera names provides access to each view. On the camera screen, the image takes priority, with cooling regions and timers displayed clearly over it. The image refreshes every 30 seconds.</dd></div>
-            <div><dt>One place for technician settings</dt><dd>Technical parameters are grouped in a dedicated, password-protected area. Technicians can find their settings in one place, while farmers’ everyday screens stay focused on monitoring.</dd></div>
-            <div><dt>A unified visual language</dt><dd>I introduced the company’s brand colors and a consistent icon style, improved contrast over camera images and replaced the red styling previously used for buttons.</dd></div>
-          </dl>
-        </section>
+            <section class="chapter">
+              <span class="label reveal">04</span>
+              <h2 class="split">Design decisions</h2>
+              <dl class="decisions reveal">
+                <div><dt>Persistent navigation</dt><dd>A fixed sidebar on the left provides direct access to the main screens. Users can move between them without repeatedly returning to a previous screen.</dd></div>
+                <div><dt>A consistent frame</dt><dd>Farm information and the company logo remain visible around the central content area. Each camera view also displays its name, helping users identify what they are looking at.</dd></div>
+                <div><dt>Camera monitoring first</dt><dd>A clear list of camera names provides access to each view. On the camera screen, the image takes priority, with cooling regions and timers displayed clearly over it. The image refreshes every 30 seconds.</dd></div>
+                <div><dt>One place for technician settings</dt><dd>Technical parameters are grouped in a dedicated, password-protected area. Technicians can find their settings in one place, while farmers’ everyday screens stay focused on monitoring.</dd></div>
+                <div><dt>A unified visual language</dt><dd>I introduced the company’s brand colors and a consistent icon style, improved contrast over camera images and replaced the red styling previously used for buttons.</dd></div>
+              </dl>
+            </section>
+          </div>
+          <div class="case-art" data-shapes="worlds" data-morph="soft" data-follow=".chapter" data-icons="cow,question,layout,toggle" data-palette="#a5654f,#c98f78,#eacdbc,#8fd3b0,#e6d3bf" aria-hidden="true"></div>
+        </div>
 
         <section class="chapter chapter-wide">
           <span class="label reveal">05</span>
@@ -176,12 +177,12 @@
             <div class="before-after">
               <figure>
                 <span class="ba-tag">Before</span>
-                <div class="case-cover unveil" style="--tint:#eeeae6" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/old/old1.jpg" alt="The old main screen: six large blue menu buttons" loading="lazy"></div>
+                <div class="case-cover unveil" style="--tint:#eeeae6" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/old/old1.jpg" alt="The old main screen: six large blue menu buttons" width="984" height="539"></div>
                 <figcaption class="reveal">A menu of large buttons, with no sign of whether the cameras were working.</figcaption>
               </figure>
               <figure>
                 <span class="ba-tag after">After</span>
-                <div class="case-cover unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-overview.webp" alt="The new camera overview" loading="lazy"></div>
+                <div class="case-cover is-framed unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-overview.webp" alt="The new camera overview" width="2560" height="1664"></div>
                 <figcaption class="reveal">Group state and every camera on one screen.</figcaption>
               </figure>
             </div>
@@ -191,12 +192,12 @@
             <div class="before-after">
               <figure>
                 <span class="ba-tag">Before</span>
-                <div class="case-cover unveil" style="--tint:#eeeae6" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/old/old3.jpg" alt="The old live view: detection boxes and numbers piled over the image" loading="lazy"></div>
+                <div class="case-cover unveil" style="--tint:#eeeae6" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/old/old3.jpg" alt="The old live view: detection boxes and numbers piled over the image" width="1538" height="830"></div>
                 <figcaption class="reveal">Detection boxes, scores and numbers piled over the image.</figcaption>
               </figure>
               <figure>
                 <span class="ba-tag after">After</span>
-                <div class="case-cover unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-fan.webp" alt="The new camera screen" loading="lazy"></div>
+                <div class="case-cover is-framed unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-fan.webp" alt="The new camera screen" width="2560" height="1664"></div>
                 <figcaption class="reveal">Clear regions on the image, each with its state and timer.</figcaption>
               </figure>
             </div>
@@ -206,12 +207,12 @@
             <div class="before-after">
               <figure>
                 <span class="ba-tag">Before</span>
-                <div class="case-cover unveil" style="--tint:#eeeae6" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/old/old2.jpg" alt="The old sprinkler settings: raw tables of devices, relays and IDs" loading="lazy"></div>
+                <div class="case-cover unveil" style="--tint:#eeeae6" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/old/old2.jpg" alt="The old sprinkler settings: raw tables of devices, relays and IDs" width="895" height="489"></div>
                 <figcaption class="reveal">Settings as raw tables of devices, relays and IDs.</figcaption>
               </figure>
               <figure>
                 <span class="ba-tag after">After</span>
-                <div class="case-cover unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-advanced.webp" alt="The new group schedule" loading="lazy"></div>
+                <div class="case-cover is-framed unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-advanced.webp" alt="The new group schedule" width="2560" height="1664"></div>
                 <figcaption class="reveal">Group schedules in plain fields, with advanced settings on demand.</figcaption>
               </figure>
             </div>
@@ -221,15 +222,15 @@
         <section class="chapter chapter-wide">
           <span class="label reveal">06</span>
           <h2 class="split">Outcome</h2>
+          <ul class="outcome-now reveal" aria-label="What the new interface provides">
+            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="36" height="32" rx="5"/><path d="M19 8v32M11 16h3M11 22h3M11 28h3"/></svg><span>Direct access to the main screens</span></li>
+            <li><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 24s7-12 20-12 20 12 20 12-7 12-20 12S4 24 4 24z"/><circle cx="24" cy="24" r="5.5"/></svg><span>Farm and camera context always visible</span></li>
+            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="20" rx="5"/><path d="M16 21v-5a8 8 0 0 1 16 0v5M24 29v4"/></svg><span>Technician settings in one dedicated area</span></li>
+          </ul>
           <ul class="outcome reveal">
             <li><strong>Shipped</strong><span>The redesigned interface was implemented.</span></li>
             <li><strong>Positive feedback</strong><span>In follow-up conversations, farmers and farm owners using the system gave positive feedback.</span></li>
             <li><strong>Fewer explanations</strong><span>They reported needing fewer explanations from the service team.</span></li>
-          </ul>
-          <ul class="outcome-now reveal" aria-label="What the new interface provides">
-            <li>Direct access to the main screens</li>
-            <li>Farm and camera context always visible</li>
-            <li>Technician settings in one dedicated area</li>
           </ul>
         </section>
 
@@ -250,9 +251,12 @@
       </article>
     </div>
 
-    <a class="next inner" href="care-platform.html" data-cursor="up next">
-      <span class="label">Next project</span>
-      <strong>One platform, three kinds of people →</strong>
+    <a class="next next-shot inner" href="care-platform.html" data-cursor="up next">
+      <span class="next-text">
+        <span class="label">Next project</span>
+        <strong>One platform, three kinds of people →</strong>
+      </span>
+      <span class="next-img" style="--chip:#dfe6ff"><img src="../assets/work/care/01.jpg" alt="The doctor’s patient list in the healthcare platform" width="1400" height="996" loading="lazy"></span>
     </a>
   </main>
 

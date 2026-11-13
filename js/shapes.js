@@ -312,9 +312,17 @@
   function pickActive() {
     let best = null;
     for (const el of forms) {
-      const zone = el.closest('section, header, footer') || el;
+      // data-follow: the formation stays in place for its whole parent and
+      // takes the shape of whichever followed element is at mid-screen.
+      const zone = el.dataset.follow ? el.parentElement : el.closest('section, header, footer') || el;
       const rr = zone.getBoundingClientRect();
       if (rr.top <= H * .5 && rr.bottom >= H * .5) { best = el; break; }
+    }
+    if (best && best.dataset.follow) {
+      let idx = 0;
+      best.parentElement.querySelectorAll(best.dataset.follow).forEach((c, n) => { if (c.getBoundingClientRect().top <= H * .55) idx = n; });
+      if (best === active && (best._world || 0) !== idx) { best._world = idx; return apply(best); }
+      best._world = idx;
     }
     if (best !== active) apply(best);
   }
@@ -347,7 +355,7 @@
   function frame() {
     t += 1;
     // The worlds formation moves on to the next world every few seconds
-    if (plan && plan.type === 'worlds' && !reduce && t - plan.born > (plan.soft ? 600 : 250)) {
+    if (plan && plan.type === 'worlds' && !plan.el.dataset.follow && !reduce && t - plan.born > (plan.soft ? 600 : 250)) {
       plan.el._world = (plan.el._world || 0) + 1;
       apply(plan.el);
     }
