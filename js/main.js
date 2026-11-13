@@ -1,4 +1,16 @@
 document.documentElement.classList.add('js');
+
+// Case pages always open at their top, even when the browser or an embedding
+// page would restore an earlier scroll position.
+if (document.querySelector('.case-hero') && !location.hash) {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const toTop = () => {
+    scrollTo(0, 0);
+    if (window.top !== window) document.querySelector('.case-hero').scrollIntoView({ block: 'start' });
+  };
+  toTop();
+  addEventListener('load', toTop, { once: true });
+}
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Years of experience, counted from the year in data-since
