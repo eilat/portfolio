@@ -182,6 +182,19 @@
       o.beginPath(); o.arc(.72, .50, .15, 0, Math.PI * 2); o.fill();
       o.globalCompositeOperation = 'source-over';
     },
+    user(o) {
+      o.beginPath(); o.arc(.50, .30, .19, 0, Math.PI * 2); o.fill();
+      o.beginPath(); o.moveTo(.14, .92); o.bezierCurveTo(.14, .58, .86, .58, .86, .92); o.closePath(); o.fill();
+    },
+    chart(o) {
+      [[.12, .52, .34], [.34, .30, .56], [.56, .44, .42], [.78, .14, .72]].forEach(([x, y, h]) => { o.beginPath(); o.roundRect(x, y, .14, h, .05); o.fill(); });
+    },
+    check(o) {
+      o.beginPath(); o.arc(.5, .5, .42, 0, Math.PI * 2); o.fill();
+      o.globalCompositeOperation = 'destination-out'; o.lineCap = 'round'; o.lineJoin = 'round'; o.lineWidth = .09;
+      o.beginPath(); o.moveTo(.31, .52); o.lineTo(.45, .66); o.lineTo(.70, .36); o.stroke();
+      o.globalCompositeOperation = 'source-over';
+    },
     snowflake(o) {
       o.lineCap = 'round'; o.lineWidth = .06; o.save(); o.translate(.5, .5);
       for (let i = 0; i < 6; i++) {

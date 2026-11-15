@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>One platform, three kinds of people — Eilat Brayer</title>
-  <meta name="description" content="Designing a doctor-service platform end to end for patients, doctors and admins, with one visual language and one design system.">
+  <title>Doctor–Patient Communication Platform · Eilat Brayer</title>
+  <meta name="description" content="A doctor–patient communication platform: keeping patients connected to their doctors after the appointment. Product specification, UX and UI design, and a shared design system.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="case-page">
+<body class="case-page case-wide theme-care">
   <canvas class="shape-canvas" aria-hidden="true"></canvas>
+
   <header class="site-header">
     <a class="back" href="../#work"><span aria-hidden="true">←</span> Back home</a>
     <nav class="tabs" aria-label="Main">
@@ -27,6 +28,7 @@
     </div>
   </header>
 
+  <!-- Floating bar: slides in once the top bar has scrolled away -->
   <nav class="float-nav" aria-label="Quick navigation" inert>
     <a class="back" href="../#work"><span aria-hidden="true">←</span> Home</a>
     <div class="tabs">
@@ -49,106 +51,143 @@
     <section class="case-hero inner" id="top" style="--chip:#dfe6ff">
       <div class="case-head">
         <div class="case-text">
-          <span class="label case-tag reveal">Case study · Healthcare</span>
-          <h1 class="split">One platform, three kinds of people</h1>
-          <p class="intro reveal">Designing a doctor-service platform end to end for patients, doctors and admins, with one visual language and one design system.</p>
+          <span class="label case-tag reveal">Case study · healthcare</span>
+          <h1 class="split title-lg">Doctor–Patient Communication Platform</h1>
+          <p class="intro reveal">Keeping patients connected to their doctors after the appointment</p>
         </div>
-        <div class="case-worlds" data-shapes="worlds" data-morph="soft" data-icons="stethoscope,chat,capsule" data-palette="#3f2bc0,#2f6fe0,#6aa8f5,#93dcc0,#ffd9a0" data-cursor="play with me" aria-hidden="true"></div>
+        <div class="case-worlds" data-shapes="worlds" data-morph="soft" data-icons="stethoscope,chat,capsule" data-palette="#2b47c9,#2f6fe0,#6aa8f5,#93dcc0,#ffd9a0" data-cursor="play with me" aria-hidden="true"></div>
       </div>
-      <div class="tour reveal" data-tour role="region" aria-label="Tour of the doctor screens">
-        <div class="tour-frame">
-          <div class="tour-view"><div class="tour-cam">
-          <div class="tour-scene" data-duration="9800" data-cam='[[0,0,0,1440,1024,"My patients: the whole practice in one table"],[2900,760,150,420,560,"Status comes first: who is waiting for an answer, who is urgent"],[5600,220,230,560,470,"The plan shows how much each patient can ask"],[8200,0,0,1440,1024,""]]'>
-            <img class="base" src="../assets/work/care/tour/s1-base.png" alt="Doctor view: my patients">
-            <img class="a-up" src="../assets/work/care/tour/s1-title.png" alt="" style="left:1.3889%;top:7.8125%;width:78.8889%;height:6.5430%" data-at="250">
-            <img class="a-drop" src="../assets/work/care/tour/s1-banner.png" alt="" style="left:1.3889%;top:16.3086%;width:78.8889%;height:5.0781%" data-at="700">
-            <img class="a-wipe" src="../assets/work/care/tour/s1-table.png" alt="" style="left:1.3889%;top:23.3398%;width:78.8889%;height:74.7070%" data-at="1100">
-          </div>
-          <div class="tour-scene" data-duration="12000" data-cam='[[0,0,0,1440,1024,"Payments: earnings at a glance"],[2900,431,360,725,240,"Revenue per plan, period by period"],[5400,30,360,390,240,"Which plans patients choose"],[7900,780,600,400,424,"Every payout traced to the patients behind it"],[10500,0,0,1440,1024,""]]'>
-            <img class="base" src="../assets/work/care/tour/s2-base.png" alt="Doctor view: payments dashboard" loading="lazy">
-            <img class="a-up" src="../assets/work/care/tour/s2-box1.png" alt="" style="left:2.7083%;top:18.5547%;width:24.9306%;height:9.9609%" data-at="200">
-            <img class="a-up" src="../assets/work/care/tour/s2-box2.png" alt="" style="left:29.0278%;top:18.5547%;width:24.9306%;height:9.9609%" data-at="380">
-            <img class="a-up" src="../assets/work/care/tour/s2-box3.png" alt="" style="left:55.3472%;top:18.5547%;width:24.9306%;height:9.9609%" data-at="560">
-            <img class="a-up" src="../assets/work/care/tour/s2-field.png" alt="" style="left:66.3889%;top:30.4688%;width:13.8889%;height:3.9062%" data-at="760">
-            <img class="a-pop" src="../assets/work/care/tour/s2-donutcard.png" alt="" style="left:2.7083%;top:36.3281%;width:25.8333%;height:20.8984%" data-at="950">
-            <img class="a-sweep" src="../assets/work/care/tour/s2-donut.png" alt="" style="left:13.8542%;top:42.4316%;width:10.2778%;height:14.4531%" data-at="1300">
-            <img class="a-pop" src="../assets/work/care/tour/s2-revcard.png" alt="" style="left:29.9306%;top:36.3281%;width:50.3472%;height:20.8984%" data-at="1050">
-            <img class="a-grow" src="../assets/work/care/tour/s2-bars.png" alt="" style="left:29.9306%;top:40.3320%;width:46.8750%;height:13.3789%" data-at="1500">
-            <img class="a-wipe" src="../assets/work/care/tour/s2-table.png" alt="" style="left:2.7083%;top:59.1797%;width:77.5694%;height:41.3086%" data-at="1900">
-          </div>
-          <div class="tour-scene" data-duration="9500" data-cam='[[0,20,180,780,700,"Patient messages: a real conversation, not a ticket"],[3300,40,430,740,260,"Answers broken into steps a patient can follow"],[6200,0,0,1440,1024,""]]'>
-            <img class="base" src="../assets/work/care/tour/s3-base.png" alt="Doctor view: a patient conversation" loading="lazy">
-            <img class="a-up" src="../assets/work/care/tour/s3-date.png" alt="" style="left:3.0556%;top:24.3164%;width:50.6250%;height:2.0508%" data-at="300">
-            <img class="a-up" src="../assets/work/care/tour/s3-msg1.png" alt="" style="left:3.0556%;top:27.5391%;width:50.6250%;height:11.1328%" data-at="550">
-            <span class="typing a-pop" style="left:45.8333%;top:43.0664%;width:6.6667%;height:3.9062%" data-at="1500" data-out="2700" aria-hidden="true"><i></i><i></i><i></i></span>
-            <img class="a-up" src="../assets/work/care/tour/s3-date.png" alt="" style="left:3.0556%;top:39.8438%;width:50.6250%;height:2.0508%" data-at="2700">
-            <img class="a-up" src="../assets/work/care/tour/s3-msg2.png" alt="" style="left:3.0556%;top:43.0664%;width:50.6250%;height:23.9258%" data-at="2850">
-            <img class="a-up" src="../assets/work/care/tour/s3-date.png" alt="" style="left:3.0556%;top:67.6758%;width:50.6250%;height:2.0508%" data-at="4600">
-            <img class="a-up" src="../assets/work/care/tour/s3-msg3.png" alt="" style="left:3.0556%;top:70.8984%;width:50.6250%;height:14.8926%" data-at="4800">
-          </div>
-          </div></div>
-        </div>
-        <div class="tour-bar">
-          <div class="tour-chips">
-        <button class="tour-chip" type="button" aria-pressed="true">Patients</button>
-        <button class="tour-chip" type="button" aria-pressed="false">Payments</button>
-        <button class="tour-chip" type="button" aria-pressed="false">Messages</button>
-          </div>
-          <p class="tour-caption" aria-live="polite"></p>
-          <button class="tour-toggle" type="button" aria-pressed="false">Pause</button>
-        </div>
-      </div>
-      <dl class="case-meta reveal">
-        <div><dt>Role</dt><dd>Lead product designer, end to end</dd></div>
-        <div><dt>Scope</dt><dd>Specification, UX/UI, design system</dd></div>
-        <div><dt>Users</dt><dd>Patients, doctors, admins</dd></div>
-        <div><dt>Domain</dt><dd>Healthcare</dd></div>
-      </dl>
     </section>
+
+    <!-- tour:start (generated, see tools/README.md) -->
+    <div class="flow" data-flow data-w="1440" data-h="1024" data-timeline='[["hold", 0.5], ["move", 1085, 532, 0.55], ["click", 1], ["step", 1], ["hold", 0.8], ["move", 1300, 853, 0.6], ["click", 2], ["step", 2], ["hold", 0.9]]' style="--flow-len:261;--flow-ratio:1.4062" role="region" aria-label="Screen tour: a doctor’s path through the platform">
+      <div class="flow-pin">
+        <div class="flow-inner">
+          <div class="flow-stage">
+            <div class="flow-bar">
+              <ol class="flow-rail" aria-label="Tour steps">
+              <li><button type="button" class="flow-dot" aria-current="step"><b>1</b><span>See who is waiting</span></button></li>
+              <li><button type="button" class="flow-dot"><b>2</b><span>Answer</span></button></li>
+              <li><button type="button" class="flow-dot"><b>3</b><span>Track payments</span></button></li>
+              </ol>
+              <a class="flow-skip" href="#details">Skip<i> the tour</i> <span aria-hidden="true">↓</span></a>
+            </div>
+            <div class="flow-frame">
+              <div class="flow-view" style="aspect-ratio:1440 / 1024">
+              <img class="flow-shot is-on" src="../assets/work/care/tour/f-patients.webp" alt="Doctor view, My Patients: a table of patients with question status tags" width="2880" height="2048">
+              <img class="flow-shot" src="../assets/work/care/tour/f-chat.webp" alt="Doctor view: a conversation with a patient, with earlier conversations listed beside it" width="2880" height="2048">
+              <img class="flow-shot" src="../assets/work/care/tour/f-payments.webp" alt="Doctor view, My Account: payment tracking with summary charts and an invoice list" width="2880" height="2048">
+                <span class="flow-cursor" aria-hidden="true" style="left:43.06%;top:68.36%"><svg viewBox="0 0 24 24"><path d="M5 2.5v17l4.6-4.3 2.9 6.6 2.7-1.2-2.9-6.5h6.2z" fill="#ffd23f" stroke="#141414" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+              </div>
+            </div>
+          </div>
+          <ol class="flow-steps">
+            <li class="flow-step is-active">
+              <h3>See who is waiting</h3>
+              <p>My Patients puts open questions first. Status tags show who needs a response, and who needs it now.</p>
+            </li>
+            <li class="flow-step">
+              <h3>Answer</h3>
+              <p>The conversation opens with the patient’s details on top and earlier conversations beside it, so the history stays in view while writing.</p>
+            </li>
+            <li class="flow-step">
+              <h3>Track payments</h3>
+              <p>In My Account, summary charts and the invoice list share one screen, with the details of the selected invoice beside it.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- tour:end -->
+
+    <div class="meta-band" id="details">
+      <dl class="case-meta cols-3 inner reveal">
+        <div><dt>Role</dt><dd>Product specification, UX and UI design, visual language and design system</dd></div>
+        <div><dt>Team</dt><dd>Founder and developer</dd></div>
+        <div><dt>Users</dt><dd>Doctors and patients</dd></div>
+      </dl>
+    </div>
 
     <div class="inner">
       <article class="case-body">
-        <section class="chapter">
-          <span class="label reveal">Context</span>
-          <h2 class="split">Three users, three different needs</h2>
-          <p class="reveal">[What the platform does and who it serves.]</p>
-        </section>
+        <div class="case-cols">
+          <div class="case-col">
+            <section class="chapter">
+              <h2 class="split">Context</h2>
+              <p class="reveal">Questions often arise after a medical appointment: something was unclear, a patient needs further guidance, or the next appointment is months away. The platform gives patients a structured way to contact their doctor and gives doctors a way to receive payment for answering follow-up questions.</p>
+              <p class="reveal">Doctors invite their patients to join and set their own package prices. Patients purchase question packages for a specific doctor, and the platform collects payments and pays doctors monthly.</p>
+              <p class="reveal">I joined at the idea stage. Through meetings with the founder and developer, I created the initial product specification, then developed the patient and doctor flows, interface design and shared design system. Early doctor homepage concepts supplied by the founder served as additional input for defining the information and functionality.</p>
+            </section>
 
-        <section class="chapter">
-          <span class="label reveal">What I did</span>
-          <h2 class="split">From specification to a shared design system</h2>
-          <p class="reveal">I owned the platform end to end: product specification, UX and UI for three user types, a new visual language, and a unified design system.</p>
-          <ul class="case-cards reveal">
-            <li><strong>Patients</strong>[Their main flow and need.]</li>
-            <li><strong>Doctors</strong>[Their main flow and need.]</li>
-            <li><strong>Admins</strong>[Their main flow and need.]</li>
-          </ul>
-          <figure>
-            <div class="case-cover unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/care/01.jpg" alt="Overview of the platform screens" loading="lazy"></div>
-          </figure>
-        </section>
+            <section class="chapter">
+              <h2 class="split">The challenge</h2>
+              <p class="reveal">The platform needed to support two connected experiences.</p>
+              <p class="reveal">Doctors needed to identify questions awaiting a response, access the relevant conversation and manage the business side of their service. Patients needed to understand how the service worked, ask a question and keep track of conversations and packages across their doctors.</p>
+              <p class="reveal">My focus was on making the next action clear for each user while keeping the relevant information within reach.</p>
+            </section>
 
-        <section class="chapter">
-          <span class="label reveal">Design system</span>
-          <h2 class="split">One language for three products</h2>
-          <p class="reveal">[How the design system kept three experiences consistent.]</p>
-          <figure>
-            <div class="case-cover unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/care/02.jpg" alt="The patient side: my doctors" loading="lazy"></div>
-            <figcaption class="reveal">The patient side: my doctors</figcaption>
-          </figure>
-        </section>
+            <section class="chapter">
+              <h2 class="split">Helping doctors prioritize responses</h2>
+              <dl class="decisions reveal">
+                <div><dt>Pending questions first</dt><dd>I structured the dashboard and “My Patients” around patients with open questions. During the design phase, the service requirement was a response within 24 hours, with priority given to VIP patients who had purchased the larger package. This requirement guided the information hierarchy: doctors should first see who needs a response and have a direct route to the conversation.</dd></div>
+                <div><dt>Access from different starting points</dt><dd>Doctors can open a conversation from either the inquiries table or the registered patients screen. Within the conversation screen, a menu provides access to previous conversations with that patient, keeping the history available while composing a response.</dd></div>
+                <div><dt>Patient invitations always available</dt><dd>I placed the invitation action in the persistent application frame so doctors could invite new patients from any screen.</dd></div>
+              </dl>
+              <figure class="shot">
+                <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/care/tour/f-patients.webp" alt="My Patients: a table of patients with question status tags" width="2880" height="2048" loading="lazy"></div>
+                <figcaption class="reveal">My Patients, with the status of each open question in the first column.</figcaption>
+              </figure>
+            </section>
 
-        <section class="chapter">
-          <span class="label reveal">Result</span>
-          <h2 class="split">[What changed]</h2>
-          <p class="reveal">[Outcome, launch, feedback.]</p>
-        </section>
+            <section class="chapter">
+              <h2 class="split">Making the service easier for patients to use</h2>
+              <dl class="decisions reveal">
+                <div><dt>A first question before purchasing</dt><dd>I recommended offering a free first question and allowing patients to skip purchasing during registration. The aim was to let them experience the service before committing to a paid package.</dd></div>
+                <div><dt>A question is always within reach</dt><dd>The action to start a new question remains available in the application frame, mirroring the persistent patient invitation action on the doctor’s side.</dd></div>
+                <div><dt>Two routes to a conversation</dt><dd>Patients can access conversations through their doctor list or their questions screen, where open and closed questions appear in separate tabs. The doctor list shows whether there is an open question and provides access to package history. When no package is available, a purchase button leads to the account area, where the patient selects a doctor and package.</dd></div>
+                <div><dt>Clear roles within the conversation</dt><dd>Doctors and patients use a similar conversation layout, with actions adapted to each role. Only patients can start a new conversation, and only doctors can close one.</dd></div>
+              </dl>
+              <figure class="shot">
+                <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/care/tour/f-chat.webp" alt="A conversation between a doctor and a patient" width="2880" height="2048" loading="lazy"></div>
+                <figcaption class="reveal">The conversation screen on the doctor’s side, with earlier conversations beside it.</figcaption>
+              </figure>
+            </section>
+
+            <section class="chapter">
+              <h2 class="split">Bringing the doctor’s account together</h2>
+              <p class="reveal">“My Account” brought together several different needs: package management and pricing, an income simulator, payment tracking, public profile details and availability settings.</p>
+              <p class="reveal">Within payment tracking, I designed a view that connects the overall financial picture with individual invoice details.</p>
+              <p class="reveal">Filters by date range and plan let doctors examine a specific period or package type. Summary charts at the top reflect the selected filters. Below them, an invoice list sits alongside the details of the selected invoice, allowing doctors to review individual records within the same screen.</p>
+              <figure class="shot">
+                <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/care/tour/f-payments.webp" alt="My Account: payment tracking with charts and an invoice list" width="2880" height="2048" loading="lazy"></div>
+                <figcaption class="reveal">Payment tracking: summary charts above, the invoice list and the selected invoice below.</figcaption>
+              </figure>
+            </section>
+
+            <section class="chapter">
+              <h2 class="split">A shared design system</h2>
+              <p class="reveal">I created a visual language and reusable components across the doctor and patient experiences, including tables, dashboard summary and analytics components, and the conversation interface.</p>
+              <p class="reveal">The shared conversation component supported both roles through different actions. Reusing components helped maintain consistency across the platform and made development easier.</p>
+              <p class="reveal">The founder and developer also used the design system to build the admin interface.</p>
+            </section>
+
+            <section class="chapter">
+              <h2 class="split">Outcome</h2>
+              <p class="outcome-lead reveal">The platform launched with my product specification and interface designs for doctors and patients.</p>
+              <p class="reveal">The delivered experience connects patient registration, question packages and conversations with the doctor’s daily response workflow and account management. I do not have post-launch user feedback or usage metrics to assess its impact.</p>
+            </section>
+          </div>
+          <div class="case-art" data-shapes="worlds" data-morph="soft" data-follow=".chapter" data-icons="chat,question,stethoscope,user,chart,layout,check" data-palette="#2b47c9,#2f6fe0,#6aa8f5,#93dcc0,#ffd9a0" aria-hidden="true"></div>
+        </div>
       </article>
     </div>
 
-    <a class="next inner" href="cooling.html" data-cursor="up next">
-      <span class="label">Next project</span>
-      <strong>Smart cooling for dairy farms →</strong>
+    <a class="next next-shot inner" href="cooling.html" data-cursor="up next">
+      <span class="next-text">
+        <span class="label">Next project</span>
+        <strong>BullsEye →</strong>
+      </span>
+      <span class="next-img" style="--chip:#1d1b1a"><img src="../assets/work/cooling/tour/f-overview.webp" alt="The BullsEye camera overview screen" width="2560" height="1664" loading="lazy"></span>
     </a>
   </main>
 
@@ -159,6 +198,6 @@
 
   <script src="../js/main.js" defer></script>
   <script src="../js/shapes.js" defer></script>
-  <script src="../js/tour.js" defer></script>
+  <script src="../js/flow.js" defer></script>
 </body>
 </html>
