@@ -6,7 +6,7 @@ from flow_tour import build
 W, H = 1280, 832
 tiles = [(98, 273), (384.3, 273), (670.5, 273), (956.8, 273), (98, 467), (384.3, 467), (670.5, 467), (956.8, 467), (98, 661), (384.3, 661), (670.5, 661)]
 SHOTS = [
- ('f-overview', 'Camera overview: the state of each cooling group and a tile for every camera',
+ ('f-overview', 'Home screen: the state of each cooling group and a tile for every camera',
   [('s1-base', 0, 0)] + [(f's1-card{i+1}', x, 124) for i, x in enumerate([110, 497.3, 884.7])] + [(f's1-cam{i+1}', x, y) for i, (x, y) in enumerate(tiles)]),
  ('f-live', 'A single camera: the image of the feed lane with a region for every feeding spot',
   [('s2-base', 0, 0), ('s2-top', 102, 165), ('s2-bottom', 98, 520)]),
@@ -16,10 +16,10 @@ SHOTS = [
  ('f-advanced', 'Group schedule with advanced settings switched on', [('s3-adv', 0, 0)]),
 ]
 STEPS = [
- ('Check', 'Every camera and every cooling group on one screen. A camera that is down stands out at once.'),
+ ('Check the cameras', 'Every camera and every cooling group on one screen. A camera that is down stands out at once.'),
  ('Open a camera', 'The live image comes first, and every feeding spot is a region on it. Hover over a spot for its details.'),
  ('Check a fan', 'Pick a fan to see exactly which spots it covers.'),
- ('Adjust', 'Basic settings hold the times that change from day to day. Everything else is one toggle away.'),
+ ('Adjust the schedule', 'Basic settings hold the times that change from day to day. Farmers who want more control switch to Advanced.'),
 ]
 TIMELINE = [
  ('hold', .5), ('move', 229, 358, .5), ('click', 1), ('step', 1), ('hold', .45),

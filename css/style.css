@@ -604,3 +604,6 @@ html.sheet-open { overflow: hidden; }
   .flow-step { grid-area: auto; opacity: 1; translate: none; visibility: visible; }
   .flow-cursor { display: none; }
 }
+
+/* One line under the intro: what the designer did, and with whom */
+.hero-role { margin: 0; max-width: 46ch; font: 500 clamp(15px, 1.2vw, 17px)/1.5 var(--body); color: var(--ink); padding-left: 14px; border-left: 2px solid var(--accent); }

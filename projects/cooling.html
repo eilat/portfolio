@@ -54,6 +54,7 @@
           <span class="label case-tag reveal">Case study · agritech, IoT and AI</span>
           <h1 class="split title-xl">BullsEye</h1>
           <p class="intro reveal">Making everyday monitoring easier for dairy farmers</p>
+          <p class="hero-role reveal">Redesign of a live system. Product design, UX specification and UI, with a product manager and developers.</p>
         </div>
         <div class="case-worlds" data-shapes="worlds" data-morph="soft" data-icons="cow,drop,snowflake" data-palette="#a5654f,#c98f78,#eacdbc,#8fd3b0,#e6d3bf" data-cursor="play with me" aria-hidden="true"></div>
       </div>
@@ -66,16 +67,16 @@
           <div class="flow-stage">
             <div class="flow-bar">
               <ol class="flow-rail" aria-label="Tour steps">
-              <li><button type="button" class="flow-dot" aria-current="step"><b>1</b><span>Check</span></button></li>
+              <li><button type="button" class="flow-dot" aria-current="step"><b>1</b><span>Check the cameras</span></button></li>
               <li><button type="button" class="flow-dot"><b>2</b><span>Open a camera</span></button></li>
               <li><button type="button" class="flow-dot"><b>3</b><span>Check a fan</span></button></li>
-              <li><button type="button" class="flow-dot"><b>4</b><span>Adjust</span></button></li>
+              <li><button type="button" class="flow-dot"><b>4</b><span>Adjust the schedule</span></button></li>
               </ol>
               <a class="flow-skip" href="#details">Skip<i> the tour</i> <span aria-hidden="true">↓</span></a>
             </div>
             <div class="flow-frame">
               <div class="flow-view" style="aspect-ratio:1280 / 832">
-              <img class="flow-shot is-on" src="../assets/work/cooling/tour/f-overview.webp" alt="Camera overview: the state of each cooling group and a tile for every camera" width="2560" height="1664">
+              <img class="flow-shot is-on" src="../assets/work/cooling/tour/f-overview.webp" alt="Home screen: the state of each cooling group and a tile for every camera" width="2560" height="1664">
               <img class="flow-shot" aria-hidden="true" src="../assets/work/cooling/tour/f-live.webp" alt="A single camera: the image of the feed lane with a region for every feeding spot" width="2560" height="1664">
               <img class="flow-shot" aria-hidden="true" src="../assets/work/cooling/tour/f-tip.webp" alt="The same camera with a tooltip over one feeding spot: fan speed, cows and time in the region" width="2560" height="1664">
               <img class="flow-shot" aria-hidden="true" src="../assets/work/cooling/tour/f-fan.webp" alt="The same camera with one fan selected and the spots it covers outlined in green" width="2560" height="1664">
@@ -87,7 +88,7 @@
           </div>
           <ol class="flow-steps" aria-live="polite">
             <li class="flow-step is-active">
-              <h2>Check</h2>
+              <h2>Check the cameras</h2>
               <p>Every camera and every cooling group on one screen. A camera that is down stands out at once.</p>
             </li>
             <li class="flow-step">
@@ -99,8 +100,8 @@
               <p>Pick a fan to see exactly which spots it covers.</p>
             </li>
             <li class="flow-step">
-              <h2>Adjust</h2>
-              <p>Basic settings hold the times that change from day to day. Everything else is one toggle away.</p>
+              <h2>Adjust the schedule</h2>
+              <p>Basic settings hold the times that change from day to day. Farmers who want more control switch to Advanced.</p>
             </li>
           </ol>
         </div>
@@ -154,7 +155,8 @@
                 <div><dt>Persistent navigation</dt><dd>A fixed sidebar on the left provides direct access to the main screens. Users can move between them without repeatedly returning to a previous screen.</dd></div>
                 <div><dt>A consistent frame</dt><dd>Farm information and the company logo remain visible around the central content area. Each camera view also displays its name, helping users identify what they are looking at.</dd></div>
                 <div><dt>Camera monitoring first</dt><dd>A clear list of camera names provides access to each view. On the camera screen, the image takes priority, with cooling regions and timers displayed clearly over it. The image refreshes every 30 seconds.</dd></div>
-                <div><dt>One place for technician settings</dt><dd>Technical parameters are grouped in a dedicated, password-protected area. Technicians can find their settings in one place, while farmers’ everyday screens stay focused on monitoring.</dd></div>
+                <div><dt>Basic and advanced settings for farmers</dt><dd>Most farmers need only a few settings, so the schedule opens in Basic. Those who want more control can switch to Advanced for additional parameters.</dd></div>
+            <div><dt>One place for technician settings</dt><dd>Technical parameters are grouped in a dedicated, password-protected area. Technicians can find their settings in one place, while farmers’ everyday screens stay focused on monitoring. A Technician mode button on the farmer’s screens opens the same area at the tab that matches that screen, so technicians arrive in the right place.</dd></div>
                 <div><dt>A unified visual language</dt><dd>I introduced the company’s brand colors and a consistent icon style, improved contrast over camera images and replaced the red styling previously used for buttons.</dd></div>
               </dl>
             </section>
@@ -174,7 +176,7 @@
               </figure>
               <figure>
                 <span class="ba-tag after">After</span>
-                <div class="case-cover is-framed unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-overview.webp" alt="The new camera overview: the state of each cooling group and a tile for every camera" width="2560" height="1664"></div>
+                <div class="case-cover is-framed unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-overview.webp" alt="The new home screen: the state of each cooling group and a tile for every camera" width="2560" height="1664"></div>
                 <figcaption class="reveal">Group state and every camera on one screen.</figcaption>
               </figure>
             </div>
@@ -215,7 +217,7 @@
           <h2 class="split">Outcome</h2>
           <p class="outcome-goal reveal"><span class="label">The goal</span>To make it easier for farmers to access all cameras and check that they were working.</p>
           <ul class="outcome-now reveal" aria-label="What the new interface provides">
-            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="16" height="13" rx="3"/><rect x="26" y="8" width="16" height="13" rx="3"/><rect x="6" y="27" width="16" height="13" rx="3"/><rect x="26" y="27" width="16" height="13" rx="3"/></svg><span>All cameras on the opening screen, with one-click access to individual views and settings always within reach</span></li>
+            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="16" height="13" rx="3"/><rect x="26" y="8" width="16" height="13" rx="3"/><rect x="6" y="27" width="16" height="13" rx="3"/><rect x="26" y="27" width="16" height="13" rx="3"/></svg><span>All cameras on the home screen, with one-click access to individual views and settings always within reach</span></li>
             <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="36" height="32" rx="5"/><path d="M19 8v32M11 16h3M11 22h3M11 28h3"/></svg><span>Direct access to the main screens</span></li>
             <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="20" rx="5"/><path d="M16 21v-5a8 8 0 0 1 16 0v5M24 29v4"/></svg><span>Technician settings in one dedicated area</span></li>
           </ul>
@@ -231,7 +233,7 @@
           <div class="quotes">
             <figure class="quote reveal">
               <blockquote>BullsEye application were upgraded significantly by the new design. User interface and functionality expanded and precised thanks to creative ideas which resulted elevated user experience. Customers love the clean design, colours complex are nice to watch, easy to navigate and clear to orient. The process was thorough with many details and problems to solve. Overall result is excellent!</blockquote>
-              <figcaption><strong>Tom Azar</strong><span>Information Systems and Development Manager</span></figcaption>
+              <figcaption><strong>Tom Azar</strong><span>Information Systems and Development Manager, BullTech</span></figcaption>
             </figure>
           </div>
         </section>
