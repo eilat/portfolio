@@ -460,7 +460,7 @@ html.sheet-open { overflow: hidden; }
 /* ---------- Screen tour, scroll scrubbed (js/flow.js) ----------
    A tall track; everything inside pins to the viewport while you scroll it. */
 .flow { height: calc(100vh + var(--flow-len, 300) * 1vh); margin-top: clamp(8px, 2vw, 28px); }
-.flow-pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; padding-top: 70px; padding-bottom: 16px; }
+.flow-pin { overflow: hidden; position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; padding-top: 70px; padding-bottom: 16px; }
 .flow-inner { width: min(var(--max) - 2 * var(--gutter), 100% - 2 * var(--gutter)); margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 320px); align-items: center; gap: clamp(28px, 4vw, 72px); }
 .flow-stage { width: min(100%, (100vh - 190px) * var(--flow-ratio, 1.5385)); min-width: 0; }
 .flow-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 14px; }
@@ -494,7 +494,7 @@ html.sheet-open { overflow: hidden; }
 @media (max-width: 900px) {
   .flow-pin { align-content: start; padding-top: 78px; }
   .flow-inner { grid-template-columns: 1fr; gap: 22px; }
-  .flow-stage { width: 100%; }
+  .flow-stage { width: min(100%, max(220px, (100svh - 270px) * var(--flow-ratio, 1.5385))); margin-inline: auto; }
   .flow-dot:not([aria-current]) span, .flow-skip i { display: none; }
   .flow-step { justify-content: flex-start; }
 }
