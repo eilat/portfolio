@@ -234,7 +234,9 @@ if (zoomables.length) {
   document.body.appendChild(box);
   const img = box.querySelector('img'), close = box.querySelector('button');
   let opener = null;
-  const hide = () => { box.classList.remove('open'); document.documentElement.classList.remove('no-scroll'); if (opener) opener.focus({ preventScroll: true }); };
+  // While the preview is open the page behind it is inert, so Tab stays on Close.
+  const behind = [...document.body.children].filter((n) => n !== box && n.tagName !== 'SCRIPT');
+  const hide = () => { box.classList.remove('open'); behind.forEach((n) => { if (n.dataset.wasInert !== '1') n.inert = false; }); document.documentElement.classList.remove('no-scroll'); if (opener) opener.focus({ preventScroll: true }); };
   zoomables.forEach((el) => {
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'button');
@@ -242,6 +244,7 @@ if (zoomables.length) {
       const src = el.querySelector('img');
       img.src = src.currentSrc || src.src; img.alt = src.alt;
       opener = el;
+      behind.forEach((n) => { n.dataset.wasInert = n.inert ? '1' : '0'; n.inert = true; });
       box.classList.add('open'); document.documentElement.classList.add('no-scroll');
       close.focus({ preventScroll: true });
     };

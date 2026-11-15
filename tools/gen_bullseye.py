@@ -17,7 +17,7 @@ SHOTS = [
 ]
 STEPS = [
  ('Check', 'Every camera and every cooling group on one screen. A camera that is down stands out at once.'),
- ('Open a camera', 'The live image comes first, and every feeding spot is a region on it. Hover a spot for its details.'),
+ ('Open a camera', 'The live image comes first, and every feeding spot is a region on it. Hover over a spot for its details.'),
  ('Check a fan', 'Pick a fan to see exactly which spots it covers.'),
  ('Adjust', 'Basic settings hold the times that change from day to day. Everything else is one toggle away.'),
 ]

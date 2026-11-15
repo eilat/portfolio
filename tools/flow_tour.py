@@ -34,13 +34,13 @@ def build(root, t):
             out.save(d + name + '.webp', quality=84, method=6)
     length = sum(i[-1] for i in t['timeline'] if i[0] in ('hold', 'move'))
     shots = '\n'.join(
-        f'              <img class="flow-shot{" is-on" if i == 0 else ""}" src="../assets/{folder}/{f}.webp" alt="{e(alt)}" width="{W * 2}" height="{H * 2}">'
+        f'              <img class="flow-shot{" is-on" if i == 0 else ""}"{"" if i == 0 else " aria-hidden=\"true\""} src="../assets/{folder}/{f}.webp" alt="{e(alt)}" width="{W * 2}" height="{H * 2}">'
         for i, (f, alt, _) in enumerate(t['shots']))
     rail = '\n'.join(
         f'              <li><button type="button" class="flow-dot"{" aria-current=\"step\"" if i == 0 else ""}><b>{i + 1}</b><span>{e(n)}</span></button></li>'
         for i, (n, _) in enumerate(t['steps']))
     steps = '\n'.join(
-        f'            <li class="flow-step{" is-active" if i == 0 else ""}">\n              <h3>{e(n)}</h3>\n              <p>{e(txt)}</p>\n            </li>'
+        f'            <li class="flow-step{" is-active" if i == 0 else ""}">\n              <h2>{e(n)}</h2>\n              <p>{e(txt)}</p>\n            </li>'
         for i, (n, txt) in enumerate(t['steps']))
     cx, cy = t['start']
     block = f'''    <!-- tour:start (generated, see tools/README.md) -->
@@ -61,7 +61,7 @@ def build(root, t):
               </div>
             </div>
           </div>
-          <ol class="flow-steps">
+          <ol class="flow-steps" aria-live="polite">
 {steps}
           </ol>
         </div>

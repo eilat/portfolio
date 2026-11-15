@@ -325,6 +325,7 @@
   function pickActive() {
     let best = null;
     for (const el of forms) {
+      if (!el.offsetWidth) continue; // hidden at this size
       // data-follow: the formation stays in place for its whole parent and
       // takes the shape of whichever followed element is at mid-screen.
       const zone = el.dataset.follow ? el.parentElement : el.closest('section, header, footer') || el;

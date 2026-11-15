@@ -7,6 +7,7 @@
    (.flow-shot images + .flow-cursor) and .flow-step texts. Timeline items:
    ["hold", len] ["move", x, y, len] ["click", shot] ["show", shot] ["step", i]. */
 (() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ease = (k) => (k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2);
 
   document.querySelectorAll('[data-flow]').forEach((flow) => {
@@ -29,8 +30,9 @@
     let shot = -1, step = -1, clicks = -1;
 
     function render() {
+      // On very short viewports the tour is not pinned (see CSS) and there is no track.
       const track = flow.offsetHeight - innerHeight;
-      const pos = Math.min(1, Math.max(0, -flow.getBoundingClientRect().top / track)) * total;
+      const pos = track > 0 ? Math.min(1, Math.max(0, -flow.getBoundingClientRect().top / track)) * total : 0;
 
       let x = start[0], y = start[1];
       for (const m of moves) {
@@ -47,7 +49,10 @@
         if (ev.type === 'step') st = ev.n; else s = ev.n;
         if (ev.type === 'click') c++;
       }
-      if (s !== shot) { shot = s; shots.forEach((img, i) => img.classList.toggle('is-on', i === s)); }
+      if (s !== shot) {
+        shot = s;
+        shots.forEach((img, i) => { img.classList.toggle('is-on', i === s); img.toggleAttribute('aria-hidden', i !== s); if (i !== s) img.setAttribute('aria-hidden', 'true'); });
+      }
       if (st !== step) {
         step = st;
         steps.forEach((el, i) => el.classList.toggle('is-active', i === st));
@@ -66,7 +71,7 @@
     dots.forEach((d, i) => d.addEventListener('click', () => {
       const track = flow.offsetHeight - innerHeight;
       const top = flow.getBoundingClientRect().top + scrollY;
-      scrollTo({ top: top + (track * stepAt[i]) / total + (i ? 4 : 0), behavior: 'smooth' });
+      scrollTo({ top: top + (track * stepAt[i]) / total + (i ? 4 : 0), behavior: reduce ? 'auto' : 'smooth' });
     }));
 
     addEventListener('scroll', onScroll, { passive: true });
