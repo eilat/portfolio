@@ -561,9 +561,9 @@ html.sheet-open { overflow: hidden; }
 
 /* Longer case titles */
 .case-hero h1.title-lg { font-size: clamp(40px, 5.6vw, 84px); letter-spacing: -.04em; line-height: 1; max-width: 14ch; }
-/* Details with three entries: the first gets the room */
-.meta-band .case-meta.cols-3 { grid-template-columns: 2fr 1fr 1fr; }
-@media (max-width: 760px) { .meta-band .case-meta.cols-3 { grid-template-columns: 1fr; row-gap: 28px; } .meta-band .case-meta.cols-3 > div { padding-left: 0; border-left: 0; } }
+/* Details with four entries: the first gets the room */
+.meta-band .case-meta.cols-4 { grid-template-columns: 1.6fr 1fr 1.4fr 1fr; }
+@media (max-width: 1000px) { .meta-band .case-meta.cols-4 { grid-template-columns: 1fr 1fr; row-gap: 28px; } .meta-band .case-meta.cols-4 > div:nth-child(odd) { padding-left: 0; border-left: 0; } .meta-band .case-meta.cols-4 > div:nth-child(even) { padding-left: 14px; border-left: 1px solid var(--rule); } }
 /* A screen inside a chapter, in the tour's dark frame */
 .chapter .shot { margin: 36px 0 0; }
 .chapter .shot .case-cover { margin: 0; aspect-ratio: auto; padding: clamp(5px, .6vw, 8px); background: #1d1b1a; border-radius: calc(var(--radius) + 4px); box-shadow: 0 24px 44px -28px rgba(20, 25, 60, .5); }
