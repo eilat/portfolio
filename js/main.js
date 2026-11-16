@@ -255,87 +255,104 @@ if (zoomables.length) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && box.classList.contains('open')) hide(); });
 }
 
-// ---------- More work: drag the rail, open a project sheet ----------
-const rail = document.querySelector('.rail');
-if (rail) {
-  // Drag with a mouse; touch and trackpads scroll natively
-  let drag = null;
-  rail.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    drag = { x: e.clientX, left: rail.scrollLeft, moved: false };
-  });
-  addEventListener('pointermove', (e) => {
-    if (!drag) return;
-    const dx = e.clientX - drag.x;
-    if (!drag.moved && Math.abs(dx) > 5) { drag.moved = true; rail.classList.add('dragging'); }
-    if (drag.moved) rail.scrollLeft = drag.left - dx;
-  });
-  addEventListener('pointerup', () => {
-    if (!drag) return;
-    // let the release finish before cards take clicks again
-    if (drag.moved) setTimeout(() => rail.classList.remove('dragging'), 0);
-    drag = null;
-  });
-  document.querySelectorAll('.rail-btn').forEach((b) => b.addEventListener('click', () => {
-    const card = rail.querySelector('.rail-card');
-    const step = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 16) : 300;
-    rail.scrollBy({ left: step * Number(b.dataset.dir), behavior: reduce ? 'auto' : 'smooth' });
-  }));
-
+// ---------- More work: a list; each project opens a popup with its screens ----------
+const moreList = document.querySelector('.more-list');
+if (moreList) {
   const projects = JSON.parse(document.getElementById('more-work-data').textContent);
-  const sheet = document.createElement('dialog');
-  sheet.className = 'sheet';
-  sheet.setAttribute('aria-labelledby', 'sheet-title');
-  sheet.innerHTML = `<div class="sheet-panel">
-      <button class="sheet-close" type="button" data-cursor="back to the work">Close</button>
-      <span class="sheet-tag"></span>
-      <h2 id="sheet-title"></h2>
-      <p class="sheet-text"></p>
-      <div class="sheet-meta"><span class="scope"></span><a class="pill live" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a></div>
-      <div class="sheet-gallery"></div>
+  const peek = document.createElement('dialog');
+  peek.className = 'peek';
+  peek.setAttribute('aria-labelledby', 'peek-title');
+  peek.innerHTML = `<div class="peek-panel">
+      <button class="peek-close" type="button" data-cursor="back to the work">Close</button>
+      <div class="peek-head">
+        <span class="peek-tag"></span>
+        <h2 id="peek-title"></h2>
+        <p class="peek-role"></p>
+        <ul class="peek-points"></ul>
+        <a class="pill live" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="peek-viewer">
+        <div class="peek-bar">
+          <ol class="peek-rail" aria-label="Screens"></ol>
+          <div class="peek-arrows">
+            <button class="peek-arrow" type="button" data-dir="-1" aria-label="Previous screen">←</button>
+            <button class="peek-arrow" type="button" data-dir="1" aria-label="Next screen">→</button>
+          </div>
+        </div>
+        <div class="peek-frame"><div class="peek-view"></div></div>
+      </div>
     </div>`;
-  document.body.appendChild(sheet);
-  const q = (sel) => sheet.querySelector(sel);
-  let opener = null;
+  document.body.appendChild(peek);
+  const q = (sel) => peek.querySelector(sel);
+  let opener = null, shots = [], dots = [], cur = 0;
 
-  function openSheet(id, from) {
+  function show(i) {
+    if (!shots.length) return;
+    cur = (i + shots.length) % shots.length;
+    shots.forEach((img, j) => { img.classList.toggle('is-on', j === cur); img.setAttribute('aria-hidden', String(j !== cur)); });
+    q('.peek-view').scrollTop = 0;
+    dots.forEach((d, j) => { if (j === cur) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    peek.querySelectorAll('.peek-arrow').forEach((b) => { b.hidden = shots.length < 2; });
+  }
+
+  function openPeek(id, from) {
     const p = projects.find((x) => x.id === id);
     if (!p) return;
     opener = from;
-    q('.sheet-tag').textContent = p.domain;
+    q('.peek-tag').textContent = p.domain;
     q('h2').textContent = p.title;
-    q('.sheet-text').textContent = p.text;
-    q('.scope').textContent = p.scope;
+    q('.peek-role').textContent = p.role;
+    q('.peek-points').innerHTML = '';
+    (p.bullets || []).forEach((b) => { const li = document.createElement('li'); li.textContent = b; q('.peek-points').appendChild(li); });
     const live = q('.live');
     live.hidden = !p.live;
     if (p.live) live.href = p.live;
-    const gallery = q('.sheet-gallery');
-    gallery.classList.toggle('phones', p.phone);
-    gallery.innerHTML = '';
-    p.images.forEach((f, i) => {
+    const view = q('.peek-view');
+    view.classList.toggle('phones', !!p.phone);
+    view.innerHTML = '';
+    q('.peek-rail').innerHTML = '';
+    shots = p.images.map((f, i) => {
       const img = document.createElement('img');
       img.src = `assets/work/${p.id}/${f}`;
       img.alt = `${p.title}, screen ${i + 1} of ${p.images.length}`;
       img.loading = i < 2 ? 'eager' : 'lazy';
-      gallery.appendChild(img);
+      view.appendChild(img);
+      return img;
     });
-    q('.sheet-panel').scrollTop = 0;
-    sheet.showModal();
+    dots = p.images.map((f, i) => {
+      const li = document.createElement('li');
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'flow-dot';
+      b.innerHTML = `<b>${i + 1}</b>`;
+      b.setAttribute('aria-label', `Screen ${i + 1}`);
+      b.addEventListener('click', () => show(i));
+      li.appendChild(b); q('.peek-rail').appendChild(li);
+      return b;
+    });
+    q('.peek-rail').hidden = shots.length < 2;
+    show(0);
+    q('.peek-panel').scrollTop = 0;
+    peek.showModal();
     document.documentElement.classList.add('sheet-open');
-    requestAnimationFrame(() => sheet.classList.add('open'));
+    requestAnimationFrame(() => peek.classList.add('open'));
   }
-  function closeSheet() {
-    sheet.classList.remove('open');
+  function closePeek() {
+    peek.classList.remove('open');
     document.documentElement.classList.remove('sheet-open');
-    setTimeout(() => { sheet.close(); if (opener) opener.focus({ preventScroll: true }); }, reduce ? 0 : 450);
+    setTimeout(() => { peek.close(); if (opener) opener.focus({ preventScroll: true }); }, reduce ? 0 : 300);
   }
-  rail.addEventListener('click', (e) => {
-    const card = e.target.closest('.rail-card');
-    if (card) openSheet(card.dataset.project, card);
+  moreList.addEventListener('click', (e) => {
+    const item = e.target.closest('.more-item');
+    if (item) openPeek(item.dataset.project, item);
   });
-  q('.sheet-close').addEventListener('click', closeSheet);
-  sheet.addEventListener('click', (e) => { if (e.target === sheet) closeSheet(); });
-  sheet.addEventListener('cancel', (e) => { e.preventDefault(); closeSheet(); });
+  peek.querySelectorAll('.peek-arrow').forEach((b) => b.addEventListener('click', () => show(cur + Number(b.dataset.dir))));
+  peek.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { show(cur + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { show(cur - 1); e.preventDefault(); }
+  });
+  q('.peek-close').addEventListener('click', closePeek);
+  peek.addEventListener('click', (e) => { if (e.target === peek) closePeek(); });
+  peek.addEventListener('cancel', (e) => { e.preventDefault(); closePeek(); });
 }
 
 onScroll();
