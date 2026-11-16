@@ -345,8 +345,8 @@ if (moreList) {
     document.documentElement.classList.remove('sheet-open');
     setTimeout(() => { peek.close(); if (opener) opener.focus({ preventScroll: true }); }, reduce ? 0 : 300);
   }
-  moreList.addEventListener('click', (e) => {
-    const item = e.target.closest('.more-item');
+  document.addEventListener('click', (e) => {
+    const item = e.target.closest('.more-item, button.project[data-project]');
     if (item) openPeek(item.dataset.project, item);
   });
   peek.querySelectorAll('.peek-arrow').forEach((b) => b.addEventListener('click', () => show(cur + Number(b.dataset.dir))));
