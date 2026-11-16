@@ -1,26 +1,37 @@
 """Doctor-patient platform screen tour (projects/care-platform.html). See flow_tour.py.
-Usage: python3 tools/gen_care.py <portfolio_root> [--images]"""
+Two tracks: the doctor's side, then the patient's side.
+Screens are flat 2x exports from the Figma section
+'Portfolio tour · healthcare source (edit here, then re-export)'.
+Usage: python3 tools/gen_care.py <portfolio_root>"""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from flow_tour import build
 W, H = 1440, 1024
 SHOTS = [
- ('f-patients', 'Doctor view, My Patients: a table of patients with question status tags',
-  [('s1-base', 0, 0), ('s1-title', 20, 80), ('s1-banner', 20, 167), ('s1-table', 20, 239)]),
- ('f-chat', 'Doctor view: a conversation with a patient, with earlier conversations listed beside it',
-  [('s3-base', 0, 0), ('s3-date', 44, 249), ('s3-msg1', 44, 282), ('s3-date', 44, 408), ('s3-msg2', 44, 441), ('s3-date', 44, 693), ('s3-msg3', 44, 726)]),
- ('f-payments', 'Doctor view, My Account: payment tracking with summary charts and an invoice list',
-  [('s2-base', 0, 0), ('s2-box1', 39, 190), ('s2-box2', 418, 190), ('s2-box3', 797, 190), ('s2-field', 956, 312), ('s2-donutcard', 39, 372),
-   ('s2-donut', 199.5, 434.5), ('s2-revcard', 431, 372), ('s2-bars', 431, 413), ('s2-table', 39, 606)]),
+ ('f-d-dashboard', 'Doctor view, dashboard: key numbers and the open questions, with how long each has waited', []),
+ ('f-d-requests', 'Doctor view, patient requests: every question, with tabs for awaiting a response, premium and closed', []),
+ ('f-d-chat', 'Doctor view: a conversation with a patient, with earlier conversations listed beside it', []),
+ ('f-d-payments', 'Doctor view, My Account: payment tracking with summary charts and an invoice list', []),
+ ('f-p-doctors', 'Patient view, My Doctors: a card for each doctor with the open question and the package in use', []),
+ ('f-p-chat', 'Patient view: a conversation with the doctor, with earlier questions beside it', []),
+ ('f-p-buy', 'Patient view, My Account: question packages side by side, with the most popular one marked', []),
 ]
 STEPS = [
- ('See who is waiting', 'My Patients puts open questions first. Status tags show who needs a response, and who needs it now.'),
- ('Answer', 'The conversation opens with the patient’s details on top and earlier conversations beside it, so the history stays in view while writing.'),
- ('Track payments', 'In My Account, summary charts and the invoice list share one screen, with the details of the selected invoice beside it.'),
+ ('See who is waiting', 'The dashboard opens with the open questions and how long each has waited, under a few key numbers.', 'Doctor'),
+ ('Open a request', 'Patient requests gathers every question, with tabs for those awaiting a response, premium patients and closed questions.', 'Doctor'),
+ ('Answer', 'The conversation opens with the patient’s details on top and earlier conversations beside it, so the history stays in view while writing.', 'Doctor'),
+ ('Track payments', 'In My Account, summary charts and the invoice list share one screen, with the details of the selected invoice beside it.', 'Doctor'),
+ ('My doctors', 'Each doctor has a card showing whether a question is open and which package is in use, with the package history below.', 'Patient'),
+ ('Ask and follow up', 'The patient’s conversation mirrors the doctor’s, with earlier questions beside it.', 'Patient'),
+ ('Buy a package', 'Packages sit side by side, with the most popular one marked. The patient picks the doctor first, then the package.', 'Patient'),
 ]
 TIMELINE = [
- ('hold', .5), ('move', 1085, 532, .55), ('click', 1), ('step', 1), ('hold', .8),
- ('move', 1300, 853, .6), ('click', 2), ('step', 2), ('hold', .9),
+ ('hold', .5), ('move', 1297, 231, .55), ('click', 1), ('step', 1), ('hold', .8),
+ ('move', 800, 420, .5), ('click', 2), ('step', 2), ('hold', .9),
+ ('move', 1300, 853, .6), ('click', 3), ('step', 3), ('hold', .9),
+ ('move', 1300, 177, .55), ('click', 4), ('step', 4), ('hold', .9),
+ ('move', 748, 160, .5), ('click', 5), ('step', 5), ('hold', .9),
+ ('move', 1300, 853, .6), ('click', 6), ('step', 6), ('hold', 1),
 ]
-build(sys.argv[1], dict(page='projects/care-platform.html', w=W, h=H, folder='work/care/tour', ext='png',
-    label='Screen tour: a doctor’s path through the platform', shots=SHOTS, steps=STEPS, start=(620, 700), unit=78, timeline=TIMELINE))
+build(sys.argv[1], dict(page='projects/care-platform.html', w=W, h=H, folder='work/care/tour', ext='webp',
+    label='Screen tour: the doctor’s side and the patient’s side', shots=SHOTS, steps=STEPS, start=(700, 600), unit=70, timeline=TIMELINE))

@@ -11,7 +11,8 @@ A tour is a dict:
   label     aria-label of the tour
   shots     [(file, alt, [(source, x, y), ...])]  flat screens, in order; --images
             flattens the sources into <file>.webp at 2x
-  steps     [(name, text)]  the text beside the screen, one visible at a time
+  steps     [(name, text[, track])]  the text beside the screen, one visible at a time;
+            a track name ('Doctor', 'Patient') groups the steps on the rail
   start     (x, y) where the cursor rests before the first move
   unit      vh of scroll per timeline unit
   timeline  ('hold', len) | ('move', x, y, len) | ('click', shot) | ('show', shot) | ('step', i)
@@ -36,15 +37,22 @@ def build(root, t):
     shots = '\n'.join(
         f'              <img class="flow-shot{" is-on" if i == 0 else ""}"{"" if i == 0 else " aria-hidden=\"true\""} src="../assets/{folder}/{f}.webp" alt="{e(alt)}" width="{W * 2}" height="{H * 2}">'
         for i, (f, alt, _) in enumerate(t['shots']))
-    rail = '\n'.join(
-        f'              <li><button type="button" class="flow-dot"{" aria-current=\"step\"" if i == 0 else ""}><b>{i + 1}</b><span>{e(n)}</span></button></li>'
-        for i, (n, _) in enumerate(t['steps']))
-    steps = '\n'.join(
-        f'            <li class="flow-step{" is-active" if i == 0 else ""}">\n              <h2>{e(n)}</h2>\n              <p>{e(txt)}</p>\n            </li>'
-        for i, (n, txt) in enumerate(t['steps']))
+    # A step may name its track (e.g. 'Doctor', 'Patient'): the rail then shows the
+    # track name before its first step, and each step text carries it on top.
+    rail, steps, track = [], [], None
+    for i, st in enumerate(t['steps']):
+        n, txt, grp = (st + (None,))[:3]
+        if grp and grp != track:
+            rail.append(f'              <li class="flow-track" aria-hidden="true">{e(grp)}</li>')
+            track = grp
+        rail.append(f'              <li><button type="button" class="flow-dot"{" aria-current=\"step\"" if i == 0 else ""}><b>{i + 1}</b><span>{e(n)}</span></button></li>')
+        who = f'\n              <span class="flow-who">{e(grp)}</span>' if grp else ''
+        steps.append(f'            <li class="flow-step{" is-active" if i == 0 else ""}">{who}\n              <h2>{e(n)}</h2>\n              <p>{e(txt)}</p>\n            </li>')
+    compact = ' flow-compact' if len(t['steps']) > 5 else ''
+    rail, steps = '\n'.join(rail), '\n'.join(steps)
     cx, cy = t['start']
     block = f'''    <!-- tour:start (generated, see tools/README.md) -->
-    <div class="flow" data-flow data-w="{W}" data-h="{H}" data-timeline='{json.dumps(t["timeline"])}' style="--flow-len:{length * t["unit"]:.0f};--flow-ratio:{W / H:.4f}" role="region" aria-label="{e(t["label"])}">
+    <div class="flow{compact}" data-flow data-w="{W}" data-h="{H}" data-timeline='{json.dumps(t["timeline"])}' style="--flow-len:{length * t["unit"]:.0f};--flow-ratio:{W / H:.4f}" role="region" aria-label="{e(t["label"])}">
       <div class="flow-pin">
         <div class="flow-inner">
           <div class="flow-stage">

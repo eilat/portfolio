@@ -607,3 +607,13 @@ html.sheet-open { overflow: hidden; }
 
 /* One line under the intro: what the designer did, and with whom */
 .hero-role { margin: 0; max-width: 46ch; font: 500 clamp(15px, 1.2vw, 17px)/1.5 var(--body); color: var(--ink); padding-left: 14px; border-left: 2px solid var(--accent); }
+
+/* Tours with two tracks (doctor / patient): a small track name opens each group on
+   the rail and sits above each step's text. Long rails show only the current label. */
+.flow-rail li.flow-track { font: 500 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); background: var(--accent-soft); padding: 6px 10px; border-radius: 99px; }
+.flow-rail li.flow-track::before { content: none; }
+.flow-rail li.flow-track:not(:first-child) { margin-left: clamp(10px, 2vw, 28px); }
+.flow-rail li.flow-track + li::before { content: none; }
+.flow-who { display: inline-block; margin-bottom: 10px; font: 500 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.flow-compact .flow-rail li + li::before { width: clamp(8px, 1.2vw, 18px); }
+.flow-compact .flow-dot:not([aria-current]) span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

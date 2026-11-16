@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Doctor–Patient Communication Platform · Eilat Brayer</title>
-  <meta name="description" content="A doctor–patient communication platform: keeping patients connected to their doctors after the appointment. Product specification, UX and UI design, and a shared design system.">
+  <meta name="description" content="A doctor–patient communication platform: keeping patients connected to their doctors after the appointment. Product specification, UX and UI design, and a shared component library.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,46 +54,79 @@
           <span class="label case-tag reveal">Case study · healthcare</span>
           <h1 class="split title-lg">Doctor–Patient Communication Platform</h1>
           <p class="intro reveal">Keeping patients connected to their doctors after the appointment</p>
-          <p class="hero-role reveal">From idea to launch. Product specification, UX and UI design and a shared design system, with a founder and a developer.</p>
+          <p class="hero-role reveal">From idea to launch. Product specification, UX and UI design and a shared component library, with a founder and a developer.</p>
         </div>
         <div class="case-worlds" data-shapes="worlds" data-morph="soft" data-icons="stethoscope,chat,capsule" data-palette="#2b47c9,#2f6fe0,#6aa8f5,#93dcc0,#ffd9a0" data-cursor="play with me" aria-hidden="true"></div>
       </div>
     </section>
 
     <!-- tour:start (generated, see tools/README.md) -->
-    <div class="flow" data-flow data-w="1440" data-h="1024" data-timeline='[["hold", 0.5], ["move", 1085, 532, 0.55], ["click", 1], ["step", 1], ["hold", 0.8], ["move", 1300, 853, 0.6], ["click", 2], ["step", 2], ["hold", 0.9]]' style="--flow-len:261;--flow-ratio:1.4062" role="region" aria-label="Screen tour: a doctor’s path through the platform">
+    <div class="flow flow-compact" data-flow data-w="1440" data-h="1024" data-timeline='[["hold", 0.5], ["move", 1297, 231, 0.55], ["click", 1], ["step", 1], ["hold", 0.8], ["move", 800, 420, 0.5], ["click", 2], ["step", 2], ["hold", 0.9], ["move", 1300, 853, 0.6], ["click", 3], ["step", 3], ["hold", 0.9], ["move", 1300, 177, 0.55], ["click", 4], ["step", 4], ["hold", 0.9], ["move", 748, 160, 0.5], ["click", 5], ["step", 5], ["hold", 0.9], ["move", 1300, 853, 0.6], ["click", 6], ["step", 6], ["hold", 1]]' style="--flow-len:644;--flow-ratio:1.4062" role="region" aria-label="Screen tour: the doctor’s side and the patient’s side">
       <div class="flow-pin">
         <div class="flow-inner">
           <div class="flow-stage">
             <div class="flow-bar">
               <ol class="flow-rail" aria-label="Tour steps">
+              <li class="flow-track" aria-hidden="true">Doctor</li>
               <li><button type="button" class="flow-dot" aria-current="step"><b>1</b><span>See who is waiting</span></button></li>
-              <li><button type="button" class="flow-dot"><b>2</b><span>Answer</span></button></li>
-              <li><button type="button" class="flow-dot"><b>3</b><span>Track payments</span></button></li>
+              <li><button type="button" class="flow-dot"><b>2</b><span>Open a request</span></button></li>
+              <li><button type="button" class="flow-dot"><b>3</b><span>Answer</span></button></li>
+              <li><button type="button" class="flow-dot"><b>4</b><span>Track payments</span></button></li>
+              <li class="flow-track" aria-hidden="true">Patient</li>
+              <li><button type="button" class="flow-dot"><b>5</b><span>My doctors</span></button></li>
+              <li><button type="button" class="flow-dot"><b>6</b><span>Ask and follow up</span></button></li>
+              <li><button type="button" class="flow-dot"><b>7</b><span>Buy a package</span></button></li>
               </ol>
               <a class="flow-skip" href="#details">Skip<i> the tour</i> <span aria-hidden="true">↓</span></a>
             </div>
             <div class="flow-frame">
               <div class="flow-view" style="aspect-ratio:1440 / 1024">
-              <img class="flow-shot is-on" src="../assets/work/care/tour/f-patients.webp" alt="Doctor view, My Patients: a table of patients with question status tags" width="2880" height="2048">
-              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-chat.webp" alt="Doctor view: a conversation with a patient, with earlier conversations listed beside it" width="2880" height="2048">
-              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-payments.webp" alt="Doctor view, My Account: payment tracking with summary charts and an invoice list" width="2880" height="2048">
-                <span class="flow-cursor" aria-hidden="true" style="left:43.06%;top:68.36%"><svg viewBox="0 0 24 24"><path d="M5 2.5v17l4.6-4.3 2.9 6.6 2.7-1.2-2.9-6.5h6.2z" fill="#ffd23f" stroke="#141414" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+              <img class="flow-shot is-on" src="../assets/work/care/tour/f-d-dashboard.webp" alt="Doctor view, dashboard: key numbers and the open questions, with how long each has waited" width="2880" height="2048">
+              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-d-requests.webp" alt="Doctor view, patient requests: every question, with tabs for awaiting a response, premium and closed" width="2880" height="2048">
+              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-d-chat.webp" alt="Doctor view: a conversation with a patient, with earlier conversations listed beside it" width="2880" height="2048">
+              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-d-payments.webp" alt="Doctor view, My Account: payment tracking with summary charts and an invoice list" width="2880" height="2048">
+              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-p-doctors.webp" alt="Patient view, My Doctors: a card for each doctor with the open question and the package in use" width="2880" height="2048">
+              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-p-chat.webp" alt="Patient view: a conversation with the doctor, with earlier questions beside it" width="2880" height="2048">
+              <img class="flow-shot" aria-hidden="true" src="../assets/work/care/tour/f-p-buy.webp" alt="Patient view, My Account: question packages side by side, with the most popular one marked" width="2880" height="2048">
+                <span class="flow-cursor" aria-hidden="true" style="left:48.61%;top:58.59%"><svg viewBox="0 0 24 24"><path d="M5 2.5v17l4.6-4.3 2.9 6.6 2.7-1.2-2.9-6.5h6.2z" fill="#ffd23f" stroke="#141414" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
               </div>
             </div>
           </div>
           <ol class="flow-steps" aria-live="polite">
             <li class="flow-step is-active">
+              <span class="flow-who">Doctor</span>
               <h2>See who is waiting</h2>
-              <p>My Patients puts open questions first. Status tags show who needs a response, and who needs it now.</p>
+              <p>The dashboard opens with the open questions and how long each has waited, under a few key numbers.</p>
             </li>
             <li class="flow-step">
+              <span class="flow-who">Doctor</span>
+              <h2>Open a request</h2>
+              <p>Patient requests gathers every question, with tabs for those awaiting a response, premium patients and closed questions.</p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-who">Doctor</span>
               <h2>Answer</h2>
               <p>The conversation opens with the patient’s details on top and earlier conversations beside it, so the history stays in view while writing.</p>
             </li>
             <li class="flow-step">
+              <span class="flow-who">Doctor</span>
               <h2>Track payments</h2>
               <p>In My Account, summary charts and the invoice list share one screen, with the details of the selected invoice beside it.</p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-who">Patient</span>
+              <h2>My doctors</h2>
+              <p>Each doctor has a card showing whether a question is open and which package is in use, with the package history below.</p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-who">Patient</span>
+              <h2>Ask and follow up</h2>
+              <p>The patient’s conversation mirrors the doctor’s, with earlier questions beside it.</p>
+            </li>
+            <li class="flow-step">
+              <span class="flow-who">Patient</span>
+              <h2>Buy a package</h2>
+              <p>Packages sit side by side, with the most popular one marked. The patient picks the doctor first, then the package.</p>
             </li>
           </ol>
         </div>
@@ -103,9 +136,9 @@
 
     <div class="meta-band" id="details">
       <dl class="case-meta cols-4 inner reveal">
-        <div><dt>Role</dt><dd>Product specification, UX and UI design, visual language and design system</dd></div>
+        <div><dt>Role</dt><dd>Product specification, UX and UI design, visual language and component library</dd></div>
         <div><dt>Team</dt><dd>A founder and a developer</dd></div>
-        <div><dt>Platform</dt><dd>Desktop, designed with mobile in mind; dense screens adapted to development needs</dd></div>
+        <div><dt>Platform</dt><dd>Desktop first, with responsive components and mobile adjustments where needed</dd></div>
         <div><dt>Users</dt><dd>Doctors and patients</dd></div>
       </dl>
     </div>
@@ -117,8 +150,8 @@
             <section class="chapter">
               <h2 class="split">Context</h2>
               <p class="reveal">Questions often arise after a medical appointment: something was unclear, a patient needs further guidance, or the next appointment is months away. The platform gives patients a structured way to contact their doctor and gives doctors a way to receive payment for answering follow-up questions.</p>
-              <p class="reveal">Doctors invite their patients to join and set their own package prices. Patients purchase question packages for a specific doctor, and the platform collects payments and pays doctors monthly.</p>
-              <p class="reveal">I joined at the idea stage. Through meetings with the founder and the developer, I created the initial product specification, then developed the patient and doctor flows, interface design and shared design system. Early doctor homepage concepts supplied by the founder served as additional input for defining the information and functionality.</p>
+              <p class="reveal">Doctors invite their patients to join and set their own package prices. Patients purchase question packages for a specific doctor, and the platform collects payments and pays doctors monthly. The interface is in Hebrew and reads right to left.</p>
+              <p class="reveal">I joined at the idea stage. Through meetings with the founder and the developer, I created the initial product specification, then designed the patient and doctor flows, the interface and a shared component library. Early doctor homepage concepts supplied by the founder served as additional input for defining the information and functionality.</p>
             </section>
 
             <section class="chapter">
@@ -132,8 +165,8 @@
               <h2 class="split">Helping doctors prioritize responses</h2>
               <dl class="decisions reveal">
                 <div><dt>Pending questions first</dt><dd>I structured the dashboard and “My Patients” around patients with open questions. During the design phase, the service requirement was a response within 24 hours, with priority given to VIP patients who had purchased the larger package. This requirement guided the information hierarchy: doctors should first see who needs a response and have a direct route to the conversation.</dd></div>
-                <div><dt>Access from different starting points</dt><dd>Doctors can open a conversation from either the inquiries table or the registered patients screen. Within the conversation screen, a menu provides access to previous conversations with that patient, keeping the history available while composing a response.</dd></div>
-                <div><dt>Patient invitations always available</dt><dd>I placed the invitation action in the persistent application frame so doctors could invite new patients from any screen.</dd></div>
+                <div><dt>Access from different starting points</dt><dd>Doctors look for a conversation in different ways: sometimes by who is waiting, sometimes by a specific patient. So a conversation opens from either the inquiries table or the patients screen, and doctors stay within the context of their search. Inside the conversation, a menu leads to earlier conversations with the same patient, keeping the history in view while writing a response.</dd></div>
+                <div><dt>Patient invitations always available</dt><dd>The platform stays open on the doctor’s computer, so I placed the invitation action in the persistent application frame. At the end of an appointment, the doctor can invite the patient on the spot, which also makes registration easier for older patients.</dd></div>
               </dl>
               <figure class="shot">
                 <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/care/tour/f-patients.webp" alt="My Patients: a table of patients with question status tags" width="2880" height="2048" loading="lazy"></div>
@@ -146,8 +179,8 @@
               <dl class="decisions reveal">
                 <div><dt>A first question before purchasing</dt><dd>I recommended offering a free first question and allowing patients to skip purchasing during registration. The aim was to let them experience the service before committing to a paid package.</dd></div>
                 <div><dt>A question is always within reach</dt><dd>The action to start a new question remains available in the application frame, mirroring the persistent patient invitation action on the doctor’s side.</dd></div>
-                <div><dt>Two routes to a conversation</dt><dd>Patients can access conversations through their doctor list or their questions screen, where open and closed questions appear in separate tabs. The doctor list shows whether there is an open question and provides access to package history. When no package is available, a purchase button leads to the account area, where the patient selects a doctor and package.</dd></div>
-                <div><dt>Clear roles within the conversation</dt><dd>Doctors and patients use a similar conversation layout, with actions adapted to each role. Only patients can start a new conversation, and only doctors can close one.</dd></div>
+                <div><dt>Two routes to a conversation</dt><dd>As on the doctor’s side, patients reach a conversation from wherever they started looking: their doctor list or their questions screen, where open and closed questions appear in separate tabs. The doctor list shows whether there is an open question and provides access to package history. When no package is available, a purchase button leads to the account area, where the patient selects a doctor and package.</dd></div>
+                <div><dt>Clear roles within the conversation</dt><dd>Doctors and patients use a similar conversation layout, with actions adapted to each role. Only patients can start a new conversation, since each one comes out of their package. Doctors close a conversation when they have finished answering, and if they want to add something later, they can reopen it without using up another of the patient’s questions.</dd></div>
               </dl>
               <figure class="shot">
                 <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/care/tour/f-chat.webp" alt="A conversation between a doctor and a patient" width="2880" height="2048" loading="lazy"></div>
@@ -157,8 +190,9 @@
 
             <section class="chapter">
               <h2 class="split">Bringing the doctor’s account together</h2>
-              <p class="reveal">“My Account” brought together several different needs: package management and pricing, an income simulator, payment tracking, public profile details and availability settings.</p>
-              <p class="reveal">Within payment tracking, I designed a view that connects the overall financial picture with individual invoice details.</p>
+              <p class="reveal">“My Account” brought together several different needs: package management, payment tracking, public profile details and availability settings. Two of them carried most of the design work.</p>
+              <p class="reveal">In package management, doctors set their own package prices, and an income simulator beside the prices shows what their pricing could mean for their income.</p>
+              <p class="reveal">In payment tracking, I designed a view that connects the overall financial picture with individual invoice details.</p>
               <p class="reveal">Filters by date range and plan let doctors examine a specific period or package type. Summary charts at the top reflect the selected filters. Below them, an invoice list sits alongside the details of the selected invoice, allowing doctors to review individual records within the same screen.</p>
               <figure class="shot">
                 <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/care/tour/f-payments.webp" alt="My Account: payment tracking with charts and an invoice list" width="2880" height="2048" loading="lazy"></div>
@@ -167,16 +201,21 @@
             </section>
 
             <section class="chapter">
-              <h2 class="split">A shared design system</h2>
-              <p class="reveal">I created a visual language and reusable components across the doctor and patient experiences, including tables, dashboard summary and analytics components, and the conversation interface.</p>
-              <p class="reveal">The shared conversation component supported both roles through different actions. Reusing components helped maintain consistency across the platform and made development easier.</p>
-              <p class="reveal">The founder and the developer also used the design system to build the admin interface.</p>
+              <h2 class="split">A shared component library</h2>
+              <p class="reveal">I created a visual language and reusable components across the doctor and patient experiences, including tables, dashboard summary and analytics components, and the conversation interface. Every component was built with responsive behavior in mind from the start.</p>
+              <p class="reveal">The shared conversation component supports both roles through different actions. Reusing components kept the platform consistent and made development easier.</p>
+              <p class="reveal">The founder and the developer also used the component library to build the admin interface themselves.</p>
             </section>
 
             <section class="chapter">
               <h2 class="split">Outcome</h2>
-              <p class="outcome-lead reveal">The platform launched with my product specification and interface designs for doctors and patients.</p>
-              <p class="reveal">The delivered experience connects patient registration, question packages and conversations with the doctor’s daily response workflow and account management.</p>
+              <p class="outcome-lead reveal">The platform has launched, and doctors are using it with their patients.</p>
+              <ul class="outcome reveal">
+                <li><strong>Launched</strong><span>Built from my product specification and interface designs, for doctors and patients.</span></li>
+                <li><strong>In use by doctors</strong><span>Doctors are answering their patients’ questions on the platform.</span></li>
+                <li><strong>Two QA rounds before launch</strong><span>I reviewed the built product twice before launch.</span></li>
+              </ul>
+              <p class="reveal">The QA rounds focused mainly on the UI, but also on whether the flows worked as intended, especially registration, which changed considerably during development. I also checked how the screens behaved on mobile, which led to mobile adjustments and to new designs for some of the widgets.</p>
             </section>
           </div>
           <div class="case-art" data-shapes="worlds" data-morph="soft" data-follow=".chapter" data-icons="chat,question,stethoscope,user,chart,layout,check" data-palette="#2b47c9,#2f6fe0,#6aa8f5,#93dcc0,#ffd9a0" aria-hidden="true"></div>

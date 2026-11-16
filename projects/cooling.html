@@ -128,7 +128,7 @@
               <h2 class="split">Context</h2>
               <p class="reveal">BullsEye is BullTech’s camera- and AI-based system for cooling dairy cows at the feed lane. A central computer processes camera data in real time and controls individual fans and sprinklers, activating cooling where cows are detected and adjusting the number of cooling cycles as needed. The system operates without tags attached to the cows.</p>
               <p class="reveal">The system was already in use when I joined the project. Its interface had been built by the developers, and the initial goal was to make it easier for farmers to access all cameras and check that they were working.</p>
-              <p class="reveal">I worked with the product manager and developers on the UX specification and interface redesign. During our review, I proposed restructuring the navigation and bringing all technician settings together in one dedicated area.</p>
+              <p class="reveal">I worked with the product manager and developers on the UX specification and interface redesign. During our review, I proposed restructuring the navigation and bringing all technician settings together in one place.</p>
             </section>
 
             <section class="chapter">
@@ -136,7 +136,7 @@
               <p class="reveal">The existing interface made routine monitoring unnecessarily complicated.</p>
               <ul class="reveal">
                 <li><strong>Too many parameters on screen.</strong> Technical settings competed with the information farmers needed for everyday use.</li>
-                <li><strong>Indirect navigation.</strong> Users had to enter and exit screens to move between different parts of the system.</li>
+                <li><strong>No navigation.</strong> Every screen opened from the home screen, so users had to return to it each time they wanted to reach another part of the system.</li>
                 <li><strong>Missing context.</strong> Farm and camera names were not consistently visible, making it difficult to identify the view on screen.</li>
                 <li><strong>Poor readability and visual consistency.</strong> Parameters were difficult to read over camera images, and the colors and icons lacked a unified visual language.</li>
               </ul>
@@ -145,18 +145,18 @@
             <section class="chapter">
               <h2 class="split">Rethinking the structure</h2>
               <p class="reveal">The redesign needed to support two distinct tasks: checking cameras during everyday farm work and configuring the system during technical service.</p>
-              <p class="reveal">I proposed a consistent layout with persistent navigation, visible farm information and a central area where the screen content would change. This would give users direct access to the main screens while keeping their context visible.</p>
+              <p class="reveal">I proposed a consistent layout with persistent navigation, visible farm information and a central area where the screen content would change. Users could then move between screens without detours, and always see where they are.</p>
               <p class="reveal">I also proposed gathering all technician settings in one password-protected area. This would give technicians a clear place to find their controls and keep detailed configuration separate from farmers’ daily monitoring.</p>
             </section>
 
             <section class="chapter">
               <h2 class="split">Design decisions</h2>
               <dl class="decisions reveal">
-                <div><dt>Persistent navigation</dt><dd>A fixed sidebar on the left provides direct access to the main screens. Users can move between them without repeatedly returning to a previous screen.</dd></div>
+                <div><dt>Navigation on the side, not the top</dt><dd>The old interface had no navigation: every screen opened from the home screen, and reaching another one meant going back to it first. BullsEye runs as a desktop application, so the top bar already carries the window controls and the details that must stay visible at all times. I added a fixed sidebar that leads straight to each main screen and kept the top bar for status.</dd></div>
                 <div><dt>A consistent frame</dt><dd>Farm information and the company logo remain visible around the central content area. Each camera view also displays its name, helping users identify what they are looking at.</dd></div>
-                <div><dt>Camera monitoring first</dt><dd>A clear list of camera names provides access to each view. On the camera screen, the image takes priority, with cooling regions and timers displayed clearly over it. The image refreshes every 30 seconds.</dd></div>
+                <div><dt>Camera tiles, not a list</dt><dd>I chose a grid of live camera tiles over a list of names. The images refresh every five seconds, so one look at the home screen shows that the system is working, and a camera that is down stands out at once. In the camera view, the image takes priority, with cooling regions and timers shown clearly over it.</dd></div>
                 <div><dt>Basic and advanced settings for farmers</dt><dd>Most farmers need only a few settings, so the schedule opens in Basic. Those who want more control can switch to Advanced for additional parameters.</dd></div>
-            <div><dt>One place for technician settings</dt><dd>Technical parameters are grouped in a dedicated, password-protected area. Technicians can find their settings in one place, while farmers’ everyday screens stay focused on monitoring. A Technician mode button on the farmer’s screens opens the same area at the tab that matches that screen, so technicians arrive in the right place.</dd></div>
+            <div><dt>One place for technician settings</dt><dd>Technical parameters are grouped in a single password-protected area. Technicians can find their settings in one place, while farmers’ everyday screens stay focused on monitoring. A Technician mode button on the farmer’s screens opens the same area at the tab that matches that screen, so technicians arrive in the right place.</dd></div>
                 <div><dt>A unified visual language</dt><dd>I introduced the company’s brand colors and a consistent icon style, improved contrast over camera images and replaced the red styling previously used for buttons.</dd></div>
               </dl>
             </section>
@@ -191,7 +191,7 @@
               </figure>
               <figure>
                 <span class="ba-tag after">After</span>
-                <div class="case-cover is-framed unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-live.webp" alt="The new camera screen: the feed lane image with a clear region and timer for every feeding spot" width="2560" height="1664"></div>
+                <div class="case-cover is-framed unveil" style="--tint:#f3e3d8" data-zoom data-cursor="zoom"><img src="../assets/work/cooling/tour/f-live.webp" alt="The new camera view: the feed lane image with a clear region and timer for every feeding spot" width="2560" height="1664"></div>
                 <figcaption class="reveal">Clear regions on the image, each with its state and timer.</figcaption>
               </figure>
             </div>
@@ -218,8 +218,8 @@
           <p class="outcome-goal reveal"><span class="label">The goal</span>To make it easier for farmers to access all cameras and check that they were working.</p>
           <ul class="outcome-now reveal" aria-label="What the new interface provides">
             <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="16" height="13" rx="3"/><rect x="26" y="8" width="16" height="13" rx="3"/><rect x="6" y="27" width="16" height="13" rx="3"/><rect x="26" y="27" width="16" height="13" rx="3"/></svg><span>All cameras on the home screen, with one-click access to individual views and settings always within reach</span></li>
-            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="36" height="32" rx="5"/><path d="M19 8v32M11 16h3M11 22h3M11 28h3"/></svg><span>Direct access to the main screens</span></li>
-            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="20" rx="5"/><path d="M16 21v-5a8 8 0 0 1 16 0v5M24 29v4"/></svg><span>Technician settings in one dedicated area</span></li>
+            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="36" height="32" rx="5"/><path d="M19 8v32M11 16h3M11 22h3M11 28h3"/></svg><span>A sidebar to every main screen, with no trips back to the home screen</span></li>
+            <li><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="21" width="28" height="20" rx="5"/><path d="M16 21v-5a8 8 0 0 1 16 0v5M24 29v4"/></svg><span>Technician settings gathered in one protected area</span></li>
           </ul>
           <ul class="outcome reveal">
             <li><strong>Shipped</strong><span>The redesigned interface was implemented.</span></li>
