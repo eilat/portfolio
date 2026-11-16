@@ -262,14 +262,18 @@ if (moreList) {
   const peek = document.createElement('dialog');
   peek.className = 'peek';
   peek.setAttribute('aria-labelledby', 'peek-title');
-  peek.innerHTML = `<div class="peek-panel">
-      <button class="peek-close" type="button" data-cursor="back to the work">Close</button>
+  peek.innerHTML = `<button class="peek-close" type="button" aria-label="Close" data-cursor="back to the work"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <div class="peek-panel">
       <div class="peek-head">
-        <span class="peek-tag"></span>
-        <h2 id="peek-title"></h2>
-        <p class="peek-role"></p>
-        <ul class="peek-points"></ul>
-        <a class="pill live" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>
+        <div class="peek-title">
+          <span class="peek-tag"></span>
+          <h2 id="peek-title"></h2>
+          <p class="peek-role"></p>
+        </div>
+        <div class="peek-title">
+          <ul class="peek-points"></ul>
+          <a class="pill live" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
       <div class="peek-viewer">
         <div class="peek-bar">
