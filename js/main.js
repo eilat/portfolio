@@ -330,5 +330,20 @@ if (zoomables.length) {
   });
 }
 
+// The third selected project starts level with the third line of the second one
+// (its two-line title, then the first line of its description)
+const alignThird = () => {
+  const g = document.querySelectorAll('.work-grid > div');
+  if (g.length < 3) return;
+  g[2].style.setProperty('--third-offset', '0px');
+  if (getComputedStyle(document.querySelector('.work-grid')).gridTemplateColumns.split(' ').length < 2) return;
+  const target = g[1].querySelector('.info p'), start = g[2].getBoundingClientRect().top;
+  if (target) g[2].style.setProperty('--third-offset', Math.max(0, target.getBoundingClientRect().top - start) + 'px');
+};
+addEventListener('load', alignThird);
+addEventListener('resize', alignThird);
+if (document.fonts) document.fonts.ready.then(alignThird);
+alignThird();
+
 onScroll();
 document.querySelectorAll('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });

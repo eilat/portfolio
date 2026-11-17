@@ -189,7 +189,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .work-grid > .featured h3 { font-size: clamp(30px, 4vw, 52px); }
 /* The third project follows the first in its column and starts beside the second one's text */
 .work-grid > :nth-child(2) { grid-row: span 2; }
-.work-grid > :nth-child(3) { grid-column: 1; margin-top: calc(-1 * clamp(64px, 9vw, 120px) + max(0px, 16vw - 36px)); }
+.work-grid > :nth-child(3) { grid-column: 1; margin-top: calc(-1 * clamp(64px, 9vw, 120px) + var(--third-offset, 0px)); }
 .project { text-decoration: none; display: block; }
 .project .media { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--tint, var(--blush)); aspect-ratio: 4 / 5; max-width: 100%; }
 .project .media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.001); transition: transform 1.2s var(--ease); }
