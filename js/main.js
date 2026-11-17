@@ -42,6 +42,12 @@ if ('IntersectionObserver' in window) {
     if (el.getBoundingClientRect().top < innerHeight) requestAnimationFrame(() => el.classList.add('in'));
     else io.observe(el);
   });
+  // After a refresh the browser may restore a scroll position past some items, so
+  // the observer never sees them: show everything that is already above the fold.
+  const revealPassed = () => revealables.forEach((el) => { if (!el.classList.contains('in') && el.getBoundingClientRect().top < innerHeight) { el.classList.add('in'); io.unobserve(el); } });
+  addEventListener('load', revealPassed);
+  addEventListener('scroll', revealPassed, { passive: true });
+  addEventListener('pageshow', revealPassed);
 } else {
   revealables.forEach((el) => el.classList.add('in'));
 }

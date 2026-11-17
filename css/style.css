@@ -161,7 +161,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Section heads ---------- */
-.section { padding-block: clamp(90px, 14vw, 180px); }
+.section { padding-block: clamp(46px, 7vw, 90px); }
 .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(40px, 7vw, 84px); }
 .section-head h2 { font-size: clamp(44px, 8vw, 112px); }
 /* Big section titles share one size; a tilted tag sits above each */
@@ -187,7 +187,9 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .project .media.is-screen img { object-position: top left; }
 .work-grid > .featured .media { aspect-ratio: 16 / 8; }
 .work-grid > .featured h3 { font-size: clamp(30px, 4vw, 52px); }
-.work-grid > :nth-child(3) { margin-top: clamp(0px, 9vw, 140px); }
+/* The third project follows the first in its column and starts beside the second one's text */
+.work-grid > :nth-child(2) { grid-row: span 2; }
+.work-grid > :nth-child(3) { grid-column: 1; margin-top: calc(-1 * clamp(64px, 9vw, 120px) + max(0px, 16vw - 36px)); }
 .project { text-decoration: none; display: block; }
 .project .media { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--tint, var(--blush)); aspect-ratio: 4 / 5; max-width: 100%; }
 .project .media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.001); transition: transform 1.2s var(--ease); }
@@ -290,7 +292,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .more-head p { margin: 12px 0 0; color: var(--ink-soft); max-width: 46ch; }
 /* More work as a bento mosaic: every so often a large tile, the rest smaller */
 .more-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(150px, 15vw, 220px); grid-auto-flow: dense; gap: clamp(12px, 1.4vw, 18px); }
-.more-item { position: relative; display: block; width: 100%; height: 100%; border: 0; padding: 0; background: var(--blush); cursor: pointer; color: inherit; font: inherit; text-align: left; border-radius: 14px; overflow: hidden; }
+.more-item { position: relative; display: block; width: 100%; height: 100%; border: 4px solid var(--blush); box-shadow: 0 0 0 1px var(--line); padding: 0; background: var(--blush); cursor: pointer; color: inherit; font: inherit; text-align: left; border-radius: 14px; overflow: hidden; }
 .more-list > :nth-child(6n+1) { grid-column: span 2; grid-row: span 2; }
 .more-list > :nth-child(6n+4) { grid-column: span 2; }
 /* ten projects leave half a row on desktop: the last tile closes it at full width */
