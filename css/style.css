@@ -306,38 +306,47 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .project .media.is-screen img { display: block; width: 100%; height: auto; }
 button.project { border: 0; padding: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; width: 100%; }
 
-/* ---------- Project popup (opens from the list) ---------- */
-.peek { border: 0; padding: 0; width: min(1080px, calc(100% - 2 * var(--gutter) - 20px)); max-width: none; max-height: none; overflow: visible; background: transparent; color: var(--ink); opacity: 0; scale: .97; transition: opacity .3s var(--ease), scale .4s var(--ease); }
-.peek.open { opacity: 1; scale: 1; }
-.peek::backdrop { background: rgba(20, 20, 20, .32); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-.peek-panel { max-height: min(90vh, 1000px); overflow-y: auto; overscroll-behavior: contain; padding: clamp(22px, 3vw, 40px); border-radius: calc(var(--radius) + 6px); background: var(--white); box-shadow: 0 40px 80px -30px rgba(20,20,20,.45); }
-.peek-close { position: absolute; top: -14px; right: -14px; z-index: 3; width: 42px; height: 42px; display: grid; place-items: center; border: 0; padding: 0; cursor: pointer; border-radius: 50%; background: var(--ink); color: var(--white); box-shadow: 0 8px 20px -8px rgba(20,20,20,.5); transition: rotate .5s var(--spring), background-color .25s; }
-.peek-close svg { width: 16px; height: 16px; }
+/* ---------- Project popup: split on desktop, a sheet from below on mobile ---------- */
+.peek { border: 0; padding: 0; color: var(--ink); background: #fff; }
+.peek::backdrop { background: rgba(20, 20, 20, .34); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.peek-close { width: 42px; height: 42px; display: grid; place-items: center; border: 0; padding: 0; border-radius: 50%; background: var(--ink); color: #fff; cursor: pointer; transition: rotate .5s var(--spring); }
 .peek-close:hover, .peek-close:focus-visible { rotate: 90deg; }
-.peek-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 10px clamp(20px, 3vw, 44px); align-items: start; margin-bottom: clamp(18px, 2.4vw, 28px); }
-.peek-title { display: grid; gap: 12px; justify-items: start; }
-.peek-tag { display: inline-block; font-size: 13px; padding: 6px 12px; border-radius: 99px; background: var(--mint); rotate: -3deg; }
-.peek h2 { font-size: clamp(26px, 2.8vw, 38px); margin: 0; font-family: var(--body); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
-.peek-role { margin: 0; font-size: 15px; color: var(--ink-soft); }
-.peek-points { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; font-size: 15px; align-self: end; }
-.peek-head .live { justify-self: start; }
-.peek-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; min-height: 34px; }
-.peek-rail { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; flex-wrap: wrap; }
-.peek-arrows { display: flex; gap: 6px; }
-.peek-arrow { width: 38px; height: 38px; border: 0; border-radius: 50%; cursor: pointer; background: var(--white); box-shadow: inset 0 0 0 1px var(--line); transition: background-color .25s, rotate .5s var(--spring); }
-.peek-arrow:hover, .peek-arrow:focus-visible { background: var(--mint); rotate: -8deg; }
-.peek-frame { padding: clamp(5px, .6vw, 8px); background: #1d1b1a; border-radius: calc(var(--radius) + 4px); box-shadow: 0 24px 44px -28px rgba(40, 25, 15, .5); }
-.peek-view { max-height: min(66vh, 720px); overflow-y: auto; overscroll-behavior: contain; border-radius: calc(var(--radius) - 2px); background: var(--white); scrollbar-width: thin; }
-.peek-view img { display: none; width: 100%; height: auto; }
-.peek-view img.is-on { display: block; animation: peek-in .45s var(--ease); }
-.peek-view.phones { background: #f4f2f0; }
-.peek-view.phones img { width: min(380px, 100%); margin-inline: auto; }
-@keyframes peek-in { from { opacity: 0; } }
-@media (max-width: 860px) {
-  .peek { width: calc(100% - 32px); }
-  .peek-head { grid-template-columns: 1fr; }
-}
-@media (prefers-reduced-motion: reduce) { .peek { transition: none; } .peek-view img.is-on { animation: none; } }
+.peek-close svg { width: 16px; height: 16px; }
+.peek-tag { display: inline-block; justify-self: start; font-size: 13px; padding: 6px 12px; border-radius: 99px; background: var(--mint); rotate: -3deg; }
+.peek-title { font: 500 clamp(26px, 2.6vw, 38px)/1.1 var(--body); letter-spacing: -.03em; margin: 0; }
+.peek-role { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.peek-points { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; font-size: 15px; }
+.peek-live { justify-self: start; }
+.peek-shot { display: block; width: 100%; height: auto; border-radius: var(--radius); box-shadow: 0 0 0 1px var(--line), 0 30px 50px -36px rgba(40, 25, 15, .45); }
+.phones .peek-shot { width: min(360px, 100%); }
+
+/* Desktop: the text stays on the side, the screens scroll */
+.peek-split { width: min(1240px, calc(100% - 48px)); max-width: none; height: 88vh; max-height: 88vh; overflow: visible; border-radius: 18px; opacity: 0; scale: .97; transition: opacity .3s var(--ease), scale .4s var(--ease); box-shadow: 0 40px 80px -30px rgba(20, 20, 20, .45); }
+.peek-split.open { opacity: 1; scale: 1; }
+.peek-split > .peek-close { position: absolute; top: -14px; right: -14px; z-index: 3; box-shadow: 0 8px 20px -8px rgba(20, 20, 20, .5); }
+.peek-cols { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(0, 2.3fr); height: 100%; }
+.peek-side { padding: 40px 32px; display: grid; gap: 16px; align-content: start; border-right: 1px solid var(--line); overflow-y: auto; }
+.peek-count { font: 300 44px/1 var(--display); letter-spacing: -.03em; margin-top: 12px; }
+.peek-count small { font-size: 18px; color: var(--ink-soft); }
+.peek-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.peek-thumbs button { border: 0; padding: 0; background: var(--blush); border-radius: 6px; overflow: hidden; aspect-ratio: 4 / 3; cursor: pointer; opacity: .55; outline: 2px solid transparent; outline-offset: 1px; transition: opacity .2s; }
+.peek-thumbs button.on { opacity: 1; outline-color: var(--ink); }
+.peek-thumbs img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.peek-main { overflow-y: auto; overscroll-behavior: contain; padding: 32px; display: grid; gap: 32px; align-content: start; background: #faf8f6; border-radius: 0 18px 18px 0; }
+.peek-main.phones { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+/* Mobile: a short case page that slides up from below */
+.peek-sheet { position: fixed; inset: auto 0 0 0; margin: 0; width: 100%; max-width: 100%; height: 92vh; max-height: 92vh; border-radius: 22px 22px 0 0; translate: 0 100%; transition: translate .55s var(--ease); box-shadow: 0 -30px 60px -40px rgba(20, 20, 20, .5); }
+.peek-sheet.open { translate: 0 0; }
+.peek-scroll { height: 100%; overflow-y: auto; overscroll-behavior: contain; }
+.peek-grip { position: sticky; top: 0; z-index: 2; display: flex; justify-content: center; align-items: center; padding: 12px 16px; background: linear-gradient(#fff 70%, rgba(255, 255, 255, 0)); }
+.peek-grip i { width: 44px; height: 5px; border-radius: 99px; background: var(--line); }
+.peek-grip .peek-close { position: absolute; right: 14px; top: 8px; width: 38px; height: 38px; }
+.peek-body { padding: 4px var(--gutter) 64px; }
+.peek-intro { display: grid; gap: 14px; padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
+.peek-shots { display: grid; gap: 28px; }
+.peek-shots.phones { justify-items: center; }
+@media (prefers-reduced-motion: reduce) { .peek-split, .peek-sheet { transition: none; } }
 html.sheet-open { overflow: hidden; }
 
 /* Insight and decision cards on case pages */

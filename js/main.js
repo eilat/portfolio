@@ -255,108 +255,73 @@ if (zoomables.length) {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && box.classList.contains('open')) hide(); });
 }
 
-// ---------- More work: a list; each project opens a popup with its screens ----------
-const moreList = document.querySelector('.more-list');
-if (moreList) {
-  const projects = JSON.parse(document.getElementById('more-work-data').textContent);
-  const peek = document.createElement('dialog');
-  peek.className = 'peek';
-  peek.setAttribute('aria-labelledby', 'peek-title');
-  peek.innerHTML = `<button class="peek-close" type="button" aria-label="Close" data-cursor="back to the work"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <div class="peek-panel">
-      <div class="peek-head">
-        <div class="peek-title">
-          <span class="peek-tag"></span>
-          <h2 id="peek-title"></h2>
-          <p class="peek-role"></p>
-        </div>
-        <div class="peek-title">
-          <ul class="peek-points"></ul>
-          <a class="pill live" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>
-        </div>
-      </div>
-      <div class="peek-viewer">
-        <div class="peek-bar">
-          <ol class="peek-rail" aria-label="Screens"></ol>
-          <div class="peek-arrows">
-            <button class="peek-arrow" type="button" data-dir="-1" aria-label="Previous screen">←</button>
-            <button class="peek-arrow" type="button" data-dir="1" aria-label="Next screen">→</button>
-          </div>
-        </div>
-        <div class="peek-frame"><div class="peek-view"></div></div>
-      </div>
-    </div>`;
-  document.body.appendChild(peek);
-  const q = (sel) => peek.querySelector(sel);
-  let opener = null, shots = [], dots = [], cur = 0;
-
-  function show(i) {
-    if (!shots.length) return;
-    cur = (i + shots.length) % shots.length;
-    shots.forEach((img, j) => { img.classList.toggle('is-on', j === cur); img.setAttribute('aria-hidden', String(j !== cur)); });
-    q('.peek-view').scrollTop = 0;
-    dots.forEach((d, j) => { if (j === cur) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
-    peek.querySelectorAll('.peek-arrow').forEach((b) => { b.hidden = shots.length < 2; });
-  }
+// ---------- Project popup: split on desktop, a sheet from below on mobile ----------
+{
+  const dataEl = document.getElementById('more-work-data');
+  const projects = dataEl ? JSON.parse(dataEl.textContent) : [];
+  const X = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const mobile = matchMedia('(max-width: 760px)');
+  let opener = null;
 
   function openPeek(id, from) {
     const p = projects.find((x) => x.id === id);
     if (!p) return;
     opener = from;
-    q('.peek-tag').textContent = p.domain;
-    q('h2').textContent = p.title;
-    q('.peek-role').textContent = p.role;
-    q('.peek-points').innerHTML = '';
-    (p.bullets || []).forEach((b) => { const li = document.createElement('li'); li.textContent = b; q('.peek-points').appendChild(li); });
-    const live = q('.live');
-    live.hidden = !p.live;
-    if (p.live) live.href = p.live;
-    const view = q('.peek-view');
-    view.classList.toggle('phones', !!p.phone);
-    view.innerHTML = '';
-    q('.peek-rail').innerHTML = '';
-    shots = p.images.map((f, i) => {
-      const img = document.createElement('img');
-      img.src = `assets/work/${p.id}/${f}`;
-      img.alt = `${p.title}, screen ${i + 1} of ${p.images.length}`;
-      img.loading = i < 2 ? 'eager' : 'lazy';
-      view.appendChild(img);
-      return img;
-    });
-    dots = p.images.map((f, i) => {
-      const li = document.createElement('li');
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'flow-dot';
-      b.innerHTML = `<b>${i + 1}</b>`;
-      b.setAttribute('aria-label', `Screen ${i + 1}`);
-      b.addEventListener('click', () => show(i));
-      li.appendChild(b); q('.peek-rail').appendChild(li);
-      return b;
-    });
-    q('.peek-rail').hidden = shots.length < 2;
-    show(0);
-    q('.peek-panel').scrollTop = 0;
-    peek.showModal();
+    const sheet = mobile.matches;
+    const d = document.createElement('dialog');
+    d.className = 'peek ' + (sheet ? 'peek-sheet' : 'peek-split');
+    d.setAttribute('aria-label', p.title);
+    const info = `<span class="peek-tag">${esc(p.domain)}</span><h2 class="peek-title">${esc(p.title)}</h2><p class="peek-role">${esc(p.role)}</p>`;
+    const points = `<ul class="peek-points">${(p.bullets || []).map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` +
+      (p.live ? `<a class="pill peek-live" href="${p.live}" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>` : '');
+    const shots = p.images.map((f, i) => `<img class="peek-shot" src="assets/work/${p.id}/${f}" alt="${esc(p.title)}, screen ${i + 1} of ${p.images.length}" loading="${i < 2 ? 'eager' : 'lazy'}">`).join('');
+    const close = `<button class="peek-close" type="button" aria-label="Close" data-cursor="back to the work">${X}</button>`;
+    if (sheet) {
+      d.innerHTML = `<div class="peek-scroll"><div class="peek-grip"><i></i>${close}</div>
+        <div class="peek-body"><div class="peek-intro">${info}${points}</div>
+        <div class="peek-shots${p.phone ? ' phones' : ''}">${shots}</div></div></div>`;
+    } else {
+      d.innerHTML = `${close}<div class="peek-cols">
+        <div class="peek-side">${info}${points}
+          <div class="peek-count" aria-hidden="true"><span>1</span> <small>/ ${p.images.length}</small></div>
+          <div class="peek-thumbs">${p.images.map((f, i) => `<button type="button" aria-label="Screen ${i + 1}"${i === 0 ? ' class="on"' : ''}><img src="assets/work/${p.id}/${f}" alt="" loading="lazy"></button>`).join('')}</div>
+        </div>
+        <div class="peek-main${p.phone ? ' phones' : ''}">${shots}</div></div>`;
+    }
+    document.body.appendChild(d);
+    d.showModal();
     document.documentElement.classList.add('sheet-open');
-    requestAnimationFrame(() => peek.classList.add('open'));
+    requestAnimationFrame(() => d.classList.add('open'));
+
+    const shut = () => {
+      d.classList.remove('open');
+      document.documentElement.classList.remove('sheet-open');
+      setTimeout(() => { d.remove(); if (opener) opener.focus({ preventScroll: true }); }, reduce ? 0 : 500);
+    };
+    d.querySelector('.peek-close').addEventListener('click', shut);
+    d.addEventListener('cancel', (e) => { e.preventDefault(); shut(); });
+    d.addEventListener('click', (e) => { if (e.target === d) shut(); });
+
+    if (!sheet) {
+      // The counter and thumbnails follow the screen in view
+      const main = d.querySelector('.peek-main'), n = d.querySelector('.peek-count span');
+      const thumbs = [...d.querySelectorAll('.peek-thumbs button')], imgs = [...main.querySelectorAll('.peek-shot')];
+      const mark = () => {
+        const top = main.getBoundingClientRect().top + 80;
+        let cur = 0; imgs.forEach((im, i) => { if (im.getBoundingClientRect().top <= top) cur = i; });
+        if (main.scrollTop + main.clientHeight >= main.scrollHeight - 4) cur = imgs.length - 1;
+        n.textContent = cur + 1; thumbs.forEach((b, i) => b.classList.toggle('on', i === cur));
+      };
+      main.addEventListener('scroll', mark, { passive: true });
+      thumbs.forEach((b, i) => b.addEventListener('click', () => main.scrollTo({ top: imgs[i].offsetTop - 32, behavior: reduce ? 'auto' : 'smooth' })));
+    }
   }
-  function closePeek() {
-    peek.classList.remove('open');
-    document.documentElement.classList.remove('sheet-open');
-    setTimeout(() => { peek.close(); if (opener) opener.focus({ preventScroll: true }); }, reduce ? 0 : 300);
-  }
+
   document.addEventListener('click', (e) => {
     const item = e.target.closest('.more-item, button.project[data-project]');
     if (item) openPeek(item.dataset.project, item);
   });
-  peek.querySelectorAll('.peek-arrow').forEach((b) => b.addEventListener('click', () => show(cur + Number(b.dataset.dir))));
-  peek.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { show(cur + 1); e.preventDefault(); }
-    if (e.key === 'ArrowLeft') { show(cur - 1); e.preventDefault(); }
-  });
-  q('.peek-close').addEventListener('click', closePeek);
-  peek.addEventListener('click', (e) => { if (e.target === peek) closePeek(); });
-  peek.addEventListener('cancel', (e) => { e.preventDefault(); closePeek(); });
 }
 
 onScroll();
