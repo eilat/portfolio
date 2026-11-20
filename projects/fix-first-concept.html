@@ -411,6 +411,8 @@
       if (k < 1) runs.set(el, requestAnimationFrame(step)); else el.textContent = fmt(to);
     };
     runs.set(el, requestAnimationFrame(step));
+    // If frames are paused (for example inside an embedded page), still land on the final value
+    clearTimeout(el._end); el._end = setTimeout(() => { cancelAnimationFrame(runs.get(el)); el.textContent = fmt(to); }, ms + 120);
   }
 
   function showTip(app) {
