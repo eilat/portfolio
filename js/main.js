@@ -283,7 +283,8 @@ if (zoomables.length) {
       (p.live ? `<a class="pill peek-live" href="${p.live}" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>` : '') +
       (p.links ? `<div class="peek-links">${p.links.map((l) => `<a class="pill peek-live" href="${l.href}" target="_blank" rel="noopener" data-cursor="see it live">${esc(l.label)} <span aria-hidden="true">↗</span></a>`).join('')}</div>` : '');
     const src = (f) => f.includes('/') ? `assets/work/${f}` : `assets/work/${p.id}/${f}`;
-    const shots = p.images.map((f, i) => `<img class="peek-shot" src="${src(f)}" alt="${esc(p.title)}, screen ${i + 1} of ${p.images.length}" loading="${i < 2 ? 'eager' : 'lazy'}">`).join('');
+    const video = p.video ? `<div class="peek-video"><iframe src="${p.video}" title="${esc(p.title)} video" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>` : '';
+    const shots = video + p.images.map((f, i) => `<img class="peek-shot" src="${src(f)}" alt="${esc(p.title)}, screen ${i + 1} of ${p.images.length}" loading="${i < 2 ? 'eager' : 'lazy'}">`).join('');
     const close = `<button class="peek-close" type="button" aria-label="Close" data-cursor="back to the work">${X}</button>`;
     if (sheet) {
       d.innerHTML = `<div class="peek-scroll"><div class="peek-grip"><i></i>${close}</div>
@@ -298,6 +299,8 @@ if (zoomables.length) {
         <div class="peek-main${p.phone ? ' phones' : ''}">${shots}</div></div>`;
     }
     document.body.appendChild(d);
+    // Screens from a phone keep their phone width, also among desktop screens
+    d.querySelectorAll('.peek-shot').forEach((im) => { const mark = () => { if (im.naturalWidth && im.naturalWidth <= 500 && im.naturalHeight > im.naturalWidth * 1.4) im.classList.add('is-phone'); }; im.complete ? mark() : im.addEventListener('load', mark, { once: true }); });
     d.showModal();
     document.documentElement.classList.add('sheet-open');
     requestAnimationFrame(() => d.classList.add('open'));

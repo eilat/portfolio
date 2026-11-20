@@ -324,7 +324,13 @@
 
   function pickActive() {
     let best = null;
+    // Forms marked data-early (the closing Hello) start once their section enters the lower part of the screen
     for (const el of forms) {
+      if (!('early' in el.dataset) || !el.offsetWidth) continue;
+      const rr = (el.closest('section, header, footer') || el).getBoundingClientRect();
+      if (rr.top <= H * .8 && rr.bottom >= H * .3) { best = el; break; }
+    }
+    if (!best) for (const el of forms) {
       if (!el.offsetWidth) continue; // hidden at this size
       // data-follow: the formation stays in place for its whole parent and
       // takes the shape of whichever followed element is at mid-screen.
