@@ -442,6 +442,7 @@ html.sheet-open { overflow: hidden; }
 /* ---------- Inner pages: one text face, no display font ---------- */
 .case-page { --display: var(--body); --accent: #a5654f; --accent-text: #955843; --accent-soft: #eacdbc; --band: #f8f2eb; --rule: #e3c9b9; --rail: var(--sand); }
 .theme-care { --accent: #2b47c9; --accent-text: #2b47c9; --accent-soft: #dfe6ff; --band: #f1f4ff; --rule: #cbd5f5; --rail: #aebcf0; }
+.theme-mend { --accent: #1b3d8f; --accent-text: #1b3d8f; --accent-soft: #dfe5f3; --band: #f2f5fb; --rule: #c9d4ec; --rail: #a9b9de; }
 .case-page .next strong { font-weight: 400; font-size: clamp(34px, 6vw, 80px); letter-spacing: -.035em; }
 .case-hero h1.title-xl { font-size: clamp(64px, 10vw, 148px); letter-spacing: -.045em; line-height: .95; }
 
@@ -643,3 +644,43 @@ html.sheet-open { overflow: hidden; }
 .flow-who { display: inline-block; margin-bottom: 10px; font: 500 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
 .flow-compact .flow-rail li + li::before { width: clamp(8px, 1.2vw, 18px); }
 .flow-compact .flow-dot:not([aria-current]) span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Live concept embedded in a case study */
+.concept-demo { margin-bottom: clamp(64px, 9vw, 110px); }
+.concept-demo p { max-width: 760px; }
+.demo-frame { margin-top: 28px; border: 1px solid var(--rule); border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 30px 60px -40px rgba(20, 23, 31, .35); }
+.demo-frame iframe { display: block; width: 100%; height: 1240px; border: 0; }
+.demo-link { margin-top: 16px; }
+.demo-link a { color: var(--accent-text); font-weight: 500; text-decoration: none; border-bottom: 1px solid currentColor; }
+@media (max-width: 1000px) { .demo-frame iframe { height: 1900px; } }
+
+/* Lead screen under a case title */
+.hero-shot { margin-top: clamp(32px, 5vw, 64px); margin-bottom: clamp(48px, 7vw, 88px); }
+.hero-shot .case-cover { margin: 0; aspect-ratio: auto; padding: clamp(6px, .7vw, 10px); background: #1d1b1a; border-radius: calc(var(--radius) + 6px); box-shadow: 0 34px 60px -36px rgba(20, 25, 60, .55); }
+.hero-shot .case-cover img { width: 100%; height: auto; border-radius: calc(var(--radius) - 2px); display: block; }
+
+/* Framed screens keep their frame: no scale on the image inside */
+.js .chapter .shot .unveil img, .js .chapter .shot .unveil.in img, .chapter .shot [data-zoom]:hover img, .js .chapter .shot [data-zoom].unveil.in:hover img { transform: none; }
+
+/* Mend: outcome boxes in one row */
+.theme-mend .outcome { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.theme-mend .outcome li { padding: clamp(16px, 1.6vw, 20px); }
+.theme-mend .outcome strong { font-size: clamp(16px, 1.3vw, 18px); }
+.theme-mend .outcome span { font-size: 13px; }
+@media (max-width: 1000px) { .theme-mend .outcome { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .theme-mend .outcome { grid-template-columns: 1fr; } }
+
+/* Two CV downloads side by side */
+.cv-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Websites: a generic tile that spans to the end of its row */
+.more-media.generic { display: grid; place-items: start center; padding-top: clamp(14px, 3vw, 34px); background: linear-gradient(140deg, #eef2fb, #f8f2eb); }
+.more-media.generic svg { width: min(30%, 170px); height: auto; fill: #fff; stroke: #8e9bb8; stroke-width: 1.6; stroke-linecap: round; transition: transform 1s var(--ease); }
+.more-media.generic .front { fill: #fff; stroke: #1b3d8f; }
+.more-media.generic .front-line { stroke: #7fa3ec; }
+.more-item:hover .more-media.generic svg { transform: scale(1.05) rotate(-1deg); }
+@media (min-width: 861px) { .more-list > :last-child:nth-child(6n) { grid-column: span 3; } }
+.peek-links { display: flex; flex-wrap: wrap; gap: 10px; }
+/* Phone screens stay phone-sized */
+.phones .peek-shot { width: min(260px, 100%); }
+.peek-main.phones { grid-template-columns: repeat(auto-fill, minmax(200px, 260px)); justify-content: center; }

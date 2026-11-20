@@ -280,8 +280,10 @@ if (zoomables.length) {
     d.setAttribute('aria-label', p.title);
     const info = `<span class="peek-tag">${esc(p.domain)}</span><h2 class="peek-title">${esc(p.title)}</h2><p class="peek-role">${esc(p.role)}</p>`;
     const points = `<ul class="peek-points">${(p.bullets || []).map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` +
-      (p.live ? `<a class="pill peek-live" href="${p.live}" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>` : '');
-    const shots = p.images.map((f, i) => `<img class="peek-shot" src="assets/work/${p.id}/${f}" alt="${esc(p.title)}, screen ${i + 1} of ${p.images.length}" loading="${i < 2 ? 'eager' : 'lazy'}">`).join('');
+      (p.live ? `<a class="pill peek-live" href="${p.live}" target="_blank" rel="noopener" data-cursor="see it live">Visit the live site <span aria-hidden="true">↗</span></a>` : '') +
+      (p.links ? `<div class="peek-links">${p.links.map((l) => `<a class="pill peek-live" href="${l.href}" target="_blank" rel="noopener" data-cursor="see it live">${esc(l.label)} <span aria-hidden="true">↗</span></a>`).join('')}</div>` : '');
+    const src = (f) => f.includes('/') ? `assets/work/${f}` : `assets/work/${p.id}/${f}`;
+    const shots = p.images.map((f, i) => `<img class="peek-shot" src="${src(f)}" alt="${esc(p.title)}, screen ${i + 1} of ${p.images.length}" loading="${i < 2 ? 'eager' : 'lazy'}">`).join('');
     const close = `<button class="peek-close" type="button" aria-label="Close" data-cursor="back to the work">${X}</button>`;
     if (sheet) {
       d.innerHTML = `<div class="peek-scroll"><div class="peek-grip"><i></i>${close}</div>
@@ -291,7 +293,7 @@ if (zoomables.length) {
       d.innerHTML = `${close}<div class="peek-cols">
         <div class="peek-side">${info}${points}
           <div class="peek-count" aria-hidden="true"><span>1</span> <small>/ ${p.images.length}</small></div>
-          <div class="peek-thumbs">${p.images.map((f, i) => `<button type="button" aria-label="Screen ${i + 1}"${i === 0 ? ' class="on"' : ''}><img src="assets/work/${p.id}/${f}" alt="" loading="lazy"></button>`).join('')}</div>
+          <div class="peek-thumbs">${p.images.map((f, i) => `<button type="button" aria-label="Screen ${i + 1}"${i === 0 ? ' class="on"' : ''}><img src="${src(f)}" alt="" loading="lazy"></button>`).join('')}</div>
         </div>
         <div class="peek-main${p.phone ? ' phones' : ''}">${shots}</div></div>`;
     }
