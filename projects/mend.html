@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=20261120b">
+  <link rel="stylesheet" href="../css/style.css?v=20261121">
 </head>
 <body class="case-page case-wide theme-mend">
   <canvas class="shape-canvas" aria-hidden="true"></canvas>
@@ -109,14 +109,14 @@
 
             <section class="chapter">
               <h2 class="split">Rethinking the dashboard</h2>
-              <p class="reveal">I had designed the dashboard for the unified system to give product managers a clear overview. Later we found that developers use it too: they get all the information from it, but they have no single place to act on it. The goal became a dashboard that answers “what do I do now”, not only “what is the status”: one click to a page that brings together the way to fix an issue, or a fix directly from the dashboard.</p>
+              <p class="reveal">I had designed the dashboard for the unified system to give product managers a clear overview. Later we found that developers used it too: they found the information there, but had nowhere to act on it. The goal became a dashboard that answers “what do I do now”, not only “what is the status”: one click to a page that brings together the way to fix an issue, or a fix directly from the dashboard.</p>
               <figure class="shot">
                 <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/risk/01.jpg" alt="The dashboard: overview numbers, findings by scan engine and severity, and the highest-risk applications and projects" width="1400" height="788" loading="lazy"></div>
                 <figcaption class="reveal">The dashboard I designed for the unified system: a clear overview, but the next step was left to the user.</figcaption>
               </figure>
               <dl class="decisions reveal">
-                <div><dt>Research, by hand and with AI</dt><dd>I combined my own searching with Claude. Searching myself gave me a direct feel for what mattered; Claude helped me find studies, articles and competitor screens, and organize them into comparisons. AI was good for breadth, but deciding what was relevant to Mend’s users stayed with me.</dd></div>
-                <div><dt>Three directions, several tools</dt><dd>I developed three different directions. With Claude I built the base and the working components; with ChatGPT I explored more options, and it added motion and hover effects to the components; with Figma’s agent I tried variations on specific components. Finally, Claude built the screens in Figma from the code files.</dd></div>
+                <div><dt>Research, by hand and with AI</dt><dd>I researched partly by hand and partly with Claude. Searching myself gave me a direct feel for what mattered; Claude helped me find studies, articles and competitor screens, and organize them into comparisons. AI was good for breadth, but deciding what was relevant to Mend’s users stayed with me.</dd></div>
+                <div><dt>Three directions</dt><dd>The directions differed in how they split and showed the information: a list, cards, or an infographic. They also differed in structure: one view that brings everything together with a filter for different states, or a repeating component that shows each state. I recommended a single infographic with a state switcher. I built the prototypes with AI tools: Claude for the base and the working components, ChatGPT for more options, motion and hover effects, and Figma’s agent for variations on specific components.</dd></div>
                 <div><dt>Live prototypes, not static frames</dt><dd>Each direction was a working coded prototype, with micro-interactions and motion. When a product manager can click and see how a card responds, the conversation about the concept becomes concrete. I handed the three directions over to Mend’s product team.</dd></div>
               </dl>
             </section>
@@ -127,7 +127,8 @@
         <section class="chapter chapter-wide concept-demo">
           <h2 class="split">A reimagined concept</h2>
           <p class="reveal">The directions I delivered to Mend are not shown here. This is a new concept with sample data, built on the same idea: lead the user from “what is the status” to “what do I do now”. Switch the view and the tabs, hover over a column, or open an application to reach its findings.</p>
-          <div class="demo-frame reveal"><iframe src="fix-first-concept.html?v=20261120b" title="Interactive dashboard concept with sample data" loading="lazy"></iframe></div>
+          <p class="demo-tag reveal">New concept · sample data</p>
+          <div class="demo-frame reveal"><iframe src="fix-first-concept.html?v=20261121" title="Interactive dashboard concept with sample data" loading="lazy"></iframe></div>
         </section>
 
         <div class="case-cols">
@@ -142,7 +143,7 @@
               <p class="outcome-lead reveal">The unified system went live, and I kept designing it for about four years.</p>
               <ul class="outcome reveal">
                 <li><strong>One live system</strong><span>All of Mend’s platforms in one interface, with a visual language based on the brand.</span></li>
-                <li><strong>Four years of new features</strong><span>Specified and designed on the same foundations and design system.</span></li>
+                <li><strong>About four years of new features</strong><span>Specified and designed on the same foundations and design system.</span></li>
                 <li><strong>Three dashboard directions</strong><span>Handed over as working coded prototypes.</span></li>
                 <li><strong>A Variables-based design system</strong><span>I built its foundations; the team completed it.</span></li>
               </ul>
@@ -166,7 +167,7 @@
     <a href="#top" data-cursor="up we go">Back to top ↑</a>
   </footer>
 
-  <script src="../js/main.js?v=20261120b" defer></script>
-  <script src="../js/shapes.js?v=20261120b" defer></script>
+  <script src="../js/main.js?v=20261121" defer></script>
+  <script src="../js/shapes.js?v=20261121" defer></script>
 </body>
 </html>

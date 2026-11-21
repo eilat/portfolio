@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Doctor–Patient Communication Platform · Eilat Brayer</title>
-  <meta name="description" content="A doctor–patient communication platform: keeping patients connected to their doctors after the appointment. Product specification, UX and UI design, and a shared component library.">
+  <meta name="description" content="A doctor–patient communication platform: a platform for patients to ask their doctor follow-up questions after the appointment. Product specification, UX and UI design, and a shared component library.">
   <meta name="theme-color" content="#ffffff">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=20261120b">
+  <link rel="stylesheet" href="../css/style.css?v=20261121">
 </head>
 <body class="case-page case-wide theme-care">
   <canvas class="shape-canvas" aria-hidden="true"></canvas>
@@ -53,7 +53,7 @@
         <div class="case-text">
           <span class="label case-tag reveal">Case study · healthcare</span>
           <h1 class="split title-lg">Doctor–Patient Communication Platform</h1>
-          <p class="intro reveal">Keeping patients connected to their doctors after the appointment</p>
+          <p class="intro reveal">Follow-up questions to your doctor, after the appointment</p>
           <p class="hero-role reveal">From idea to launch. Product specification, UX and UI design and a shared component library, with a founder and a developer.</p>
         </div>
         <div class="case-worlds" data-shapes="worlds" data-morph="soft" data-icons="stethoscope,chat,capsule" data-palette="#2b47c9,#2f6fe0,#6aa8f5,#93dcc0,#ffd9a0" data-cursor="play with me" aria-hidden="true"></div>
@@ -96,12 +96,12 @@
             <li class="flow-step is-active">
               <span class="flow-who">Doctor</span>
               <h2>See who is waiting</h2>
-              <p>The dashboard opens with the open questions and how long each has waited, under a few key numbers.</p>
+              <p>The dashboard leads with unanswered questions and how long each has waited, under a few key numbers.</p>
             </li>
             <li class="flow-step">
               <span class="flow-who">Doctor</span>
               <h2>Open a request</h2>
-              <p>Patient requests gathers every question, with tabs for those awaiting a response, premium patients and closed questions.</p>
+              <p>The Patient Requests screen gathers every question, with tabs for those awaiting a response, premium patients and closed questions.</p>
             </li>
             <li class="flow-step">
               <span class="flow-who">Doctor</span>
@@ -138,7 +138,7 @@
       <dl class="case-meta cols-4 inner reveal">
         <div><dt>Role</dt><dd>Product specification, UX and UI design, visual language and component library</dd></div>
         <div><dt>Team</dt><dd>A founder and a developer</dd></div>
-        <div><dt>Platform</dt><dd>Desktop first, with responsive components and mobile adjustments where needed</dd></div>
+        <div><dt>Platform</dt><dd>Designed on desktop with mobile in mind, built responsive, with mobile adjustments during the build</dd></div>
         <div><dt>Users</dt><dd>Doctors and patients</dd></div>
       </dl>
     </div>
@@ -151,22 +151,22 @@
               <h2 class="split">Context</h2>
               <p class="reveal">Questions often arise after a medical appointment: something was unclear, a patient needs further guidance, or the next appointment is months away. The platform gives patients a structured way to contact their doctor and gives doctors a way to receive payment for answering follow-up questions.</p>
               <p class="reveal">Doctors invite their patients to join and set their own package prices. Patients purchase question packages for a specific doctor, and the platform collects payments and pays doctors monthly. The interface is in Hebrew and reads right to left.</p>
-              <p class="reveal">I joined at the idea stage. Through meetings with the founder and the developer, I created the initial product specification, then designed the patient and doctor flows, the interface and a shared component library. Early doctor homepage concepts supplied by the founder served as additional input for defining the information and functionality.</p>
+              <p class="reveal">I joined at the idea stage. Through meetings with the founder and the developer, I created the initial product specification, then designed the patient and doctor flows, the interface and a shared component library. The founder’s early concepts for the doctor’s home page helped me define what it should show and do.</p>
             </section>
 
             <section class="chapter">
               <h2 class="split">The challenge</h2>
               <p class="reveal">The platform needed to support two connected experiences.</p>
               <p class="reveal">Doctors needed to identify questions awaiting a response, access the relevant conversation and manage the business side of their service. Patients needed to understand how the service worked, ask a question and keep track of conversations and packages across their doctors.</p>
-              <p class="reveal">My focus was on making the next action clear for each user while keeping the relevant information within reach.</p>
+              <p class="reveal">My focus: doctors first see who is waiting and for how long, and patients are always one click from a new question.</p>
             </section>
 
             <section class="chapter">
               <h2 class="split">Helping doctors prioritize responses</h2>
               <dl class="decisions reveal">
-                <div><dt>Pending questions first</dt><dd>I structured the dashboard and “My Patients” around patients with open questions. During the design phase, the service requirement was a response within 24 hours, with priority given to VIP patients who had purchased the larger package. This requirement guided the information hierarchy: doctors should first see who needs a response and have a direct route to the conversation.</dd></div>
-                <div><dt>Access from different starting points</dt><dd>Doctors look for a conversation in different ways: sometimes by who is waiting, sometimes by a specific patient. So a conversation opens from either the inquiries table or the patients screen, and doctors stay within the context of their search. Inside the conversation, a menu leads to earlier conversations with the same patient, keeping the history in view while writing a response.</dd></div>
-                <div><dt>Patient invitations always available</dt><dd>The platform stays open on the doctor’s computer, so I placed the invitation action in the persistent application frame. At the end of an appointment, the doctor can invite the patient on the spot, which also makes registration easier for older patients.</dd></div>
+                <div><dt>Pending questions first</dt><dd>I structured the dashboard and “My Patients” around patients with open questions. During the design phase, the service requirement was a response within 24 hours, with priority given to premium patients who had purchased the larger package. This requirement guided the information hierarchy: doctors should first see who needs a response and have a direct route to the conversation.</dd></div>
+                <div><dt>Access from different starting points</dt><dd>Doctors look for a conversation in different ways: sometimes by who is waiting, sometimes by a specific patient. So a conversation opens from either the questions table or the patients screen, and doctors stay within the context of their search. Inside the conversation, a menu leads to earlier conversations with the same patient, keeping the history in view while writing a response.</dd></div>
+                <div><dt>Patient invitations always available</dt><dd>The platform stays open on the doctor’s computer, so I placed the invitation action in the persistent application frame. At the end of an appointment, the doctor can invite the patient on the spot, which is meant to make registration easier for older patients.</dd></div>
               </dl>
               <figure class="shot">
                 <div class="case-cover unveil" data-zoom data-cursor="zoom"><img src="../assets/work/care/tour/f-patients.webp" alt="My Patients: a table of patients with question status tags" width="2880" height="2048" loading="lazy"></div>
@@ -177,7 +177,7 @@
             <section class="chapter">
               <h2 class="split">Making the service easier for patients to use</h2>
               <dl class="decisions reveal">
-                <div><dt>A first question before purchasing</dt><dd>I recommended offering a free first question and allowing patients to skip purchasing during registration. The aim was to let them experience the service before committing to a paid package.</dd></div>
+                <div><dt>A first question before purchasing</dt><dd>I recommended a free first question. Patients who don’t know the service yet find it hard to trust it and pay right away. Letting them sign up without buying anything was the other option, but then they would not feel the core of the service: a doctor actually answering. A free question, with no credit card needed, lets them try it and feel good about it.</dd></div>
                 <div><dt>A question is always within reach</dt><dd>The action to start a new question remains available in the application frame, mirroring the persistent patient invitation action on the doctor’s side.</dd></div>
                 <div><dt>Two routes to a conversation</dt><dd>As on the doctor’s side, patients reach a conversation from wherever they started looking: their doctor list or their questions screen, where open and closed questions appear in separate tabs. The doctor list shows whether there is an open question and provides access to package history. When no package is available, a purchase button leads to the account area, where the patient selects a doctor and package.</dd></div>
                 <div><dt>Clear roles within the conversation</dt><dd>Doctors and patients use a similar conversation layout, with actions adapted to each role. Only patients can start a new conversation, since each one comes out of their package. Doctors close a conversation when they have finished answering, and if they want to add something later, they can reopen it without using up another of the patient’s questions.</dd></div>
@@ -202,8 +202,8 @@
 
             <section class="chapter">
               <h2 class="split">A shared component library</h2>
-              <p class="reveal">I created a visual language and reusable components across the doctor and patient experiences, including tables, dashboard summary and analytics components, and the conversation interface. Every component was built with responsive behavior in mind from the start.</p>
-              <p class="reveal">The shared conversation component supports both roles through different actions. Reusing components kept the platform consistent and made development easier.</p>
+              <p class="reveal">I created a visual language and reusable components across the doctor and patient experiences, including tables, dashboard summary and analytics components, and the conversation interface. I designed on desktop with mobile in mind; the developer built every component responsive, and we adjusted for mobile during the build where needed.</p>
+              <p class="reveal">The shared conversation component supports both roles through different actions.</p>
               <p class="reveal">The founder and the developer also used the component library to build the admin interface themselves.</p>
             </section>
 
@@ -237,8 +237,8 @@
     <a href="#top" data-cursor="up we go">Back to top ↑</a>
   </footer>
 
-  <script src="../js/main.js?v=20261120b" defer></script>
-  <script src="../js/shapes.js?v=20261120b" defer></script>
-  <script src="../js/flow.js?v=20261120b" defer></script>
+  <script src="../js/main.js?v=20261121" defer></script>
+  <script src="../js/shapes.js?v=20261121" defer></script>
+  <script src="../js/flow.js?v=20261121" defer></script>
 </body>
 </html>
