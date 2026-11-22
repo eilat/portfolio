@@ -154,7 +154,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 /* Round badge: turns slowly, scrolls to the work */
 .badge { position: absolute; right: var(--gutter); bottom: clamp(28px, 5vh, 56px); width: clamp(110px, 10vw, 140px); aspect-ratio: 1; display: grid; place-items: center; text-decoration: none; border-radius: 50%; }
 .badge-ring { position: absolute; inset: 0; width: 100%; height: 100%; }
-.badge-ring text { font: 500 11.5px var(--body); letter-spacing: .14em; fill: var(--ink); }
+.badge-ring text { font: 500 12px var(--body); letter-spacing: .06em; fill: var(--ink); }
 .badge-core { width: 44%; aspect-ratio: 1; border-radius: 50%; background: var(--mint); display: grid; place-items: center; transition: scale .5s var(--spring), background .25s; }
 .badge-core svg { width: 42%; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .badge.is-hover .badge-core, .badge:focus-visible .badge-core { scale: 1.12; background: var(--nude); }
