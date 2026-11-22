@@ -53,7 +53,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .site-header, main, .site-footer { position: relative; z-index: 1; }
 
 .inner { max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
-.label { font: 500 12px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.label { font: 500 12px/1 var(--body); letter-spacing: .02em; text-transform: none; color: var(--ink-soft); }
 
 /* ---------- Pills: one hover language for every button ---------- */
 .pill, .tabs a, .btn, .talk, .back {
@@ -226,7 +226,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 .cv-side { display: grid; gap: 24px; align-content: start; justify-items: start; }
 .cv-side p { margin: 0; color: var(--ink-soft); }
 .cv-block + .cv-block { margin-top: 56px; }
-.cv-block h3 { font-size: 15px; font-family: var(--body); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
+.cv-block h3 { font-size: 15px; font-family: var(--body); font-weight: 500; letter-spacing: .02em; text-transform: none; color: var(--ink-soft); margin-bottom: 8px; }
 .cv-row {
   display: grid; grid-template-columns: 140px 1fr auto; gap: 20px; align-items: baseline;
   padding-block: 22px; border-bottom: 1px solid var(--line);
@@ -270,7 +270,7 @@ em, .serif { font-family: var(--accent); font-style: italic; font-weight: 400; l
 }
 .case-hero .intro { font: 300 clamp(20px, 2.2vw, 28px)/1.35 var(--display); letter-spacing: -.015em; color: var(--ink-soft); max-width: 36ch; margin: 0; }
 .case-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin: clamp(32px, 4vw, 48px) 0 0; padding: 26px 0; border-block: 1px solid var(--line); }
-.case-meta dt { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.case-meta dt { font-size: 12px; letter-spacing: .02em; text-transform: none; color: var(--ink-soft); }
 .case-meta dd { margin: 6px 0 0; }
 .case-cover { margin-top: clamp(40px, 6vw, 72px); border-radius: var(--radius); overflow: hidden; background: var(--tint, var(--blush)); aspect-ratio: 16 / 9; max-width: 100%; }
 .case-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
@@ -637,11 +637,11 @@ html.sheet-open { overflow: hidden; }
 
 /* Tours with two tracks (doctor / patient): a small track name opens each group on
    the rail and sits above each step's text. Long rails show only the current label. */
-.flow-rail li.flow-track { font: 500 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); background: var(--accent-soft); padding: 6px 10px; border-radius: 99px; }
+.flow-rail li.flow-track { font: 500 11px/1 var(--body); letter-spacing: .02em; text-transform: none; color: var(--ink); background: var(--accent-soft); padding: 6px 10px; border-radius: 99px; }
 .flow-rail li.flow-track::before { content: none; }
 .flow-rail li.flow-track:not(:first-child) { margin-left: clamp(10px, 2vw, 28px); }
 .flow-rail li.flow-track + li::before { content: none; }
-.flow-who { display: inline-block; margin-bottom: 10px; font: 500 11px/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.flow-who { display: inline-block; margin-bottom: 10px; font: 500 11px/1 var(--body); letter-spacing: .02em; text-transform: none; color: var(--ink-soft); }
 .flow-compact .flow-rail li + li::before { width: clamp(8px, 1.2vw, 18px); }
 .flow-compact .flow-dot:not([aria-current]) span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
