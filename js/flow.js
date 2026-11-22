@@ -29,6 +29,14 @@
     const total = at;
     let shot = -1, step = -1, clicks = -1;
 
+    // A small spinning badge tells readers the tour moves as they scroll, until the last step.
+    const hint = document.createElement('div');
+    const hid = 'flow-hint-' + Math.random().toString(36).slice(2, 7);
+    hint.className = 'flow-hint';
+    hint.setAttribute('aria-hidden', 'true');
+    hint.innerHTML = `<svg class="flow-hint-ring" viewBox="0 0 100 100"><defs><path id="${hid}" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><text><textPath href="#${hid}" textLength="236" lengthAdjust="spacing">Scroll to continue · Scroll to continue ·</textPath></text></svg><span class="flow-hint-core"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>`;
+    flow.querySelector('.flow-pin').appendChild(hint);
+
     function render() {
       // On very short viewports the tour is not pinned (see CSS) and there is no track.
       const track = flow.offsetHeight - innerHeight;
@@ -63,6 +71,8 @@
       }
       if (c > clicks && clicks >= 0) { cursor.classList.remove('is-click'); void cursor.offsetWidth; cursor.classList.add('is-click'); }
       clicks = c;
+      const rect = flow.getBoundingClientRect();
+      hint.classList.toggle('on', track > 0 && rect.top <= 2 && rect.bottom > innerHeight && pos < total * .94);
     }
 
     let ticking = false;
