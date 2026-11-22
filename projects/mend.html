@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=20261122c">
+  <link rel="stylesheet" href="../css/style.css?v=20261122d">
 </head>
 <body class="case-page case-wide theme-mend">
   <canvas class="shape-canvas" aria-hidden="true"></canvas>
@@ -128,7 +128,7 @@
           <h2 class="split">A reimagined concept</h2>
           <p class="reveal">The directions I delivered to Mend are not shown here. This is a new concept with sample data, built on the same idea: lead the user from “what is the status” to “what do I do now”. Switch the view and the tabs, hover over a column, or open an application to reach its findings.</p>
           <p class="demo-tag reveal">New concept · sample data</p>
-          <div class="demo-frame reveal"><iframe src="fix-first-concept.html?v=20261122c" title="Interactive dashboard concept with sample data" loading="lazy"></iframe></div>
+          <div class="demo-frame reveal" data-scale-frame><iframe src="fix-first-concept.html?v=20261122d" title="Interactive dashboard concept with sample data" loading="lazy"></iframe></div>
         </section>
 
         <div class="case-cols">
@@ -167,7 +167,22 @@
     <a href="#top" data-cursor="up we go">Back to top ↑</a>
   </footer>
 
-  <script src="../js/main.js?v=20261122c" defer></script>
-  <script src="../js/shapes.js?v=20261122c" defer></script>
+  <script src="../js/main.js?v=20261122d" defer></script>
+  <script src="../js/shapes.js?v=20261122d" defer></script>
+  <script>
+    // Show the embedded concept at its desktop proportions, scaled to fit narrow screens
+    (() => {
+      const box = document.querySelector('[data-scale-frame]'); if (!box) return;
+      const frame = box.querySelector("iframe"), DESK = 1240, H = 1190;
+      const fit = () => {
+        const w = box.clientWidth;
+        if (w >= DESK) { frame.style.cssText = ''; box.style.height = ''; return; }
+        const k = w / DESK;
+        frame.style.cssText = `width:${DESK}px;height:${H}px;transform:scale(${k});transform-origin:0 0;`;
+        box.style.height = Math.ceil(H * k) + 'px';
+      };
+      fit(); addEventListener('resize', fit);
+    })();
+  </script>
 </body>
 </html>

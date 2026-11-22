@@ -652,7 +652,7 @@ html.sheet-open { overflow: hidden; }
 .demo-frame iframe { display: block; width: 100%; height: 1240px; border: 0; }
 .demo-link { margin-top: 16px; }
 .demo-link a { color: var(--accent-text); font-weight: 500; text-decoration: none; border-bottom: 1px solid currentColor; }
-@media (max-width: 1000px) { .demo-frame iframe { height: 1900px; } }
+
 
 /* Lead screen under a case title */
 .hero-shot { margin-top: clamp(32px, 5vw, 64px); margin-bottom: clamp(48px, 7vw, 88px); }
@@ -719,3 +719,5 @@ html.sheet-open { overflow: hidden; }
 @keyframes flow-hint-spin { to { transform: rotate(360deg); } }
 @keyframes flow-hint-bob { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
 @media (prefers-reduced-motion: reduce) { .flow-hint-ring, .flow-hint-core svg { animation: none; } }
+
+.demo-frame[data-scale-frame] { position: relative; }
